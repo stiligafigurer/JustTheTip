@@ -13,6 +13,8 @@ namespace JustTheTip.Models {
         public virtual string Password { get; set; }
         public virtual string FirstName { get; set; }
         public virtual string LastName { get; set; }
+        [Required]
+        [DataType(DataType.EmailAddress)]
         public virtual string Email { get; set; }
         public virtual string Gender { get; set; }
         public virtual string SexualOrientation { get; set; }
