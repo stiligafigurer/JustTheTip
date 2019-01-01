@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace JustTheTip.Models
-{
+namespace JustTheTip.Models {
     public class User
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
         public virtual int UserID { get; set; }
         public virtual string Username { get; set; }
         public virtual string Password { get; set; }

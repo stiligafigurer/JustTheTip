@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace JustTheTip.Models
-{
-    public class Interest
-    {
+namespace JustTheTip.Models {
+    public class Interest {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
         public virtual int InterestID { get; set; }
         public virtual string Description { get; set; }
     }

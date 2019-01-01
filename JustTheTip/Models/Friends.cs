@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace JustTheTip.Models
-{
+namespace JustTheTip.Models {
     public class Friends
     {
+        [Key]
         public virtual User User { get; set; }
+        [Key]
         public virtual User Friend { get; set; }
         public virtual Category RelationCategory { get; set; }
     }

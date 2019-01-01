@@ -7,7 +7,7 @@ namespace JustTheTip.Models
 {
     public class User_Interest
     {
-        public virtual User User { get; set; }
-        public virtual Interest Interest { get; set; }
+        public virtual User UserID { get; set; }
+        public virtual Interest InterestID { get; set; }
     }
 }

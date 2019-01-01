@@ -6,7 +6,7 @@ using System.Web;
 
 namespace JustTheTip.DAL {
     public class JTTInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<JTTContext> {
-        protected override Seed(JTTContext context) {
+        protected override void Seed(JTTContext context) {
             var users = new List<User> {
                 new User {
                     Username ="racar",
