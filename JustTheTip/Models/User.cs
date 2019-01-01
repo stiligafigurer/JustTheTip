@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -22,5 +23,9 @@ namespace JustTheTip.Models {
         public virtual string District { get; set; }
         //ActiveUser 1 = true, 0 = false
         public virtual int ActiveUser { get; set; }
+
+        public virtual ICollection<User> Friends { get; set; }
+        public virtual ICollection<User> FriendRequests { get; set; }
+
     }
 }

@@ -1,14 +1,13 @@
-﻿using System.Data.Entity;
+﻿using JustTheTip.Models;
+using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
-namespace JustTheTip.Models {
+namespace JustTheTip.DAL {
     public class JTTContext : DbContext {
-        public JTTContext() : base("JTTContext") {
+        public JTTContext() : base() {
         }
 
         public DbSet<User> Users { get; set; }
-        public DbSet<Friends> Friends { get; set; }
-        public DbSet<FriendRequest> FriendRequests { get; set; }
         public DbSet<Visitor> Visitors { get; set; }
         public DbSet<Interest> Interests { get; set; }
         public DbSet<Post> Posts { get; set; }
