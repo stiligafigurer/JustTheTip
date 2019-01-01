@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace JustTheTip.Models
-{
+namespace JustTheTip.Models {
     public class User_Interest
     {
-        public virtual User User { get; set; }
-        public virtual Interest Interest { get; set; }
+        [Key]
+        public virtual User UserID { get; set; }
+        [Key]
+        public virtual Interest InterestID { get; set; }
     }
 }
