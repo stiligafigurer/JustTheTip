@@ -12,16 +12,19 @@ namespace JustTheTip.Models {
         public virtual string Email { get; set; }
         [Required, DataType(DataType.Password)]
         public virtual string Password { get; set; }
-        [Required]
+        [Required, Display(Name = "First name")]
         public virtual string FirstName { get; set; }
-        [Required]
+        [Required, Display(Name = "Last name")]
         public virtual string LastName { get; set; }
         [Required]
         public virtual string Gender { get; set; }
+        [Required, Display(Name = "Sexual orientation")]
         public virtual string SexualOrientation { get; set; }
+        [Required, DataType(DataType.Date), Display(Name = "Date of birth")]
         public virtual DateTime BirthDate { get; set; }
-        [DataType(DataType.ImageUrl)]
+        [DataType(DataType.ImageUrl), Display(Name = "Profile picture (url)")]
         public virtual string ProfilePicUrl { get; set; }
+        [Display(Name = "Zodiac sign")]
         public virtual string ZodiacSign { get; set; }
         public virtual string Country { get; set; }
         public virtual string District { get; set; }
