@@ -9,7 +9,6 @@ namespace JustTheTip.DAL {
         protected override void Seed(JTTContext context) {
             var users = new List<User> {
                 new User {
-                    Username ="racar",
                     Password ="racar",
                     FirstName ="Rasmus",
                     LastName ="Carlsson",
@@ -23,7 +22,6 @@ namespace JustTheTip.DAL {
                     District ="Örebro",
                     ActiveUser = 1
                 }, new User {
-                    Username ="ivahl",
                     Password ="ivahl",
                     FirstName ="Ivan",
                     LastName ="Ahlblom",
@@ -37,7 +35,6 @@ namespace JustTheTip.DAL {
                     District ="Örebro",
                     ActiveUser = 1
                 }, new User {
-                    Username ="johol",
                     Password ="johol",
                     FirstName ="Josef",
                     LastName ="Holmberg",
@@ -49,7 +46,7 @@ namespace JustTheTip.DAL {
                     ZodiacSign ="Unknown",
                     Country ="Sweden",
                     District ="Örebro",
-                    ActiveUser = 1
+                    ActiveUser = 0
                 }
             };
 
