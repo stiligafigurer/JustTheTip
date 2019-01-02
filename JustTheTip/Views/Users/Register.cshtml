@@ -4,7 +4,7 @@
     ViewBag.Title = "Register";
 }
 
-<h2>Test</h2>
+<h2>Register</h2>
 
 
 @using (Html.BeginForm()) 
@@ -52,7 +52,7 @@
         @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @*@Html.EditorFor(model => model.Gender, new { htmlAttributes = new { @class = "form-control" } })*@
-            @Html.DropDownList("GenderList", new SelectList(ViewBag.GenderList), new { @class = "form-control" })
+            @Html.DropDownListFor(model => model.Gender, new SelectList(ViewBag.GenderList), new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -85,7 +85,7 @@
         @Html.LabelFor(model => model.ZodiacSign, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @*@Html.EditorFor(model => model.ZodiacSign, new { htmlAttributes = new { @class = "form-control" } })*@
-            @Html.DropDownList("ZodiacList", new SelectList(ViewBag.ZodiacList), new { @class = "form-control" })
+            @Html.DropDownListFor(model => model.ZodiacSign, new SelectList(ViewBag.ZodiacList), new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.ZodiacSign, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -94,7 +94,7 @@
         @Html.LabelFor(model => model.Country, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @*@Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "form-control" } })*@
-            @Html.DropDownList("CountryList", new SelectList(ViewBag.CountryList), new { @class = "form-control" })
+            @Html.DropDownListFor(model => model.Country, new SelectList(ViewBag.CountryList), new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
         </div>
     </div>
