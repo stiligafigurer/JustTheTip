@@ -3,8 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JustTheTip.Models {
     public class Interest {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Key]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public virtual int InterestID { get; set; }
         public virtual string Description { get; set; }
     }

@@ -47,7 +47,7 @@ namespace JustTheTip.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserID,Username,Password,FirstName,LastName,Email,Gender,SexualOrientation,BirthDate,ProfilePicUrl,ZodiacSign,Country,District,ActiveUser")] User user)
+        public ActionResult Create([Bind(Include = "UserID,Password,FirstName,LastName,Email,Gender,SexualOrientation,BirthDate,ProfilePicUrl,ZodiacSign,Country,District,ActiveUser")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +79,7 @@ namespace JustTheTip.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UserID,Username,Password,FirstName,LastName,Email,Gender,SexualOrientation,BirthDate,ProfilePicUrl,ZodiacSign,Country,District,ActiveUser")] User user)
+        public ActionResult Edit([Bind(Include = "UserID,Password,FirstName,LastName,Email,Gender,SexualOrientation,BirthDate,ProfilePicUrl,ZodiacSign,Country,District,ActiveUser")] User user)
         {
             if (ModelState.IsValid)
             {
