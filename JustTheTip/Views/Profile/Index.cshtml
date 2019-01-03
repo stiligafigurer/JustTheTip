@@ -17,8 +17,8 @@
         <img class="img-circle " height="200" width="300" src="https://makehimyours.com.au/wp-content/uploads/2016/11/Depositphotos_9830876_l-2015Optimised.jpg" />
     </div>
     <div class="col-md-4 ">
-        <h1>Poster</h1>
-        <table class="table table-striped table-bordered table-hover table-dark">
+        <h1>Messages</h1>
+        <table id="message_table" class="table table-striped table-bordered table-hover table-dark">
             <thead style="background-color: lightblue">
                 <tr>
                     <th scope="col">#</th>
@@ -35,12 +35,12 @@
         </table>
     </div>
     <div class="col-md-4">
-        <h1>Vänner</h1>
-        <table class=" table table-striped table-bordered table-bordered">
+        <h1>Friends</h1>
+        <table id="friends_table" class=" table table-striped table-bordered table-bordered">
             <thead style="background-color: lightblue">
                 <tr>
                     <th scope="col">Name</th>
-                    <th scope="col">Kategori</th>
+                    <th scope="col">Category</th>
                 </tr>
             </thead>
             <tbody>
@@ -61,6 +61,57 @@
     </div>
 </div>
 <div class="row">
+
+    <div class="row">
+        <div class="col-md-4">
+            <h1>Profile</h1>
+
+            <table id="profile_table" class=" table table-striped table-bordered table-bordered">
+                <tr>
+                    <th class="col-md-2" scope="col" style="background-color: lightblue">Name</th>
+                    <td class="col-md-3">Ulla</td>
+                </tr>
+                <tr>
+                    <th scope="col" style="background-color: lightblue">Gender</th>
+                    <td>Woman</td>
+                </tr>
+                <tr>
+                    <th scope="col" style="background-color: lightblue">Age</th>
+                    <td>25</td>
+                </tr>
+                <tr>
+                    <th scope="col" style="background-color: lightblue">Zodiac</th>
+                    <td>Capricorn</td>
+                </tr>
+                <tr>
+                    <th scope="col" style="background-color: lightblue">Sexual Orientation</th>
+                    <td>Straight</td>
+                </tr>
+                <tr>
+                    <th scope="col" style="background-color: lightblue">City</th>
+                    <td>Kiruna, Sweden</td>
+                </tr>
+            </table>
+
+        </div>
+        <div class="col-md-4 col-md-offset-4">
+            <h1>Interests</h1>
+
+            <table id="interests_table" class=" table table-striped table-bordered table-bordered">
+                <thead style="background-color: lightblue">
+                    <tr><th>My interests:</th></tr>
+                    </thead>
+                <tbody>
+                    <tr>
+                        <td class="col-md-3">Eat</td>
+                    </tr>
+                    <tr><td>Eat more</td></tr>
+                    <tr><td>Knitting</td></tr>
+                    <tr><td>Crosswords</td></tr>
+                    </tbody>
+</table>
+        </div>
+    </div>
     
     <div class="row">
         @Html.ActionLink("Ragga", "Friends", null, new { @class = "btn btn-primary" })
