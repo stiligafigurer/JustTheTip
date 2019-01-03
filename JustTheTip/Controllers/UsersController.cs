@@ -43,6 +43,7 @@ namespace JustTheTip.Controllers {
         [ValidateAntiForgeryToken]
         public ActionResult Register([Bind(Include = "UserID,Password,FirstName,LastName,Email,Gender,SexualOrientation,BirthDate,ProfilePicUrl,ZodiacSign,Country,District,ActiveUser")] User user) {
             if (ModelState.IsValid) {
+                user.ActiveUser = 1;
                 db.Users.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Index");
