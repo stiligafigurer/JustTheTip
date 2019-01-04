@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 
 namespace JustTheTip.Models {
-    public class ProfileModel
+    public class UserModel
     {
         [Key]
         public virtual string UserId { get; set; }
@@ -17,21 +17,20 @@ namespace JustTheTip.Models {
         [Required, Display(Name = "Sexual orientation")]
         public virtual string SexualOrientation { get; set; }
         [Required, DataType(DataType.Date), Display(Name = "Date of birth")]
-        public virtual DateTime BirthDate { get; set; }
+        public virtual DateTime? BirthDate { get; set; }
         [DataType(DataType.ImageUrl), Display(Name = "Profile picture (url)")]
         public virtual string ProfilePicUrl { get; set; }
         [Display(Name = "Zodiac sign")]
         public virtual string ZodiacSign { get; set; }
         public virtual string Country { get; set; }
         //ActiveUser 1 = true, 0 = false
-        public virtual int ActiveUser { get; set; }
-
-        public virtual ICollection<ProfileModel> FriendRequests { get; set; }
+        public virtual int? ActiveUser { get; set; }
     }
 
-    public class ProfileDbContext : DbContext {
-        public DbSet<ProfileModel> Profiles { get; set; }
+    public class UserDbContext : DbContext {
+        public DbSet<UserModel> Users { get; set; }
+        public DbSet<FriendsModel> Friends { get; set; }
 
-        public ProfileDbContext() : base("JustTheTip") { }
+        public UserDbContext() : base("JustTheTip") { }
     }
 }

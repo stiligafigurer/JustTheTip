@@ -1,4 +1,4 @@
-﻿@model JustTheTip.Models.ProfileModel
+﻿@model JustTheTip.Models.UserModel
 
 @{
     ViewBag.Title = "Edit";
@@ -6,12 +6,12 @@
 
 <h2>Edit</h2>
 
-@using (Html.BeginForm("Edit", "Profile"))
+@using (Html.BeginForm("Edit", "User"))
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>ProfileModel</h4>
+        <h4>UserModel</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.UserId)
