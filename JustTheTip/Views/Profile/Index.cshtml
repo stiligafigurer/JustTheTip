@@ -1,0 +1,12 @@
+﻿@model JustTheTip.Models.ProfileModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+@Model.BirthDate
+<div>
+    @Html.Partial("Edit")
+</div>
+
