@@ -11,6 +11,7 @@ using Microsoft.Owin.Security;
 using JustTheTip.Models;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace JustTheTip.Controllers {
     [Authorize]
@@ -121,6 +122,53 @@ namespace JustTheTip.Controllers {
         // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register() {
+
+            // Add CountryList to ViewBag
+            var countries = new List<string>();
+            CultureInfo[] cInfoList = CultureInfo.GetCultures(CultureTypes.SpecificCultures);
+            foreach (var cInfo in cInfoList) {
+                var r = new RegionInfo(cInfo.LCID);
+                if (!(countries.Contains(r.EnglishName))) {
+                    countries.Add(r.EnglishName);
+                }
+            }
+            countries.Sort();
+            ViewBag.CountryList = countries;
+
+            // Add ZodiacList to ViewBag
+            var zodiacList = new List<string> {
+                "Aries",
+                "Taurus",
+                "Gemini",
+                "Cancer",
+                "Leo",
+                "Virgo",
+                "Libra",
+                "Scorpio",
+                "Sagittarius",
+                "Capricorn",
+                "Aquarius",
+                "Pisces"
+            };
+            ViewBag.ZodiacList = zodiacList;
+
+            // Add GenderList to ViewBag
+            var genderList = new List<string> {
+                "Female",
+                "Male",
+                "Other"
+            };
+            ViewBag.GenderList = genderList;
+
+            // Add SexOrList to ViewBag
+            var sexOrList = new List<string> {
+                "Bisexual",
+                "Homosexual",
+                "Heterosexual",
+                "Other"
+            };
+            ViewBag.SexOrList = sexOrList;
+
             return View();
         }
 
