@@ -163,8 +163,8 @@ namespace JustTheTip.Controllers {
             // Add SexOrList to ViewBag
             var sexOrList = new List<string> {
                 "Bisexual",
-                "Homosexual",
                 "Heterosexual",
+                "Homosexual",
                 "Other"
             };
             ViewBag.SexOrList = sexOrList;
