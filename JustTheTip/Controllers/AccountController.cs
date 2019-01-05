@@ -179,6 +179,10 @@ namespace JustTheTip.Controllers {
             }
 
             // If we got this far, something failed, redisplay form
+            ViewBag.CountryList = GetList.Countries();
+            ViewBag.ZodiacList = GetList.ZodiacSigns();
+            ViewBag.GenderList = GetList.Genders();
+            ViewBag.SexOrList = GetList.SexualOrientations();
             return View(model);
         }
 
