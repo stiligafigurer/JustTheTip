@@ -16,7 +16,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
-                    
+
                 </button>
                 <a href="#" class="navbar-left"><img src="..\Pictures\Icon.png" height="50" width="50" /></a>
                 @Html.ActionLink("Just The Tip", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
@@ -25,7 +25,9 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Users", "Index", "User")</li>
+                    @if (Request.IsAuthenticated) {
+                        <li>@Html.ActionLink("Settings", "Index", "User")</li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

@@ -5,8 +5,7 @@
 
 <h2>@ViewBag.Title.</h2>
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
     @Html.AntiForgeryToken()
     <h4>Create a new account.</h4>
     <hr />
@@ -14,19 +13,71 @@
     <div class="form-group">
         @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @id = "email" })
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "email@email.com" })
         </div>
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @id = "password" })
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "password" })
         </div>
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @id = "cpassword" })
+            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "confirm password" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @placeholder = "first name" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @placeholder = "last name" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Gender, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownList("Gender", new SelectList(ViewBag.GenderList),
+            "— Choose one —", new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.SexualOrientation, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownList("SexualOrientation", new SelectList(ViewBag.SexOrList),
+            "— Choose one —", new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.BirthDate, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.EditorFor(m => m.BirthDate, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ProfilePicUrl, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.ProfilePicUrl, new { @class = "form-control", @placeholder = "https://justthetip.com/image.png/" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ZodiacSign, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownList("ZodiacSign", new SelectList(ViewBag.ZodiacList),
+            "— Choose one —", new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Country, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownList("CountryList", new SelectList(ViewBag.CountryList),
+            "— Choose one —", new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">

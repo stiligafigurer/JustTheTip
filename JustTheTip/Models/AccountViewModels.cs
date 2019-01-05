@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace JustTheTip.Models
@@ -79,6 +80,24 @@ namespace JustTheTip.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+        [Required, Display(Name = "First name")]
+        public virtual string FirstName { get; set; }
+        [Required, Display(Name = "Last name")]
+        public virtual string LastName { get; set; }
+        [Required]
+        public virtual string Gender { get; set; }
+        [Required, Display(Name = "Sexual orientation")]
+        public virtual string SexualOrientation { get; set; }
+        [Required, DataType(DataType.Date), Display(Name = "Date of birth")]
+        public virtual DateTime? BirthDate { get; set; }
+        [Required, DataType(DataType.ImageUrl), Display(Name = "Profile picture (url)")]
+        public virtual string ProfilePicUrl { get; set; }
+        [Required, Display(Name = "Zodiac sign")]
+        public virtual string ZodiacSign { get; set; }
+        [Required]
+        public virtual string Country { get; set; }
+        //ActiveUser 1 = true, 0 = false
+        public virtual int? ActiveUser { get; set; }
     }
 
     public class ResetPasswordViewModel
