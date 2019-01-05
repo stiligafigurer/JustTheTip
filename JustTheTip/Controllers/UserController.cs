@@ -1,5 +1,7 @@
 ﻿using JustTheTip.Models;
 using Microsoft.AspNet.Identity;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -12,12 +14,17 @@ namespace JustTheTip.Controllers {
             var userId = User.Identity.GetUserId();
             var currentUser = userContext.Users.FirstOrDefault(u => u.UserId == userId);
 
+            ViewBag.CountryList = GetList.Countries();
+            ViewBag.ZodiacList = GetList.ZodiacSigns();
+            ViewBag.GenderList = GetList.Genders();
+            ViewBag.SexOrList = GetList.SexualOrientations();
+
             return View(new UserModel {
                 FirstName = currentUser?.FirstName,
                 LastName = currentUser?.LastName,
                 Gender = currentUser?.Gender,
                 SexualOrientation = currentUser?.SexualOrientation,
-                BirthDate = currentUser?.BirthDate.Value,
+                BirthDate = (System.DateTime) currentUser?.BirthDate,
                 ProfilePicUrl = currentUser?.ProfilePicUrl,
                 ZodiacSign = currentUser?.ZodiacSign,
                 Country = currentUser?.Country,
@@ -51,13 +58,26 @@ namespace JustTheTip.Controllers {
                 currentUser.LastName = model.LastName;
                 currentUser.Gender = model.Gender;
                 currentUser.SexualOrientation = model.SexualOrientation;
-                currentUser.BirthDate = model.BirthDate;
+                currentUser.BirthDate = model.BirthDate.Value;
                 currentUser.ProfilePicUrl = model.ProfilePicUrl;
                 currentUser.ZodiacSign = model.ZodiacSign;
                 currentUser.Country = model.Country;
                 currentUser.ActiveUser = model.ActiveUser;
             }
-            userContext.SaveChanges();
+            try {
+                userContext.SaveChanges();
+            } catch (DbEntityValidationException e) {
+                foreach (var eve in e.EntityValidationErrors) {
+                    Debug.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors) {
+                        Debug.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+            } catch (System.Data.Entity.Infrastructure.DbUpdateException e) {
+                Debug.WriteLine(e);
+            }
 
             return RedirectToAction("Index", "User");
         }

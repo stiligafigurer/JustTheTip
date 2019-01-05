@@ -18,6 +18,10 @@ namespace JustTheTip.Models {
         [Required, Display(Name = "Sexual orientation")]
         public virtual string SexualOrientation { get; set; }
         [Required, DataType(DataType.Date), Display(Name = "Date of birth")]
+        //[RangeUntilEighteen(ErrorMessage = "Please enter a valid year")]
+        [Range(typeof(DateTime), "1/2/1919", "3/4/2001",
+        ErrorMessage = "Value for {0} must be between {1} and {2}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public virtual DateTime? BirthDate { get; set; }
         [Required, DataType(DataType.ImageUrl), Display(Name = "Profile picture (url)")]
         public virtual string ProfilePicUrl { get; set; }

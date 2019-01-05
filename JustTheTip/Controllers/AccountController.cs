@@ -118,57 +118,13 @@ namespace JustTheTip.Controllers {
             }
         }
 
-        //
         // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register() {
-
-            // Add CountryList to ViewBag
-            var countries = new List<string>();
-            CultureInfo[] cInfoList = CultureInfo.GetCultures(CultureTypes.SpecificCultures);
-            foreach (var cInfo in cInfoList) {
-                var r = new RegionInfo(cInfo.LCID);
-                if (!(countries.Contains(r.EnglishName))) {
-                    countries.Add(r.EnglishName);
-                }
-            }
-            countries.Sort();
-            ViewBag.CountryList = countries;
-
-            // Add ZodiacList to ViewBag
-            var zodiacList = new List<string> {
-                "Aries",
-                "Taurus",
-                "Gemini",
-                "Cancer",
-                "Leo",
-                "Virgo",
-                "Libra",
-                "Scorpio",
-                "Sagittarius",
-                "Capricorn",
-                "Aquarius",
-                "Pisces"
-            };
-            ViewBag.ZodiacList = zodiacList;
-
-            // Add GenderList to ViewBag
-            var genderList = new List<string> {
-                "Female",
-                "Male",
-                "Other"
-            };
-            ViewBag.GenderList = genderList;
-
-            // Add SexOrList to ViewBag
-            var sexOrList = new List<string> {
-                "Bisexual",
-                "Heterosexual",
-                "Homosexual",
-                "Other"
-            };
-            ViewBag.SexOrList = sexOrList;
-
+            ViewBag.CountryList = GetList.Countries();
+            ViewBag.ZodiacList = GetList.ZodiacSigns();
+            ViewBag.GenderList = GetList.Genders();
+            ViewBag.SexOrList = GetList.SexualOrientations();
             return View();
         }
 
@@ -184,9 +140,9 @@ namespace JustTheTip.Controllers {
                 if (result.Succeeded) {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-                    var profileContext = new UserDbContext();
+                    var userContext = new UserDbContext();
                     var userId = SignInManager.AuthenticationManager.AuthenticationResponseGrant.Identity.GetUserId();
-                    profileContext.Users.Add(new UserModel {
+                    userContext.Users.Add(new UserModel {
                         UserId = userId,
                         FirstName = model.FirstName,
                         LastName = model.LastName,
@@ -200,7 +156,7 @@ namespace JustTheTip.Controllers {
                     });
 
                     try {
-                        profileContext.SaveChanges();
+                        userContext.SaveChanges();
                     } catch (DbEntityValidationException e) {
                         foreach (var eve in e.EntityValidationErrors) {
                             Debug.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
