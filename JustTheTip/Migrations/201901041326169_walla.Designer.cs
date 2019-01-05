@@ -7,13 +7,13 @@ namespace JustTheTip.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class UpdateDb : IMigrationMetadata
+    public sealed partial class walla : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdateDb));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(walla));
         
         string IMigrationMetadata.Id
         {
-            get { return "201901041247145_UpdateDb"; }
+            get { return "201901041326169_walla"; }
         }
         
         string IMigrationMetadata.Source
