@@ -29,6 +29,24 @@
                         <li>@Html.ActionLink("Settings", "Index", "User")</li>
                     }
                 </ul>
+                <a  href='@Url.Action("Friends", "Profile")'>
+                    <img onclick=hejsan() id="newfriend" class="nav navbar-nav" src='@Url.Content("~/Pictures/friend.png")' height="40" width="40"/>
+                </a>
+                <style>
+                    .svartvit {
+                        filter: gray; /* IE6-9 */
+                        --webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
+                        filter: grayscale(1); /**Edge FF 35+*/
+                    }
+                </style>
+                <script>
+                        function hejsan() {
+                            $("#newfriend").addClass("svartvit");
+                            //$(".svartvit").hide();
+                        } 
+                </script>
+                
+
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
