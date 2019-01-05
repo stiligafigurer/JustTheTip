@@ -39,7 +39,18 @@
         </table>
     </div>
     <div class="col-md-4">
-        <h1>Friends</h1>
+        <button onclick=friendcount()>Test</button>
+        <script>
+            //Måste fixa så att den hamnar direkt på onload istället för button
+            function friendcount() {
+                var rows = $('#friends_table >tbody >tr').length;
+                $("#fcbadge").text(rows);
+            };
+        </script>
+        <h1>Friends <span onload=testa() id="fcbadge" class="label label-success"> </span></h1>
+
+
+
         <table id="friends_table" class=" table table-striped table-bordered table-bordered">
             <thead style="background-color: lightblue">
                 <tr>
