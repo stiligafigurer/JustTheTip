@@ -202,9 +202,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201901041247145_UpdateDb.cs" />
-    <Compile Include="Migrations\201901041247145_UpdateDb.Designer.cs">
-      <DependentUpon>201901041247145_UpdateDb.cs</DependentUpon>
+    <Compile Include="Migrations\201901041326169_walla.cs" />
+    <Compile Include="Migrations\201901041326169_walla.Designer.cs">
+      <DependentUpon>201901041326169_walla.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -300,8 +300,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201901041247145_UpdateDb.resx">
-      <DependentUpon>201901041247145_UpdateDb.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201901041326169_walla.resx">
+      <DependentUpon>201901041326169_walla.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
