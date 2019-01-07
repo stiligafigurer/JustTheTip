@@ -206,6 +206,10 @@
     <Compile Include="Migrations\201901051527364_UpdateDb.Designer.cs">
       <DependentUpon>201901051527364_UpdateDb.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901071001089_walla2.cs" />
+    <Compile Include="Migrations\201901071001089_walla2.Designer.cs">
+      <DependentUpon>201901071001089_walla2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AttributeExtensions.cs" />
@@ -213,6 +217,7 @@
     <Compile Include="Models\GetList.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\ProfileViewModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\Validate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -303,6 +308,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201901051527364_UpdateDb.resx">
       <DependentUpon>201901051527364_UpdateDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901071001089_walla2.resx">
+      <DependentUpon>201901071001089_walla2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
