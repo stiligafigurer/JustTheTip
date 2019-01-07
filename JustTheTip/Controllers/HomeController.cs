@@ -10,7 +10,13 @@ namespace JustTheTip.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            if(Request.IsAuthenticated) {
+                return RedirectToAction("Index_Loggedin", "Home");
+            } else
+            {
+                return View();
+            }
+
         }
         
         public ActionResult About()
@@ -24,6 +30,11 @@ namespace JustTheTip.Controllers
         {
             ViewBag.Message = "Your contact page.";
 
+            return View();
+        }
+        [Authorize]
+        public ActionResult Index_LoggedIn()
+        {
             return View();
         }
     }

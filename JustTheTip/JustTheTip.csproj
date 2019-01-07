@@ -229,6 +229,7 @@
     <Compile Include="Models\InterestsModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PostModel.cs" />
+    <Compile Include="Models\ProfileViewModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\VisitorsModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -298,8 +299,10 @@
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
+    <Content Include="Views\Home\Index_LoggedIn.cshtml" />
     <Content Include="Views\User\All.cshtml" />
     <Content Include="Views\Friends\Index.cshtml" />
+    <Content Include="Views\User\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
