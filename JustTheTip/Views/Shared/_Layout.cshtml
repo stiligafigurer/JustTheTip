@@ -6,7 +6,8 @@
     <title>@ViewBag.Title - JustTheTip</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+          crossorigin="anonymous">
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -25,27 +26,34 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
-                    @if (Request.IsAuthenticated) {
+                    @if (Request.IsAuthenticated)
+                    {
                         <li>@Html.ActionLink("Settings", "Index", "User")</li>
                     }
                 </ul>
-                <a  href='@Url.Action("Friends", "Profile")'>
-                    <img onclick=hejsan() id="newfriend" class="nav navbar-nav" src='@Url.Content("~/Pictures/friend.png")' height="40" width="40"/>
-                </a>
-                <style>
-                    .svartvit {
-                        filter: gray; /* IE6-9 */
-                        --webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
-                        filter: grayscale(1); /**Edge FF 35+*/
+
+                <div class="navbar-header">
+                    @*Fixa rätt länk till knappen*@
+                    @* Knappen ska döljas och bara visas när det finns en vänförfrågan. *@
+                <button class="btn-navbar" title="You have a new friend request!" onclick="location.href='@Url.Action("Index", "Profile")'"><i id="friendnavbaricon" class="fas fa-user-plus"></i></button>
+                </div>
+                    <style>
+                    .btn-navbar {
+                        padding-top: 7px;
+                        border: none;
+                        color: limegreen; /*Kan ta bort senare, färgen aktiveras i jquery*/
+                        background-color: transparent;
+                        /*display:none;*/
+                    }
+                    .fa-user-plus {
+                        font-size: 35px;
+                    }
+                    .btn-navbar:hover {
+                        color: darkslategray;
                     }
                 </style>
-                <script>
-                        function hejsan() {
-                            $("#newfriend").addClass("svartvit");
-                            //$(".svartvit").hide();
-                        } 
-                </script>
-                
+
+
 
                 @Html.Partial("_LoginPartial")
             </div>

@@ -26,5 +26,10 @@ namespace JustTheTip.Controllers
 
             return View();
         }
+
+        public ActionResult Index_LoggedIn()
+        {
+            return View();
+        }
     }
 }

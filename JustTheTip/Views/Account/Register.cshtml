@@ -76,7 +76,7 @@
     <div class="form-group">
         @Html.LabelFor(m => m.Country, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.DropDownList("CountryList", new SelectList(ViewBag.CountryList),
+            @Html.DropDownList("Country", new SelectList(ViewBag.CountryList),
             "— Choose one —", new { @class = "form-control" })
         </div>
     </div>
