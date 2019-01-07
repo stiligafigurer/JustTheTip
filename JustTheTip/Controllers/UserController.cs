@@ -94,13 +94,21 @@ namespace JustTheTip.Controllers {
             var userId = User.Identity.GetUserId();
             var currentUser = userContext.Users.FirstOrDefault(u => u.UserId == userId);
 
-            var friendsContext = new FriendsDbContext();
-            friendsContext.Friends.Add(new FriendsModel {
+            //var friendsContext = new FriendsDbContext();
+            //friendsContext.Friends.Add(new FriendsModel {
+            //    UserId = userId,
+            //    FriendId = id,
+            //    Category = "Friend"
+            //});
+            //friendsContext.SaveChanges();
+
+            var requestsContext = new FriendRequestDbContext();
+            requestsContext.FriendRequests.Add(new FriendRequestModel {
                 UserId = userId,
                 FriendId = id,
-                Category = "Friend"
+                Seen = false
             });
-            friendsContext.SaveChanges();
+            requestsContext.SaveChanges();
 
             return RedirectToAction("All", "User");
         }

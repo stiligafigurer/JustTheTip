@@ -1,0 +1,44 @@
+﻿@model IEnumerable<JustTheTip.Models.FriendsViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ProfilePicUrl)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FullName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BirthYear)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            <img src="@Html.DisplayFor(modelItem => item.ProfilePicUrl)" alt="No image" style="max-height: 50px; max-width: 50px;" />
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FullName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BirthYear)
+        </td>
+        <td>
+            @Html.ActionLink("Accept", "Accept", new { id=item.UserId }) |
+            @Html.ActionLink("Ignore", "Remove", new { id=item.UserId })
+        </td>
+    </tr>
+}
+
+</table>

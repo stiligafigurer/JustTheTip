@@ -13,7 +13,6 @@ namespace JustTheTip.Models {
         public virtual UserModel Friend { get; set; }
 
         public virtual string Category { get; set; }
-
     }
 
     public class FriendsDbContext : DbContext {
