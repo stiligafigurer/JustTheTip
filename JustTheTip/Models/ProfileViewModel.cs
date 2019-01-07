@@ -15,6 +15,6 @@ namespace JustTheTip.Models
         public DateTime? BirthDate { get; set; }
         public string ZodiacSign { get; set; }
         public string ProfilePicUrl { get; set; }
-        public List<UserModel> Friends { get; set; } 
+        public Dictionary<UserModel, string> Friends { get; set; } 
     }
 }

@@ -20,10 +20,10 @@ namespace JustTheTip.Controllers
             var friendContext = new FriendsDbContext();
             var user = userContext.Users.FirstOrDefault(u => u.UserId == userId);
             List<FriendsModel> friendList = friendContext.Friends.Where(f => f.UserId == userId).ToList();
-            var UserList = new List<UserModel>();
+            var UserDict = new Dictionary<UserModel, string>();
             foreach(var item in friendList)
             {
-                UserList.Add(userContext.Users.FirstOrDefault(u => u.UserId == item.FriendId));
+                UserDict.Add(userContext.Users.FirstOrDefault(u => u.UserId == item.FriendId), item.Category);
             }
 
             model.FirstName = user.FirstName;
@@ -34,7 +34,7 @@ namespace JustTheTip.Controllers
             model.ProfilePicUrl = user.ProfilePicUrl;
             model.BirthDate = user.BirthDate;
             model.Country = user.Country;
-            model.Friends = UserList;
+            model.Friends = UserDict;
 
             return View(model);
         }
