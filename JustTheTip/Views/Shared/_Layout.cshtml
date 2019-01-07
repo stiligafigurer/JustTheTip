@@ -16,15 +16,37 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
+
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <a href="#" class="navbar-left"><img src="..\Pictures\Icon.png" height="50" width="50" /></a>
+                @Html.ActionLink("Just The Tip", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Users", "Index", "Users")</li>
+                    @if (Request.IsAuthenticated) {
+                        <li>@Html.ActionLink("Settings", "Index", "User")</li>
+                    }
                 </ul>
+                <a  href='@Url.Action("Friends", "Profile")'>
+                    <img onclick=hejsan() id="newfriend" class="nav navbar-nav" src='@Url.Content("~/Pictures/friend.png")' height="40" width="40"/>
+                </a>
+                <style>
+                    .svartvit {
+                        filter: gray; /* IE6-9 */
+                        --webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
+                        filter: grayscale(1); /**Edge FF 35+*/
+                    }
+                </style>
+                <script>
+                        function hejsan() {
+                            $("#newfriend").addClass("svartvit");
+                            //$(".svartvit").hide();
+                        } 
+                </script>
+                
+
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
@@ -33,7 +55,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - JustTheTip</p>
+            <p class="navbar-fixed-bottom">&copy; @DateTime.Now.Year - JustTheTip&#8482;</p>
         </footer>
     </div>
 

@@ -1,0 +1,44 @@
+﻿
+@model JustTheTip.Models.FriendCategory
+
+@{
+    ViewBag.Title = "Friends";
+}
+
+<h2>Ey, grattis! Skiten funkar!</h2>
+<div class="row">
+    <div class="col-md-10">
+        <h1>Vänner</h1>
+        <table id="friends table" class=" table table-striped table-bordered table-bordered">
+            <thead style="background-color: lightblue">
+                <tr>
+                    <th scope="col" class="col-md-2 col-sm-2 col-xs-2" >Profile Picture</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Message</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><img src="https://images.cdn.yle.fi/image/upload/f_auto,fl_progressive/q_88/w_1600,h_900,c_crop,x_0,y_0/w_1200/v1464516465/14-svyle-289622574abf4fecb6f.jpg" class="img-circle img-responsive" /></td>
+                    <td>Ivan A</td>
+                    <td>Stalkers</td>
+                    <td> @Html.ActionLink("Send message!", "Friends", null, new { @class = "btn btn-primary" })</td>
+                </tr>
+                <tr>
+                    <td><img src="https://images.cdn.yle.fi/image/upload/f_auto,fl_progressive/q_88/w_1600,h_900,c_crop,x_0,y_0/w_1200/v1464516465/14-svyle-289622574abf4fecb6f.jpg" class="img-circle img-responsive" /></td>
+                    <td>Josef H</td>
+                    <td>Friendzone</td>
+                    <td> @Html.ActionLink("Send message!", "Friends", null, new { @class = "btn btn-primary" })</td>
+                </tr>
+                <tr>
+                    <td><img src="https://images.cdn.yle.fi/image/upload/f_auto,fl_progressive/q_88/w_1600,h_900,c_crop,x_0,y_0/w_1200/v1464516465/14-svyle-289622574abf4fecb6f.jpg" class="img-circle img-responsive" /></td>
+                    <td>Rasmus C</td>
+                    <td>Toyboy</td>
+                    <td> @Html.ActionLink("Send message!", "Friends", null, new { @class = "btn btn-primary" })</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+

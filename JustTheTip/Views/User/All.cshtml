@@ -1,10 +1,10 @@
-﻿@model IEnumerable<JustTheTip.Models.User>
+﻿@model IEnumerable<JustTheTip.Models.UserModel>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "All";
 }
 
-<h2>Index</h2>
+<h2>All</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -18,17 +18,13 @@
             @Html.DisplayNameFor(model => model.LastName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Gender)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.SexualOrientation)
         </th>
         <th>
-            @*@Html.DisplayNameFor(model => model.BirthDate)*@
-            Born
+            @Html.DisplayNameFor(model => model.BirthDate)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.ProfilePicUrl)
@@ -40,12 +36,12 @@
             @Html.DisplayNameFor(model => model.Country)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.District)
+            @Html.DisplayNameFor(model => model.ActiveUser)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model.Where(u => u.ActiveUser == 1)) {
+@foreach (var item in Model) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.FirstName)
@@ -54,19 +50,16 @@
             @Html.DisplayFor(modelItem => item.LastName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Gender)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.SexualOrientation)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.BirthDate.Year)
+            @Html.DisplayFor(modelItem => item.BirthDate)
         </td>
         <td>
-            <img src="@Html.DisplayFor(modelItem => item.ProfilePicUrl)" style="width: 30px; height: 30px;"/>
+            @Html.DisplayFor(modelItem => item.ProfilePicUrl)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ZodiacSign)
@@ -75,12 +68,13 @@
             @Html.DisplayFor(modelItem => item.Country)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.District)
+            @Html.DisplayFor(modelItem => item.ActiveUser)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.UserID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.UserID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.UserID })
+            @Html.ActionLink("Edit", "Edit", new { id=item.UserId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.UserId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.UserId }) |
+            @Html.ActionLink("Add", "Add", new { id = item.UserId })
         </td>
     </tr>
 }
