@@ -202,9 +202,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201901041326169_walla.cs" />
-    <Compile Include="Migrations\201901041326169_walla.Designer.cs">
-      <DependentUpon>201901041326169_walla.cs</DependentUpon>
+    <Compile Include="Migrations\201901051527364_UpdateDb.cs" />
+    <Compile Include="Migrations\201901051527364_UpdateDb.Designer.cs">
+      <DependentUpon>201901051527364_UpdateDb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901071001089_walla2.cs" />
+    <Compile Include="Migrations\201901071001089_walla2.Designer.cs">
+      <DependentUpon>201901071001089_walla2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -213,6 +217,7 @@
     <Compile Include="Models\GetList.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\ProfileViewModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\Validate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -283,6 +288,7 @@
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Home\Index_LoggedIn.cshtml" />
+    <Content Include="Views\User\All.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -301,8 +307,11 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201901041326169_walla.resx">
-      <DependentUpon>201901041326169_walla.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201901051527364_UpdateDb.resx">
+      <DependentUpon>201901051527364_UpdateDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901071001089_walla2.resx">
+      <DependentUpon>201901071001089_walla2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
