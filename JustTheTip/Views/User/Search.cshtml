@@ -1,0 +1,12 @@
+﻿@model List<JustTheTip.Models.UserModel>
+
+@{
+    ViewBag.Title = "Search";
+}
+
+<h2>Search</h2>
+<p>@{ foreach(var item in Model)
+    {
+        <p>@item.FirstName </p>
+    }
+        }</p>

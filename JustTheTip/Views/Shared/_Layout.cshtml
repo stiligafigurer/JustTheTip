@@ -35,9 +35,9 @@
                 <div class="navbar-header">
                     @*Fixa rätt länk till knappen*@
                     @* Knappen ska döljas och bara visas när det finns en vänförfrågan. *@
-                <button class="btn-navbar" title="You have a new friend request!" onclick="location.href='@Url.Action("Index", "Profile")'"><i id="friendnavbaricon" class="fas fa-user-plus"></i></button>
+                    <button class="btn-navbar" title="You have a new friend request!" onclick="location.href='@Url.Action("Index", "Profile")'"><i id="friendnavbaricon" class="fas fa-user-plus"></i></button>
                 </div>
-                    <style>
+                <style>
                     .btn-navbar {
                         padding-top: 7px;
                         border: none;
@@ -45,16 +45,28 @@
                         background-color: transparent;
                         /*display:none;*/
                     }
+
                     .fa-user-plus {
                         font-size: 35px;
                     }
+
                     .btn-navbar:hover {
                         color: darkslategray;
                     }
                 </style>
-
-
-
+                <div class="col-sm-3 col-md-3">
+                    <form class="navbar-form" role="search">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search" name="srchterm" id="srchterm" runat="server">
+                            <div class="input-group-btn">,
+                                <a href="@Url.Action("Search", "User", new { query = Request.Form["srchterm"] })" class="btn btn-default">
+                                    <i class="fas fa-search"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
@@ -62,9 +74,6 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer>
-            <p class="navbar-fixed-bottom">&copy; @DateTime.Now.Year - JustTheTip&#8482;</p>
-        </footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")

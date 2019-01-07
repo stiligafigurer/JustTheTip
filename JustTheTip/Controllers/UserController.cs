@@ -104,5 +104,21 @@ namespace JustTheTip.Controllers {
 
             return RedirectToAction("All", "User");
         }
+
+        public ActionResult Search(string srchterm)
+        {
+            if (srchterm == null)
+            {
+                srchterm = "joahn löfven";
+            }
+            string[] nameArr = srchterm.Split(' ');
+            var userContext = new UserDbContext();
+            List<UserModel> validUserList = new List<UserModel>();
+            foreach (var word in nameArr) {
+                validUserList.AddRange(userContext.Users.Where(u => u.FirstName == word).ToList());
+                validUserList.AddRange(userContext.Users.Where(u => u.LastName == word));
+            }
+            return View(validUserList);
+        }
     }
 }
