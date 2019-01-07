@@ -202,13 +202,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201901051527364_UpdateDb.cs" />
-    <Compile Include="Migrations\201901051527364_UpdateDb.Designer.cs">
-      <DependentUpon>201901051527364_UpdateDb.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201901071001089_walla2.cs" />
-    <Compile Include="Migrations\201901071001089_walla2.Designer.cs">
-      <DependentUpon>201901071001089_walla2.cs</DependentUpon>
+    <Compile Include="Migrations\201901071238219_nydb.cs" />
+    <Compile Include="Migrations\201901071238219_nydb.Designer.cs">
+      <DependentUpon>201901071238219_nydb.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -307,11 +303,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201901051527364_UpdateDb.resx">
-      <DependentUpon>201901051527364_UpdateDb.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201901071001089_walla2.resx">
-      <DependentUpon>201901071001089_walla2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201901071238219_nydb.resx">
+      <DependentUpon>201901071238219_nydb.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
