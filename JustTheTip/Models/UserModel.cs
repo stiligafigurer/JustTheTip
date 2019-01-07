@@ -32,7 +32,6 @@ namespace JustTheTip.Models {
 
     public class UserDbContext : DbContext {
         public DbSet<UserModel> Users { get; set; }
-        public DbSet<FriendsModel> Friends { get; set; }
 
         public UserDbContext() : base("JustTheTip") { }
     }
