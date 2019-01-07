@@ -1,5 +1,6 @@
 ﻿using JustTheTip.Models;
 using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
@@ -25,7 +26,7 @@ namespace JustTheTip.Controllers {
                 LastName = currentUser?.LastName,
                 Gender = currentUser?.Gender,
                 SexualOrientation = currentUser?.SexualOrientation,
-                BirthDate = (System.DateTime) currentUser?.BirthDate,
+                BirthDate = (DateTime)currentUser?.BirthDate,
                 ProfilePicUrl = currentUser?.ProfilePicUrl,
                 ZodiacSign = currentUser?.ZodiacSign,
                 Country = currentUser?.Country,
@@ -89,27 +90,34 @@ namespace JustTheTip.Controllers {
             return View(users);
         }
 
+        // TODO: Move this action to ProfileController when it's done
         public ActionResult Add(string id) {
             var userContext = new UserDbContext();
-            var userId = User.Identity.GetUserId();
-            var currentUser = userContext.Users.FirstOrDefault(u => u.UserId == userId);
-
-            //var friendsContext = new FriendsDbContext();
-            //friendsContext.Friends.Add(new FriendsModel {
-            //    UserId = userId,
-            //    FriendId = id,
-            //    Category = "Friend"
-            //});
-            //friendsContext.SaveChanges();
-
+            var friendsContext = new FriendsDbContext();
             var requestsContext = new FriendRequestDbContext();
-            requestsContext.FriendRequests.Add(new FriendRequestModel {
-                UserId = userId,
-                FriendId = id,
-                Seen = false
-            });
-            requestsContext.SaveChanges();
+            var userId = User.Identity.GetUserId();
 
+            // Check that the sender hasn't already sent a request
+            var sentRequest = requestsContext.FriendRequests.Where(u => u.UserId == userId && u.FriendId == id);
+            if (sentRequest.Count() == 0) {
+                // Check that the recipient hasn't already sent a request (redirect to requests page if they have)
+                var receivedRequest = requestsContext.FriendRequests.Where(u => u.UserId == id && u.FriendId == userId);
+                if (receivedRequest.Count() == 0) {
+                    // Check that the users aren't already friends && that the user isn't trying to add themself
+                    var friends = friendsContext.Friends.Where(u => u.User.UserId == userId && u.Friend.UserId == id);
+                    if (friends.Count() == 0 && userId != id) {
+                        requestsContext.FriendRequests.Add(new FriendRequestModel {
+                            UserId = userId,
+                            FriendId = id,
+                            Seen = false
+                        });
+                        requestsContext.SaveChanges();
+                    }
+                } else {
+                    return RedirectToAction("Index", "Friends");
+                }
+            }
+            // TODO: Change to appropriate action once the method has been moved to ProfileController
             return RedirectToAction("All", "User");
         }
     }

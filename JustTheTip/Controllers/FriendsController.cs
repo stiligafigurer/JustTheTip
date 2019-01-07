@@ -12,7 +12,7 @@ namespace JustTheTip.Controllers {
         public ActionResult Index() {
             var requestsContext = new FriendRequestDbContext();
             var userId = User.Identity.GetUserId();
-            var requests = requestsContext.FriendRequests.Where(u => u.UserId == userId);
+            var requests = requestsContext.FriendRequests.Where(u => u.FriendId == userId);
 
             var userContext = new UserDbContext();
             var requestList = new List<FriendsViewModel>();
@@ -32,28 +32,34 @@ namespace JustTheTip.Controllers {
 
         public ActionResult Accept(string id) {
             var friendsContext = new FriendsDbContext();
+            var requestsContext = new FriendRequestDbContext();
             var userId = User.Identity.GetUserId();
+            var requestToRemove = requestsContext.FriendRequests.FirstOrDefault(u => u.FriendId == userId && u.UserId == id);
 
-            friendsContext.Friends.Add(new FriendsModel {
-                UserId = userId,
-                FriendId = id,
-                Category = "Friend"
-            });
+            // Check that the users aren't already friends
+            var friends = friendsContext.Friends.Where(u => u.User.UserId == userId && u.Friend.UserId == id);
+            if (friends.Count() == 0) {
+                friendsContext.Friends.Add(new FriendsModel {
+                    UserId = userId,
+                    FriendId = id,
+                    Category = "Friend"
+                });
+                // You're my friend == I'm your friend (allows users to pick different categories for each other)
+                friendsContext.Friends.Add(new FriendsModel {
+                    UserId = id,
+                    FriendId = userId,
+                    Category = "Friend"
+                });
 
-            try {
                 friendsContext.SaveChanges();
-                var requestsContext = new FriendRequestDbContext();
-                var requestToRemove = requestsContext.FriendRequests.FirstOrDefault(u => u.UserId == userId && u.FriendId == id);
-                requestsContext.FriendRequests.Remove(requestToRemove);
-                requestsContext.SaveChanges();
-            } catch {
-                return RedirectToAction("Index");
             }
+            requestsContext.FriendRequests.Remove(requestToRemove);
+            requestsContext.SaveChanges();
 
             return RedirectToAction("Index");
         }
 
-        public ActionResult Remove(string id) {
+        public ActionResult Ignore(string id) {
             var requestsContext = new FriendRequestDbContext();
             var userId = User.Identity.GetUserId();
             var requestToRemove = requestsContext.FriendRequests.FirstOrDefault(u => u.UserId == userId && u.FriendId == id);
