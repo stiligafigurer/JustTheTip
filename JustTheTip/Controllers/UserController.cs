@@ -1,5 +1,6 @@
 ﻿using JustTheTip.Models;
 using Microsoft.AspNet.Identity;
+using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Linq;
@@ -80,6 +81,28 @@ namespace JustTheTip.Controllers {
             }
 
             return RedirectToAction("Index", "User");
+        }
+
+        public ActionResult All(IEnumerable<UserModel> model) {
+            var userContext = new UserDbContext();
+            var users = userContext.Users.ToList();
+            return View(users);
+        }
+
+        public ActionResult Add(string id) {
+            var userContext = new UserDbContext();
+            var userId = User.Identity.GetUserId();
+            var currentUser = userContext.Users.FirstOrDefault(u => u.UserId == userId);
+
+            var friendsContext = new FriendsDbContext();
+            friendsContext.Friends.Add(new FriendsModel {
+                UserId = userId,
+                FriendId = id,
+                Category = "Friend"
+            });
+            friendsContext.SaveChanges();
+
+            return RedirectToAction("All", "User");
         }
     }
 }
