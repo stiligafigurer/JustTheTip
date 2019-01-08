@@ -10,9 +10,15 @@ namespace JustTheTip.Controllers
     {
         public ActionResult Index()
         {
-            return View();
-        }
+            if(Request.IsAuthenticated) {
+                return RedirectToAction("Index_Loggedin", "Home");
+            } else
+            {
+                return View();
+            }
 
+        }
+        
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -26,7 +32,7 @@ namespace JustTheTip.Controllers
 
             return View();
         }
-
+        [Authorize]
         public ActionResult Index_LoggedIn()
         {
             return View();

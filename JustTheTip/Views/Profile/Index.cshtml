@@ -23,16 +23,38 @@
         <table id="message_table" class="table table-striped table-bordered table-hover table-dark">
             <thead style="background-color: lightblue">
                 <tr>
+                    <th scope="col" width="20%"></th>
                     <th scope="col">#</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">Josef</th>
-                </tr>
-                <tr>
-                    <td>Hey bby</td>
-                </tr>
+                @{
+                    foreach (var user in Model.Friends)
+                    {
+                        <tr>
+                            <td><img src="@user.Key.ProfilePicUrl" alt="ProfilePic" class="img-rounded" style="max-height:50px; max-width:50px; height:auto; width:auto" /></td>
+                            <th scope="row">@user.Key.FirstName:</th>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <td>Hey bby</td>
+                        </tr>
+                        <tr>
+                            <td><img src="@user.Key.ProfilePicUrl" alt="ProfilePic" class="img-rounded" style="max-height:50px; max-width:50px; height:auto; width:auto" /></td>
+                            <th scope="row">@user.Key.FirstName:</th>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <td>U like banana?</td>
+                        </tr>
+                    }
+                }
+                @*<tr>
+            <th scope="row">Josef</th>
+        </tr>
+        <tr>
+            <td>Hey bby</td>
+        </tr>*@
             </tbody>
         </table>
     </div>
@@ -41,8 +63,8 @@
         <table id="friends_table" class=" table table-striped table-bordered table-bordered">
             <thead style="background-color: lightblue">
                 <tr>
-                    <th scope="col">Picture</th>
-                    <th scope="col">Name</th>
+                    <th scope="col" width="15%"></th>
+                    <th scope="col" width="45%">Name</th>
                     <th scope="col">Category</th>
                 </tr>
             </thead>
