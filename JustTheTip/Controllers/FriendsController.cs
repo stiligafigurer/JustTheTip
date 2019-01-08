@@ -81,9 +81,11 @@ namespace JustTheTip.Controllers {
         public ActionResult Ignore(string id) {
             var requestsContext = new FriendRequestDbContext();
             var userId = User.Identity.GetUserId();
-            var requestToRemove = requestsContext.FriendRequests.FirstOrDefault(u => u.UserId == userId && u.FriendId == id);
-            requestsContext.FriendRequests.Remove(requestToRemove);
-            requestsContext.SaveChanges();
+            var requestToRemove = requestsContext.FriendRequests.FirstOrDefault(u => u.UserId == id && u.FriendId == userId);
+            if (requestToRemove != null) {
+                requestsContext.FriendRequests.Remove(requestToRemove);
+                requestsContext.SaveChanges();
+            }
 
             return RedirectToAction("Index");
         }
@@ -91,7 +93,7 @@ namespace JustTheTip.Controllers {
         public ActionResult Remove(string id) {
             var friendsContext = new FriendsDbContext();
             var userId = User.Identity.GetUserId();
-            var friendshipsToRemove = friendsContext.Friends.Where(u => 
+            var friendshipsToRemove = friendsContext.Friends.Where(u =>
                 u.UserId == userId && u.FriendId == id ||
                 u.UserId == id && u.FriendId == userId);
             foreach (var friendship in friendshipsToRemove) {
@@ -100,6 +102,19 @@ namespace JustTheTip.Controllers {
             friendsContext.SaveChanges();
 
             return RedirectToAction("Index");
+        }
+
+        public ActionResult NewRequests() {
+            var buttonStyle = "false";
+            var requestsContext = new FriendRequestDbContext();
+            var userId = User.Identity.GetUserId();
+            var unseenRequests = requestsContext.FriendRequests.Where(r => r.FriendId == userId && r.Seen == false).Count();
+
+            if (unseenRequests > 0) {
+                buttonStyle = "true";
+            }
+
+            return Content(buttonStyle);
         }
     }
 }
