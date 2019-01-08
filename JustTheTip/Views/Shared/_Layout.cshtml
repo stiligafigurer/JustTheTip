@@ -35,7 +35,9 @@
                 <div class="navbar-header">
                     @*Fixa rätt länk till knappen*@
                     @* Knappen ska döljas och bara visas när det finns en vänförfrågan. *@
-                    <button class="btn-navbar" title="You have a new friend request!" onclick="location.href='@Url.Action("Index", "Profile")'"><i id="friendnavbaricon" class="fas fa-user-plus"></i></button>
+                    @using Microsoft.AspNet.Identity {
+                    <button class="btn-navbar" title="You have a new friend request!" onclick="location.href='@Url.Action("Index", "Profile", new { profileId = @User.Identity.GetUserId()})'"><i id="friendnavbaricon" class="fas fa-user-plus"></i></button>
+                    }
                 </div>
                 <style>
                     .btn-navbar {
@@ -61,7 +63,7 @@
                             <input type="text" class="form-control" placeholder="Search" name="srchterm" id="srchterm" runat="server">
                             <div class="input-group-btn">
                                 <a href="@Url.Action("Search", "User", new { query = Request.Form["srchterm"] })" >
-                                    <i class="fas fa-search"></i>
+                                   
                                 </a>
                             </div>
                         </div>

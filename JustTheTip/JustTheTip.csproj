@@ -203,21 +203,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201901071129484_UpdateDb.cs" />
-    <Compile Include="Migrations\201901071129484_UpdateDb.Designer.cs">
-      <DependentUpon>201901071129484_UpdateDb.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201901071139092_UpdateDb2.cs" />
-    <Compile Include="Migrations\201901071139092_UpdateDb2.Designer.cs">
-      <DependentUpon>201901071139092_UpdateDb2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201901071141464_UpdateDb3.cs" />
-    <Compile Include="Migrations\201901071141464_UpdateDb3.Designer.cs">
-      <DependentUpon>201901071141464_UpdateDb3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201901071246372_UpdateDb4.cs" />
-    <Compile Include="Migrations\201901071246372_UpdateDb4.Designer.cs">
-      <DependentUpon>201901071246372_UpdateDb4.cs</DependentUpon>
+    <Compile Include="Migrations\201901081048330_ivans1.cs" />
+    <Compile Include="Migrations\201901081048330_ivans1.Designer.cs">
+      <DependentUpon>201901081048330_ivans1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -321,17 +309,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201901071129484_UpdateDb.resx">
-      <DependentUpon>201901071129484_UpdateDb.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201901071139092_UpdateDb2.resx">
-      <DependentUpon>201901071139092_UpdateDb2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201901071141464_UpdateDb3.resx">
-      <DependentUpon>201901071141464_UpdateDb3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201901071246372_UpdateDb4.resx">
-      <DependentUpon>201901071246372_UpdateDb4.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201901081048330_ivans1.resx">
+      <DependentUpon>201901081048330_ivans1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
