@@ -7,6 +7,7 @@ namespace JustTheTip.Models
 {
     public class ProfileViewModel
     {
+        public string UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Gender { get; set; }
@@ -16,5 +17,6 @@ namespace JustTheTip.Models
         public string ZodiacSign { get; set; }
         public string ProfilePicUrl { get; set; }
         public Dictionary<UserModel, string> Friends { get; set; } 
+        public int Compatibility { get; set; }
     }
 }

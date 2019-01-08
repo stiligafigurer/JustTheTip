@@ -13,13 +13,17 @@ namespace JustTheTip.Controllers
     public class ProfileController : Controller
     {
         // GET: Profile
-        public ActionResult Index(ProfileViewModel model)
+        public ActionResult Index(ProfileViewModel model, string profileId)
         {
             var userId = User.Identity.GetUserId();
             if (userId != null)
             {
                 var userContext = new UserDbContext();
                 var friendContext = new FriendsDbContext();
+                if (userId != profileId && profileId != null)
+                {
+                    userId = profileId;
+                };
                 var user = userContext.Users.FirstOrDefault(u => u.UserId == userId);
                 List<FriendsModel> friendList = friendContext.Friends.Where(f => f.UserId == userId).ToList();
                 var UserDict = new Dictionary<UserModel, string>();
@@ -27,7 +31,7 @@ namespace JustTheTip.Controllers
                 {
                     UserDict.Add(userContext.Users.FirstOrDefault(u => u.UserId == item.FriendId), item.Category);
                 }
-
+                model.UserId = user.UserId;
                 model.FirstName = user.FirstName;
                 model.LastName = user.LastName;
                 model.Gender = user.Gender;
@@ -39,10 +43,10 @@ namespace JustTheTip.Controllers
                 model.Friends = UserDict;
 
                 return View(model);
-            }
+              }
+
             return View("~/Views/Home/index.cshtml");
         }
-
         private int CheckCompatibility(string id) {
             var compatibility = 0;
             var userContext = new UserDbContext();

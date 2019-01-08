@@ -30,7 +30,6 @@
                         <li>@Html.ActionLink("Settings", "Index", "User")</li>
                     }
                 </ul>
-
                 @if (User.Identity.IsAuthenticated) {
                     // Create a different button depending on whether the user has any new friend requests
                     if (Html.Action("NewRequests", "Friends").ToString() == "true") {
@@ -43,7 +42,6 @@
                         </div>
                     }
                 }
-
                 <style>
                     .btn-navbar {
                         padding-top: 7px;
@@ -66,7 +64,7 @@
                             <input type="text" class="form-control" placeholder="Search" name="srchterm" id="srchterm" runat="server">
                             <div class="input-group-btn">
                                 <a href="@Url.Action("Search", "User", new { query = Request.Form["srchterm"] })" >
-                                    <i class="fas fa-search"></i>
+                                   
                                 </a>
                             </div>
                         </div>
