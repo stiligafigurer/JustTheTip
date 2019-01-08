@@ -49,7 +49,7 @@
                         padding-top: 7px;
                         border: none;
                         background-color: transparent;
-                        /*display:none;*/
+                        /*visibility: hidden;*/
                     }
 
                     .fa-user-plus, .fa-user {
@@ -61,17 +61,16 @@
                     }
                 </style>
                 <div class="col-sm-3 col-md-3">
-                    <form class="navbar-form" role="search">
+                    @using (Html.BeginForm("Search", "User", FormMethod.Get)) { 
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Search" name="srchterm" id="srchterm" runat="server">
                             <div class="input-group-btn">
-                                ,
-                                <a href="@Url.Action("Search", "User", new { query = Request.Form["srchterm"] })" class="btn btn-default">
+                                <a href="@Url.Action("Search", "User", new { query = Request.Form["srchterm"] })" >
                                     <i class="fas fa-search"></i>
                                 </a>
                             </div>
                         </div>
-                    </form>
+                    }
                 </div>
 
                 @Html.Partial("_LoginPartial")
