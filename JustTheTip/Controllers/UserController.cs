@@ -104,7 +104,7 @@ namespace JustTheTip.Controllers {
 
             return RedirectToAction("All", "User");
         }
-
+        [HttpGet]
         public ActionResult Search(string srchterm)
         {
             if (srchterm == null)
