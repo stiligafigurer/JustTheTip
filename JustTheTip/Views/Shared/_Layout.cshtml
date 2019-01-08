@@ -26,30 +26,31 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
-                    @if (Request.IsAuthenticated)
-                    {
+                    @if (Request.IsAuthenticated) {
                         <li>@Html.ActionLink("Settings", "Index", "User")</li>
                     }
                 </ul>
-
-                <div class="navbar-header">
-                    @*Fixa rätt länk till knappen*@
-                    @* Knappen ska döljas och bara visas när det finns en vänförfrågan. *@
-                    @using Microsoft.AspNet.Identity {
-                    <button class="btn-navbar" title="You have a new friend request!" onclick="location.href='@Url.Action("Index", "Profile", new { profileId = @User.Identity.GetUserId()})'"><i id="friendnavbaricon" class="fas fa-user-plus"></i></button>
+                @if (User.Identity.IsAuthenticated) {
+                    // Create a different button depending on whether the user has any new friend requests
+                    if (Html.Action("NewRequests", "Friends").ToString() == "true") {
+                        <div class="navbar-header">
+                            <button style="color: mediumseagreen;" class="btn-navbar" title="Friends & requests" onclick="location.href='@Url.Action("Index", "Friends")'"><i id="friendnavbaricon" class="fas fa-user-plus"></i></button>
+                        </div>
+                    } else {
+                        <div class="navbar-header">
+                            <button style="color: grey;" class="btn-navbar" title="Friends & requests" onclick="location.href='@Url.Action("Index", "Friends")'"><i id="friendnavbaricon" class="fas fa-user"></i></button>
+                        </div>
                     }
-                </div>
+                }
                 <style>
                     .btn-navbar {
                         padding-top: 7px;
                         border: none;
-                        color: limegreen; /*Kan ta bort senare, färgen aktiveras i jquery*/
                         background-color: transparent;
                         /*visibility: hidden;*/
                     }
 
-
-                    .fa-user-plus {
+                    .fa-user-plus, .fa-user {
                         font-size: 35px;
                     }
 
