@@ -120,6 +120,7 @@ namespace JustTheTip.Controllers {
             // TODO: Change to appropriate action once the method has been moved to ProfileController
             return RedirectToAction("All", "User");
         }
+
         [HttpGet]
         public ActionResult Search(string srchterm)
         {
@@ -134,7 +135,24 @@ namespace JustTheTip.Controllers {
                 validUserList.AddRange(userContext.Users.Where(u => u.FirstName == word).ToList());
                 validUserList.AddRange(userContext.Users.Where(u => u.LastName == word));
             }
-            return View(validUserList);
+            var validUserListNoDup = new List<UserModel>();
+            for(int i = 0; i < validUserList.Count; i++)
+            {
+                bool hasMatch = false;
+                for (int e = i + 1; e < validUserList.Count; e++)
+                {
+                    
+                    if(validUserList[i].UserId == validUserList[e].UserId)
+                    {
+                        hasMatch = true;
+                    }
+                }
+                if(!hasMatch)
+                {
+                    validUserListNoDup.Add(validUserList[i]);
+                }
+            }
+            return View(validUserListNoDup);
         }
     }
 }

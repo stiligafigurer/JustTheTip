@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace JustTheTip.Models {
     public class FriendsViewModel {
@@ -10,5 +11,10 @@ namespace JustTheTip.Models {
         public string FullName { get; set; }
         [Display(Name = "Born")]
         public int BirthYear { get; set; }
+    }
+
+    public class FriendCollectionViewModel {
+        public IEnumerable<FriendsViewModel> Friends { get; set; }
+        public IEnumerable<FriendsViewModel> Requests { get; set; }
     }
 }

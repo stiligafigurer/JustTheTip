@@ -203,10 +203,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201901081052055_nydb2.cs" />
-    <Compile Include="Migrations\201901081052055_nydb2.Designer.cs">
-      <DependentUpon>201901081052055_nydb2.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\FriendRequestModel.cs" />
@@ -291,6 +287,8 @@
     <Content Include="Views\User\All.cshtml" />
     <Content Include="Views\Friends\Index.cshtml" />
     <Content Include="Views\User\Search.cshtml" />
+    <Content Include="Views\Friends\Friends.cshtml" />
+    <Content Include="Views\Friends\Requests.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -307,11 +305,6 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201901081052055_nydb2.resx">
-      <DependentUpon>201901081052055_nydb2.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
