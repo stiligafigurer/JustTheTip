@@ -105,16 +105,16 @@ namespace JustTheTip.Controllers {
         }
 
         public ActionResult NewRequests() {
-            var buttonStyle = "false";
+            var hasRequests = "false";
             var requestsContext = new FriendRequestDbContext();
             var userId = User.Identity.GetUserId();
             var unseenRequests = requestsContext.FriendRequests.Where(r => r.FriendId == userId && r.Seen == false).Count();
 
             if (unseenRequests > 0) {
-                buttonStyle = "true";
+                hasRequests = "true";
             }
 
-            return Content(buttonStyle);
+            return Content(hasRequests);
         }
     }
 }
