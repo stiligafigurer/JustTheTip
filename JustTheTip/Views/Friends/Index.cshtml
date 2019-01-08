@@ -1,42 +1,15 @@
-﻿@model IEnumerable<JustTheTip.Models.FriendsViewModel>
+﻿@model JustTheTip.Models.FriendCollectionViewModel
 
 @{
-    ViewBag.Title = "Friend requests";
+    ViewBag.Title = "Friends";
 }
 
-<h2>Friend requests</h2>
+<h2>Friends</h2>
 
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ProfilePicUrl)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FullName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BirthYear)
-            </th>
-            <th></th>
-        </tr>
+<div class="col-md-6">
+    @Html.Partial("Friends")
+</div>
 
-        @foreach (var item in Model) {
-            <tr>
-                <td>
-                    <img src="@Html.DisplayFor(modelItem => item.ProfilePicUrl)" alt="No image" style="max-height: 50px; max-width: 50px;" />
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FullName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BirthYear)
-                </td>
-                <td>
-                    @Html.ActionLink("Accept", "Accept", new { id = item.UserId }) |
-                    @Html.ActionLink("Ignore", "Remove", new { id = item.UserId })
-                </td>
-            </tr>
-
-        }
-
-    </table>
+<div class="col-md-6">
+    @Html.Partial("Requests");
+</div>

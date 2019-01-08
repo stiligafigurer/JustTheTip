@@ -1,0 +1,35 @@
+﻿@model JustTheTip.Models.FriendCollectionViewModel
+
+@{ 
+    int n = Model.Requests.Count();
+}
+
+<h3>Requests (@n)</h3>
+
+<table class="table">
+
+    @if (n > 0) {
+        foreach (var item in Model.Requests) {
+            <tr>
+                <td>
+                    <img src="@Html.DisplayFor(modelItem => item.ProfilePicUrl)" alt="No image" style="max-height: 50px; max-width: 50px;" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BirthYear)
+                </td>
+                <td>
+                    @Html.ActionLink("Accept", "Accept", new { id = item.UserId }) |
+                    @Html.ActionLink("Ignore", "Ignore", new { id = item.UserId })
+                </td>
+            </tr>
+        }
+    } else {
+        <tr>
+            <td>You have no new requests.</td>
+        </tr>
+    }
+
+</table>

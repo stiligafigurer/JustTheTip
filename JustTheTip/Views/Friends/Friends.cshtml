@@ -1,0 +1,31 @@
+﻿@model JustTheTip.Models.FriendCollectionViewModel
+
+@{
+    var n = Model.Friends.Count();
+}
+
+<h3>Current (@n)</h3>
+
+@if (n > 0) {
+    <table class="table table-striped table-bordered table-hover table-dark">
+        @foreach (var item in Model.Friends) {
+            <tr>
+                <td>
+                    <img src="@Html.DisplayFor(modelItem => item.ProfilePicUrl)" alt="No image" style="max-height: 50px; max-width: 50px;" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BirthYear)
+                </td>
+                <td>
+                    @Html.ActionLink("Remove", "Remove", new { id = item.UserId })
+                </td>
+            </tr>
+        }
+    </table>
+} else {
+    <p>You have no friends. :(</p>
+}
+
