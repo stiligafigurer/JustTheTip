@@ -120,7 +120,7 @@ namespace JustTheTip.Controllers {
             // TODO: Change to appropriate action once the method has been moved to ProfileController
             return RedirectToAction("All", "User");
         }
-
+        [HttpGet]
         public ActionResult Search(string srchterm)
         {
             if (srchterm == null)
