@@ -203,9 +203,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201901081048330_ivans1.cs" />
-    <Compile Include="Migrations\201901081048330_ivans1.Designer.cs">
-      <DependentUpon>201901081048330_ivans1.cs</DependentUpon>
+    <Compile Include="Migrations\201901081440000_CreateFriends.cs" />
+    <Compile Include="Migrations\201901081440000_CreateFriends.Designer.cs">
+      <DependentUpon>201901081440000_CreateFriends.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -311,8 +311,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201901081048330_ivans1.resx">
-      <DependentUpon>201901081048330_ivans1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201901081440000_CreateFriends.resx">
+      <DependentUpon>201901081440000_CreateFriends.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

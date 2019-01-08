@@ -31,9 +31,11 @@ namespace JustTheTip.Controllers {
             var requests = requestsContext.FriendRequests.Where(u => u.FriendId == userId);
             var requestList = new List<FriendsViewModel>();
 
-            foreach (var request in requests) {
+            foreach (var request in requests)
+            {
                 var user = userContext.Users.FirstOrDefault(u => u.UserId == request.UserId);
-                requestList.Add(new FriendsViewModel {
+                requestList.Add(new FriendsViewModel
+                {
                     UserId = request.UserId,
                     ProfilePicUrl = user.ProfilePicUrl,
                     FullName = user.FirstName + ' ' + user.LastName,
