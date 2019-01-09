@@ -9,11 +9,17 @@
 
 
 <h2>@Model.FirstName  @Model.LastName</h2>
-<div class="progress">
-    <div class="progress-bar" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-        Match Probability!
-    </div>
-</div>
+@{ if (@Model.Compatibility >= 0)
+    {
+        <div class="progress">
+
+            <div class="progress-bar" role="progressbar" aria-valuenow=@Model.Compatibility aria-valuemin="0" aria-valuemax="100" style="width:@Model.Compatibility%;">
+                Match Probability!
+            </div>
+
+        </div>
+    }
+}
 <div class="row">
     <div class="col-md-4">
         <img style="max-height: 250px; max-width: 250px; height:auto; width:auto" class="img-circle " src="@Model.ProfilePicUrl" alt="https://makehimyours.com.au/wp-content/uploads/2016/11/Depositphotos_9830876_l-2015Optimised.jpg" />
@@ -28,22 +34,16 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var user in Model.Friends)
+                @foreach (var post in Model.Posts)
                 {
 
                     <tr>
                         <td>
-                            <a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @user.Key.UserId})">
-                                <img src="@user.Key.ProfilePicUrl" alt="ProfilePic" class="img-rounded" style="max-height:50px; max-width:50px; height:auto; width:auto" />
+                            <a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = post.PosterId})">
+                                <img src="@post.ProfilePicUrl" alt="ProfilePic" class="img-rounded" style="max-height:50px; max-width:50px; height:auto; width:auto" />
                             </a>
                         </td>
-                        <th scope="row"><a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @user.Key.UserId})">@user.Key.FirstName:</a></th>
-                    </tr>
-                    <tr>
-                        <th></th>
-                        <td>
-                            <a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @user.Key.UserId})"></a>
-                        </td>
+                        <td scope="row"><a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = post.PosterId})">@post.FirstName:</a> @post.Content </td>
                     </tr>
                 }
 
