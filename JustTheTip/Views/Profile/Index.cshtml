@@ -16,7 +16,7 @@
 </div>
 <div class="row">
     <div class="col-md-4">
-        <img style="max-height: 100%; max-width: 100%; height:auto; width:auto" class="img-circle "  src="@Model.ProfilePicUrl" alt="https://makehimyours.com.au/wp-content/uploads/2016/11/Depositphotos_9830876_l-2015Optimised.jpg" />
+        <img style="max-height: 250px; max-width: 250px; height:auto; width:auto" class="img-circle " src="@Model.ProfilePicUrl" alt="https://makehimyours.com.au/wp-content/uploads/2016/11/Depositphotos_9830876_l-2015Optimised.jpg" />
     </div>
     <div class="col-md-4 ">
         <h1>Posts</h1>
@@ -29,35 +29,30 @@
             </thead>
             <tbody>
                 @foreach (var user in Model.Friends)
-                    {
-                
+                {
+
                     <tr>
-                        <td><img src="@user.Key.ProfilePicUrl" alt="ProfilePic" class="img-rounded" style="max-height:50px; max-width:50px; height:auto; width:auto" /></td>
-                        <th scope="row">@user.Key.FirstName:</th>
+                        <td>
+                            <a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @user.Key.UserId})">
+                                <img src="@user.Key.ProfilePicUrl" alt="ProfilePic" class="img-rounded" style="max-height:50px; max-width:50px; height:auto; width:auto" />
+                            </a>
+                        </td>
+                        <th scope="row"><a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @user.Key.UserId})">@user.Key.FirstName:</a></th>
                     </tr>
                     <tr>
                         <th></th>
                         <td>
-                            <a href="@Url.Action("Index", "Profile", new { profileId = @user.Key.UserId})">waa</a>
+                            <a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @user.Key.UserId})"></a>
                         </td>
                     </tr>
-                    <tr>
-                        <td><img src="@user.Key.ProfilePicUrl" alt="ProfilePic" class="img-rounded" style="max-height:50px; max-width:50px; height:auto; width:auto" /></td>
-                        <th scope="row">@user.Key.FirstName:</th>
-                    </tr>
-                    <tr>
-                        <th></th>
-                        <td>U like banana?</td>
-                    </tr>
-                
-                    }
-                
+                }
+
                 @*<tr>
-            <th scope="row">Josef</th>
-        </tr>
-        <tr>
-            <td>Hey bby</td>
-        </tr>*@
+                        <th scope="row">Josef</th>
+                    </tr>
+                    <tr>
+                        <td>Hey bby</td>
+                    </tr>*@
             </tbody>
         </table>
     </div>
@@ -76,9 +71,9 @@
                     foreach (var user in Model.Friends)
                     {
                         <tr>
-                            <td><img src="@user.Key.ProfilePicUrl" alt="ProfilePic" class="img-rounded" style="max-height:50px; max-width:50px; height:auto; width:auto" /></td>
-                            <td>@user.Key.FirstName</td>
-                            <td>@user.Value</td>
+                            <td><a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @user.Key.UserId})"><img src="@user.Key.ProfilePicUrl" alt="ProfilePic" class="img-rounded" style="max-height:50px; max-width:50px; height:auto; width:auto" /></a></td>
+                            <td><a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @user.Key.UserId})">@user.Key.FirstName</a></td>
+                            <td><a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @user.Key.UserId})">@user.Value</a></td>
                         </tr>
                     }
                 }
@@ -100,7 +95,8 @@
                 <tr>
                     <th scope="col" style="background-color: lightblue">Gender</th>
                     <td>
-                        @Model.Gender</td>
+                        @Model.Gender
+                    </td>
                 </tr>
                 <tr>
                     <th scope="col" style="background-color: lightblue">Age</th>
@@ -109,7 +105,8 @@
                             var birthDate = Model.BirthDate.Value;
                             var age = today.Year - birthDate.Year;
                             if (birthDate > today.AddYears(-age)) { age--; }
-                        }@age </td>
+                        }@age
+                    </td>
                 </tr>
                 <tr>
                     <th scope="col" style="background-color: lightblue">Zodiac</th>
