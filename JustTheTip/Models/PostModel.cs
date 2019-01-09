@@ -7,10 +7,14 @@ namespace JustTheTip.Models {
     public class PostModel {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PostId { get; set; }
-        [ForeignKey("UserId")]
+
+        //[ForeignKey("Poster")]
         public string PosterId { get; set; }
-        [ForeignKey("UserId")]
+        //public virtual UserModel Poster {get; set;}
+
+        //[ForeignKey("Recipient")]
         public string RecipientId { get; set; }
+        //public virtual UserModel Recipient { get; set; }
         public string Content { get; set; }
         public DateTime Date { get; set; }
     }
