@@ -19,5 +19,6 @@ namespace JustTheTip.Models
         public Dictionary<UserModel, string> Friends { get; set; } 
         public int Compatibility { get; set; }
         public List<UserPostViewModel> Posts { get; set; }
+        public List<InterestsModel> Interests { get; set; }
     }
 }

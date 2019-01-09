@@ -4,7 +4,7 @@ using System.Data.Entity;
 
 namespace JustTheTip.Models {
     public class InterestsModel {
-        [Key, ForeignKey("UserId")]
+        [Key]
         public string UserId { get; set; }
         public string Interest { get; set; }
     }
