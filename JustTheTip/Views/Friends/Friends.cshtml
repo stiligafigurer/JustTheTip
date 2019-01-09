@@ -20,9 +20,10 @@
                     @Html.DisplayFor(modelItem => item.FullName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.BirthYear)
+                    @Html.DisplayFor(modelItem => item.Category)
                 </td>
                 <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.UserId }) | 
                     @Html.ActionLink("Remove", "Remove", new { id = item.UserId })
                 </td>
             </tr>
