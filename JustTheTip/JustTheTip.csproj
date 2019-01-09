@@ -203,9 +203,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201901081440000_CreateFriends.cs" />
-    <Compile Include="Migrations\201901081440000_CreateFriends.Designer.cs">
-      <DependentUpon>201901081440000_CreateFriends.cs</DependentUpon>
+    <Compile Include="Migrations\201901090902335_UpdateDb.cs" />
+    <Compile Include="Migrations\201901090902335_UpdateDb.Designer.cs">
+      <DependentUpon>201901090902335_UpdateDb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901090919259_UpdateDb1.cs" />
+    <Compile Include="Migrations\201901090919259_UpdateDb1.Designer.cs">
+      <DependentUpon>201901090919259_UpdateDb1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -294,6 +298,7 @@
     <Content Include="Views\User\Search.cshtml" />
     <Content Include="Views\Friends\Friends.cshtml" />
     <Content Include="Views\Friends\Requests.cshtml" />
+    <Content Include="Views\Friends\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -312,8 +317,11 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201901081440000_CreateFriends.resx">
-      <DependentUpon>201901081440000_CreateFriends.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201901090902335_UpdateDb.resx">
+      <DependentUpon>201901090902335_UpdateDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901090919259_UpdateDb1.resx">
+      <DependentUpon>201901090919259_UpdateDb1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -20,9 +20,10 @@
                     <a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @item.UserId})">@Html.DisplayFor(modelItem => item.FullName)</a>
 </td>
                 <td>
-                    <a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @item.UserId})">@Html.DisplayFor(modelItem => item.BirthYear)</a>
+                    @Html.DisplayFor(modelItem => item.Category)
 </td>
                 <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.UserId }) | 
                     @Html.ActionLink("Remove", "Remove", new { id = item.UserId })
                 </td>
             </tr>

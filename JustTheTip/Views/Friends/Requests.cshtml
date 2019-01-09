@@ -1,14 +1,23 @@
 ﻿@model JustTheTip.Models.FriendCollectionViewModel
 
-@{ 
+@{
     int n = Model.Requests.Count();
 }
 
 <table class="table table-striped table-bordered table-dark">
     <tr>
-        <th colspan="4" style="background-color: mediumseagreen;">
-            <h4 class="text-center" style="font-weight: bold;">Requests (@n)</h4>
-        </th>
+        @*Different table header depending on whether the user has any friend requests*@
+        @if (n > 0) {
+            <th colspan="4" style="background-color: mediumseagreen;">
+                <h4 class="text-center" style="font-weight: bold;">Requests (@n)</h4>
+            </th>
+        } else {
+            <th colspan="4" style="background-color: lightgray;">
+                <h4 class="text-center" style="font-weight: bold;">Requests (@n)</h4>
+            </th>
+        }
+
+
     </tr>
     @if (n > 0) {
         foreach (var item in Model.Requests) {

@@ -6,11 +6,9 @@ namespace JustTheTip.Models {
     public class FriendRequestModel {
         [Key, Column(Order = 0)]
         public string UserId { get; set; }
-        public virtual UserModel User { get; set; }
 
         [Key, Column(Order = 1)]
         public string FriendId { get; set; }
-        public virtual UserModel Friend { get; set; }
 
         // 0 == Not seen, 1 == seen
         public bool Seen { get; set; }

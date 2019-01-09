@@ -66,6 +66,7 @@ namespace JustTheTip.Controllers {
                 currentUser.Country = model.Country;
                 currentUser.ActiveUser = model.ActiveUser;
             }
+
             try {
                 userContext.SaveChanges();
             } catch (DbEntityValidationException e) {

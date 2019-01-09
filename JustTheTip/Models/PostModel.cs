@@ -15,6 +15,7 @@ namespace JustTheTip.Models {
         //[ForeignKey("Recipient")]
         public string RecipientId { get; set; }
         //public virtual UserModel Recipient { get; set; }
+
         public string Content { get; set; }
         public DateTime Date { get; set; }
     }

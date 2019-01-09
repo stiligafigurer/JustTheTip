@@ -11,6 +11,7 @@ namespace JustTheTip.Models {
         public string FullName { get; set; }
         [Display(Name = "Born")]
         public int BirthYear { get; set; }
+        public string Category { get; set; }
     }
 
     public class FriendCollectionViewModel {

@@ -53,5 +53,14 @@ namespace JustTheTip.Models {
                 "Other"
             };
         }
+
+        public static List<string> Categories() {
+            return new List<string> {
+                "Friend",
+                "Friend with benefits",
+                "Friendzone",
+                "Stalker"
+            };
+        }
     }
 }
