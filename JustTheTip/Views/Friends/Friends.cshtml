@@ -14,14 +14,14 @@
         foreach (var item in Model.Friends) {
             <tr>
                 <td>
-                    <img src="@Html.DisplayFor(modelItem => item.ProfilePicUrl)" alt="No image" style="max-height: 50px; max-width: 50px;" />
-                </td>
+                    <a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @item.UserId})"><img src="@Html.DisplayFor(modelItem => item.ProfilePicUrl)" alt="No image" style="max-height: 50px; max-width: 50px;" /></a>
+</td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.FullName)
-                </td>
+                    <a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @item.UserId})">@Html.DisplayFor(modelItem => item.FullName)</a>
+</td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Category)
-                </td>
+                    <a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @item.UserId})">@Html.DisplayFor(modelItem => item.Category)</a>
+</td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.UserId }) | 
                     @Html.ActionLink("Remove", "Remove", new { id = item.UserId })
