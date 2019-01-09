@@ -9,7 +9,7 @@ namespace JustTheTip.Models {
         public virtual UserModel User { get; set; }
 
         [Key, Column(Order = 1)]
-        public virtual string FriendId { get; set; }
+        public string FriendId { get; set; }
         public virtual UserModel Friend { get; set; }
 
         public virtual string Category { get; set; }
