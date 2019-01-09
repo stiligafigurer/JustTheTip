@@ -28,27 +28,30 @@
                 </tr>
             </thead>
             <tbody>
-                @{
-                    foreach (var user in Model.Friends)
+                @foreach (var user in Model.Friends)
                     {
-                        <tr>
-                            <td><img src="@user.Key.ProfilePicUrl" alt="ProfilePic" class="img-rounded" style="max-height:50px; max-width:50px; height:auto; width:auto" /></td>
-                            <th scope="row">@user.Key.FirstName:</th>
-                        </tr>
-                        <tr>
-                            <th></th>
-                            <td><a href="@Url.Action("Index", "Profile", new { profileId = "78adccb9-758d-47ab-bf04-9533be859f16"})">waa</a></td>
-                        </tr>
-                        <tr>
-                            <td><img src="@user.Key.ProfilePicUrl" alt="ProfilePic" class="img-rounded" style="max-height:50px; max-width:50px; height:auto; width:auto" /></td>
-                            <th scope="row">@user.Key.FirstName:</th>
-                        </tr>
-                        <tr>
-                            <th></th>
-                            <td>U like banana?</td>
-                        </tr>
+                
+                    <tr>
+                        <td><img src="@user.Key.ProfilePicUrl" alt="ProfilePic" class="img-rounded" style="max-height:50px; max-width:50px; height:auto; width:auto" /></td>
+                        <th scope="row">@user.Key.FirstName:</th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td>
+                            <a href="@Url.Action("Index", "Profile", new { profileId = @user.Key.UserId})">waa</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><img src="@user.Key.ProfilePicUrl" alt="ProfilePic" class="img-rounded" style="max-height:50px; max-width:50px; height:auto; width:auto" /></td>
+                        <th scope="row">@user.Key.FirstName:</th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td>U like banana?</td>
+                    </tr>
+                
                     }
-                }
+                
                 @*<tr>
             <th scope="row">Josef</th>
         </tr>
