@@ -1,32 +1,66 @@
-﻿@{
+﻿@model JustTheTip.Models.ProfileViewModel
+
+@{
     ViewBag.Title = "Home Page";
 }
 
+
 <div class="row">
-    <div class="col-md-4 ">
+    <div class="col-md-3 ">
         <img class="" src="..\Pictures\Icon.png" />
     </div>
-    <div class=" col-md-4 ">
-        <h1 style="color: hotpink; font-weight: 600">Welcome to Just the Tip Dating</h1>
+    <div class=" col-md-6">
+        <h1 style="color: hotpink; font-weight: 700">Welcome to Just the Tip Dating</h1>
         <p class="lead">A dating site for desires out of the ordinary</p>
 
     </div>
-    
+
 </div>
 
 
-<div class=" row">
+<div class=" row test">
     <div class="col-md-5">
         @Html.ActionLink("Register", "../Account/Register", null, new { @class = "btn-lg btn-block text-center", @style = "text-align: center; background-color: hotpink; font-weight: 800; color: black", @role = "button" })
     </div>
 </div>
 <br />
 <div class=" row">
-    <div class="col-md-5">
-        @Html.ActionLink("Log in", "../Account/Login", null, new { @class = "btn-lg btn-block text-center", @style = "text-align: center; background-color: hotpink; font-weight: 800; color: black", @role = "button" })
+    <div class="col-md-5 test">
+        @Html.ActionLink("Log in", "../Account/Login", null, new { @id = "startpagebtn", @class = "btn-lg btn-block text-center", @style = "text-align: center; background-color: hotpink; font-weight: 800; color: black", @role = "button" })
     </div>
     <div class="col-md-2">
         <b style="font-weight: 900">Our model:</b>
         <p>We strive to achieve the best possible matching experience for our users.</p>
     </div>
 </div>
+
+<div class="row col-md-12">
+    <h2>Here's a few of our awesome members!</h2>
+    <div class="col-md-3" id="exampleusers">
+        <a href="@Url.Action("Index", "Profile", null)">
+            <img src="https://images.cdn.yle.fi/image/upload/f_auto,fl_progressive/q_88/w_1600,h_900,c_crop,x_0,y_0/w_500/v1464516465/14-svyle-289622574abf4fecb6f.jpg" alt="No image" style="max-height: 200px; max-width: 200px;" class="img-circle" />
+            <h3>Harambe, 35</h3>
+            </a>
+    </div>
+    <div class="col-md-3">
+        <img src="http://dianasuemi.com/wp-content/uploads/2017/08/QwupPdD.png" alt="No image" style="max-height: 200px; max-width: 200px;" class="img-circle" />
+        <h3>Pocahontas, 18</h3>
+    </div>
+    <div class="col-md-3">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShAT2U4MG4w-yy9z0exnrJPJJKETvcyGyhNVg7N-_MSBs2ju_W" alt="No image" style="max-height: 200px; max-width: 200px;" class="img-circle" />
+        <h3>NotPsycho, 69</h3>
+        </a>
+    </div>
+</div>
+
+<style>
+    .col-md-3 {
+        text-align: center;
+    }
+    #exampleusers {
+        border: solid 1px pink;
+    }
+    #exampleusers:hover {
+        background-color: lightpink;
+    }
+</style>

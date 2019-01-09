@@ -19,120 +19,126 @@
         <img style="max-height: 100%; max-width: 100%; height:auto; width:auto" class="img-circle "  src="@Model.ProfilePicUrl" alt="https://makehimyours.com.au/wp-content/uploads/2016/11/Depositphotos_9830876_l-2015Optimised.jpg" />
     </div>
     <div class="col-md-4 ">
-        <h1>Posts</h1>
-        <table id="message_table" class="table table-striped table-bordered table-hover table-dark">
-            <thead style="background-color: lightblue">
-                <tr>
-                    <th scope="col" width="20%"></th>
-                    <th scope="col">#</th>
-                </tr>
-            </thead>
-            <tbody>
-                @{
-                    foreach (var user in Model.Friends)
-                    {
-                        <tr>
-                            <td><img src="@user.Key.ProfilePicUrl" alt="ProfilePic" class="img-rounded" style="max-height:50px; max-width:50px; height:auto; width:auto" /></td>
-                            <th scope="row">@user.Key.FirstName:</th>
-                        </tr>
-                        <tr>
-                            <th></th>
-                            <td><a href="@Url.Action("Index", "Profile", new { profileId = "78adccb9-758d-47ab-bf04-9533be859f16"})">waa</a></td>
-                        </tr>
-                        <tr>
-                            <td><img src="@user.Key.ProfilePicUrl" alt="ProfilePic" class="img-rounded" style="max-height:50px; max-width:50px; height:auto; width:auto" /></td>
-                            <th scope="row">@user.Key.FirstName:</th>
-                        </tr>
-                        <tr>
-                            <th></th>
-                            <td>U like banana?</td>
-                        </tr>
-                    }
-                }
-                @*<tr>
-            <th scope="row">Josef</th>
-        </tr>
-        <tr>
-            <td>Hey bby</td>
-        </tr>*@
-            </tbody>
+        <h1>Profile</h1>
+
+        <table id="profile_table" class=" table table-striped table-bordered table-bordered">
+            <tr>
+                <th class="col-md-2" scope="col" style="background-color: lightblue">Name</th>
+                <td class="col-md-3">@Model.FirstName</td>
+            </tr>
+            <tr>
+                <th scope="col" style="background-color: lightblue">Gender</th>
+                <td>
+                    @Model.Gender
+                </td>
+            </tr>
+            <tr>
+                <th scope="col" style="background-color: lightblue">Age</th>
+                <td>
+                    @{var today = DateTime.Today;
+                        var birthDate = Model.BirthDate.Value;
+                        var age = today.Year - birthDate.Year;
+                        if (birthDate > today.AddYears(-age)) { age--; }
+                    }@age
+                </td>
+            </tr>
+            <tr>
+                <th scope="col" style="background-color: lightblue">Zodiac</th>
+                <td>@Model.ZodiacSign</td>
+            </tr>
+            <tr>
+                <th scope="col" style="background-color: lightblue">Sexual Orientation</th>
+                <td>@Model.SexualOrientation</td>
+            </tr>
         </table>
     </div>
     <div class="col-md-4">
-        <h1>Friends <span class="label label-success">@Model.Friends.Count</span></h1>
-        <table id="friends_table" class=" table table-striped table-bordered table-bordered">
+        <h1>Interests</h1>
+        <table id="interests_table" class=" table table-striped table-bordered table-bordered">
             <thead style="background-color: lightblue">
-                <tr>
-                    <th scope="col" width="15%"></th>
-                    <th scope="col" width="45%">Name</th>
-                    <th scope="col">Category</th>
-                </tr>
+                <tr><th>My interests:</th></tr>
             </thead>
             <tbody>
-                @{
-                    foreach (var user in Model.Friends)
-                    {
-                        <tr>
-                            <td><img src="@user.Key.ProfilePicUrl" alt="ProfilePic" class="img-rounded" style="max-height:50px; max-width:50px; height:auto; width:auto" /></td>
-                            <td>@user.Key.FirstName</td>
-                            <td>@user.Value</td>
-                        </tr>
-                    }
-                }
+                <tr>
+                    <td class="col-md-3">Eat</td>
+                </tr>
+                <tr><td>Eat more</td></tr>
+                <tr><td>Knitting</td></tr>
+                <tr><td>Crosswords</td></tr>
             </tbody>
         </table>
+
+       
     </div>
 </div>
 <div class="row">
 
     <div class="row">
         <div class="col-md-4">
-            <h1>Profile</h1>
+            
 
-            <table id="profile_table" class=" table table-striped table-bordered table-bordered">
-                <tr>
-                    <th class="col-md-2" scope="col" style="background-color: lightblue">Name</th>
-                    <td class="col-md-3">@Model.FirstName</td>
+            <h1>Posts</h1>
+            <table id="message_table" class="table table-striped table-bordered table-hover table-dark">
+                <thead style="background-color: lightblue">
+                    <tr>
+                        <th scope="col" width="20%"></th>
+                        <th scope="col">#</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (var user in Model.Friends)
+                        {
+                            <tr>
+                                <td><img src="@user.Key.ProfilePicUrl" alt="ProfilePic" class="img-rounded" style="max-height:50px; max-width:50px; height:auto; width:auto" /></td>
+                                <th scope="row">@user.Key.FirstName:</th>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <td><a href="@Url.Action("Index", "Profile", new { profileId = "78adccb9-758d-47ab-bf04-9533be859f16"})">waa</a></td>
+                            </tr>
+                            <tr>
+                                <td><img src="@user.Key.ProfilePicUrl" alt="ProfilePic" class="img-rounded" style="max-height:50px; max-width:50px; height:auto; width:auto" /></td>
+                                <th scope="row">@user.Key.FirstName:</th>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <td>U like banana?</td>
+                            </tr>
+                        }
+                    }
+                    @*<tr>
+                    <th scope="row">Josef</th>
                 </tr>
                 <tr>
-                    <th scope="col" style="background-color: lightblue">Gender</th>
-                    <td>
-                        @Model.Gender</td>
-                </tr>
-                <tr>
-                    <th scope="col" style="background-color: lightblue">Age</th>
-                    <td>
-                        @{var today = DateTime.Today;
-                            var birthDate = Model.BirthDate.Value;
-                            var age = today.Year - birthDate.Year;
-                            if (birthDate > today.AddYears(-age)) { age--; }
-                        }@age </td>
-                </tr>
-                <tr>
-                    <th scope="col" style="background-color: lightblue">Zodiac</th>
-                    <td>@Model.ZodiacSign</td>
-                </tr>
-                <tr>
-                    <th scope="col" style="background-color: lightblue">Sexual Orientation</th>
-                    <td>@Model.SexualOrientation</td>
-                </tr>
+                    <td>Hey bby</td>
+                </tr>*@
+                </tbody>
             </table>
 
         </div>
-        <div class="col-md-4 col-md-offset-4">
-            <h1>Interests</h1>
-
-            <table id="interests_table" class=" table table-striped table-bordered table-bordered">
+        <div class="col-md-4">
+            @*Sätt in friends här*@
+            <h1>Friends <span class="label label-success">@Model.Friends.Count</span></h1>
+            <table id="friends_table" class=" table table-striped table-bordered table-bordered">
                 <thead style="background-color: lightblue">
-                    <tr><th>My interests:</th></tr>
+                    <tr>
+                        <th scope="col" width="15%"></th>
+                        <th scope="col" width="45%">Name</th>
+                        <th scope="col">Category</th>
+                    </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="col-md-3">Eat</td>
-                    </tr>
-                    <tr><td>Eat more</td></tr>
-                    <tr><td>Knitting</td></tr>
-                    <tr><td>Crosswords</td></tr>
+                    @{
+                        foreach (var user in Model.Friends)
+                        {
+                            <tr>
+                                <td><img src="@user.Key.ProfilePicUrl" alt="ProfilePic" class="img-rounded" style="max-height:50px; max-width:50px; height:auto; width:auto" /></td>
+                                <td>@user.Key.FirstName</td>
+                                <td>@user.Value</td>
+                            </tr>
+                        }
+                    }
                 </tbody>
             </table>
         </div>
