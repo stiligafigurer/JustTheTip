@@ -13,9 +13,9 @@ namespace JustTheTip.Controllers
     public class ProfileController : Controller
     {
         // GET: Profile
-        public ActionResult Index(ProfileViewModel model, string profileId)
+        public ActionResult Index(string ProfileId)
         {
-
+            var model = new ProfileViewModel();
             var userId = User.Identity.GetUserId();
             if (userId != null)
             {
@@ -25,9 +25,9 @@ namespace JustTheTip.Controllers
                 var interestContext = new InterestsDbContext();
 
                 //Checks if the current user is the owner of the profile
-                if (userId != profileId && profileId != null)
+                if (userId != ProfileId && ProfileId != null)
                 {
-                    userId = profileId;
+                    userId = ProfileId;
                 };
                 var user = userContext.Users.FirstOrDefault(u => u.UserId == userId);
                 List<InterestsModel> interestsList = interestContext.Friends.Where(u => u.UserId == userId).ToList();
@@ -147,6 +147,59 @@ namespace JustTheTip.Controllers
             }
 
             return compatibility;
+        }
+
+        public ActionResult Add(string id)
+        {
+            var userContext = new UserDbContext();
+            var friendsContext = new FriendsDbContext();
+            var requestsContext = new FriendRequestDbContext();
+            var userId = User.Identity.GetUserId();
+
+            // Check that the sender hasn't already sent a request
+            var sentRequest = requestsContext.FriendRequests.Where(u => u.UserId == userId && u.FriendId == id);
+            if (sentRequest.Count() == 0)
+            {
+                // Check that the recipient hasn't already sent a request (redirect to requests page if they have)
+                var receivedRequest = requestsContext.FriendRequests.Where(u => u.UserId == id && u.FriendId == userId);
+                if (receivedRequest.Count() == 0)
+                {
+                    // Check that the users aren't already friends && that the user isn't trying to add themself
+                    var friends = friendsContext.Friends.Where(u => u.User.UserId == userId && u.Friend.UserId == id);
+                    if (friends.Count() == 0 && userId != id)
+                    {
+                        requestsContext.FriendRequests.Add(new FriendRequestModel
+                        {
+                            UserId = userId,
+                            FriendId = id,
+                            Seen = false
+                        });
+                        requestsContext.SaveChanges();
+                    }
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Friends");
+                }
+            }
+            // TODO: Change to appropriate action once the method has been moved to ProfileController
+            return (RedirectToAction("Index", "Profile", new { profileId = id }));
+        }
+
+
+        public ActionResult CompabilitySearch(string userId)
+        {
+            var userContext = new UserDbContext();
+            var userDict = new Dictionary<UserModel, int>();
+            List<UserModel> userList = new List<UserModel>();
+            userList.AddRange(userContext.Users.Where(u => u.UserId != userId));
+            foreach (var user in userList)
+            {
+                var score = CheckCompatibility(user.UserId);
+                userDict.Add(user, score);
+            }
+            //Dictionary<UserModel, int> orderedUserDict = (Dictionary<UserModel, int>)userDict.OrderBy(x => x.Value);
+            return View("~/Views/User/CompabilitySearch.cshtml", userDict);
         }
     }
 }

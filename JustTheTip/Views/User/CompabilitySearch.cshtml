@@ -1,0 +1,56 @@
+﻿@model Dictionary<JustTheTip.Models.UserModel, int>
+
+@{
+    ViewBag.Title = "Search";
+}
+<h2>Search results</h2>
+
+<div class="col-md-8">
+    <table id="search_table" class=" table table-striped table-bordered table-bordered">
+        <thead style="background-color: lightblue">
+            <tr>
+                <th scope="col" width="7%"></th>
+                <th scope="col" width="45%">Name</th>
+                <th scope="col" width="25%">Gender</th>
+                <th scope="col">Age</th>
+                <th scope="col">Compability</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{ foreach (var item in Model)
+                {
+
+
+                    <tr>
+                        <td><a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @item.Key.UserId})"><img src="@item.Key.ProfilePicUrl" alt="ProfilePic" class="img-rounded" style="max-height:50px; max-width:50px; height:auto; width:auto" /></a></td>
+                        <td><a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @item.Key.UserId})">@item.Key.FirstName @item.Key.LastName</a></td>
+                        <td><a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @item.Key.UserId})">@item.Key.Gender</a></td>
+
+                        <td>
+                            <a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @item.Key.UserId})">
+                                @{var today = DateTime.Today;
+                                    var birthDate = item.Key.BirthDate.Value;
+                                    var age = today.Year - birthDate.Year;
+                                    if (birthDate > today.AddYears(-age)) { age--; }
+                                }@age
+                            </a>
+                        </td>
+                        <td>@item.Value%</td>
+                        <td><a class="table-link" href="@Url.Action("Add", "Profile", new { id = item.Key.UserId })">Add</a></td>
+                    </tr>
+
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+
+
+
+

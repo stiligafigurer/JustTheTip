@@ -9,16 +9,22 @@
 
 
 <h2>@Model.FirstName  @Model.LastName</h2>
-@{ if (@Model.Compatibility >= 0)
-    {
-        <div class="progress">
+@if (@Model.Compatibility >= 0)
+{
+    <div class="progress">
 
-            <div class="progress-bar" role="progressbar" aria-valuenow=@Model.Compatibility aria-valuemin="0" aria-valuemax="100" style="width:@Model.Compatibility%;">
-                Match Probability!
-            </div>
-
+        <div class="progress-bar" role="progressbar" aria-valuenow=@Model.Compatibility aria-valuemin="0" aria-valuemax="100" style="width:@Model.Compatibility%;">
+            Match Probability!
         </div>
-    }
+
+    </div>
+
+}
+@if (@Model.Compatibility < 0)
+{
+    <div class="btn">
+        <a class="table-link" href="@Url.Action("CompabilitySearch", "Profile", new { userId = Model.UserId})">Search for compatible partners</a>
+    </div>
 }
 <div class="row">
     <div class="col-md-4">

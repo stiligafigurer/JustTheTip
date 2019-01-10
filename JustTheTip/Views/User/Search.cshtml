@@ -13,6 +13,7 @@
                 <th scope="col" width="45%">Name</th>
                 <th scope="col" width="25%">Gender</th>
                 <th scope="col">Age</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
@@ -20,20 +21,22 @@
                 {
 
 
-                    <tr>
-                        <td><a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @item.UserId})"><img src="@item.ProfilePicUrl" alt="ProfilePic" class="img-rounded" style="max-height:50px; max-width:50px; height:auto; width:auto" /></a></td>
-                        <td><a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @item.UserId})">@item.FirstName @item.LastName</a></td>
-                        <td><a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @item.UserId})">@item.Gender</a></td>
-                        <td>
-                            <a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @item.UserId})">
-                                @{var today = DateTime.Today;
-                                    var birthDate = item.BirthDate.Value;
-                                    var age = today.Year - birthDate.Year;
-                                    if (birthDate > today.AddYears(-age)) { age--; }
-                                }@age
-                            </a>
-                        </td>
-                    </tr>
+            <tr>
+                <td><a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @item.UserId})"><img src="@item.ProfilePicUrl" alt="ProfilePic" class="img-rounded" style="max-height:50px; max-width:50px; height:auto; width:auto" /></a></td>
+                <td><a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @item.UserId})">@item.FirstName @item.LastName</a></td>
+                <td><a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @item.UserId})">@item.Gender</a></td>
+
+                <td>
+                    <a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @item.UserId})">
+                        @{var today = DateTime.Today;
+                            var birthDate = item.BirthDate.Value;
+                            var age = today.Year - birthDate.Year;
+                            if (birthDate > today.AddYears(-age)) { age--; }
+                        }@age
+                    </a>
+                </td>
+                <td><a class="table-link" href="@Url.Action("Add", "Profile", new { id = item.UserId })">Add</a></td>
+            </tr>
 
                 }
             }

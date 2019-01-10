@@ -90,37 +90,7 @@ namespace JustTheTip.Controllers {
             var users = userContext.Users.ToList();
             return View(users);
         }
-
-        // TODO: Move this action to ProfileController when it's done
-        public ActionResult Add(string id) {
-            var userContext = new UserDbContext();
-            var friendsContext = new FriendsDbContext();
-            var requestsContext = new FriendRequestDbContext();
-            var userId = User.Identity.GetUserId();
-
-            // Check that the sender hasn't already sent a request
-            var sentRequest = requestsContext.FriendRequests.Where(u => u.UserId == userId && u.FriendId == id);
-            if (sentRequest.Count() == 0) {
-                // Check that the recipient hasn't already sent a request (redirect to requests page if they have)
-                var receivedRequest = requestsContext.FriendRequests.Where(u => u.UserId == id && u.FriendId == userId);
-                if (receivedRequest.Count() == 0) {
-                    // Check that the users aren't already friends && that the user isn't trying to add themself
-                    var friends = friendsContext.Friends.Where(u => u.User.UserId == userId && u.Friend.UserId == id);
-                    if (friends.Count() == 0 && userId != id) {
-                        requestsContext.FriendRequests.Add(new FriendRequestModel {
-                            UserId = userId,
-                            FriendId = id,
-                            Seen = false
-                        });
-                        requestsContext.SaveChanges();
-                    }
-                } else {
-                    return RedirectToAction("Index", "Friends");
-                }
-            }
-            // TODO: Change to appropriate action once the method has been moved to ProfileController
-            return RedirectToAction("All", "User");
-        }
+ 
 
         [HttpGet]
         public ActionResult Search(string srchterm)
@@ -155,5 +125,6 @@ namespace JustTheTip.Controllers {
             }
             return View(validUserListNoDup);
         }
+
     }
 }
