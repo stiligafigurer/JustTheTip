@@ -155,7 +155,7 @@
     <script>
         // Update list of posts
         function update() {
-            $.get('api/posts/getposts?id=' + '@(Model.UserId)', function (posts) {
+            $.get('api/profile/get-posts?id=' + '@(Model.UserId)', function (posts) {
                 $('#posts').text(''); // Clear list of posts
 
                 posts.forEach(function (post) {
@@ -189,45 +189,45 @@
         // Submit a new post
         $('#new-post-submit').click(function () {
             var content = $('#new-post').val();
-            if (content.length <= 140) {
-                var post = { RecipientId: '@(Model.UserId)', Content: content };
-                $.ajax({
-                    type: "POST",
-                    data: JSON.stringify(post),
-                    url: "api/posts/submit",
-                    contentType: "application/json"
-                });
-                $('#new-post').val('');
-                $('#posts').fadeOut();
-                setTimeout(
-                    function () {
-                        update();
-                        $('#posts').fadeIn();
-                        }, 500);
+
+            // Enforce the 140 character limit with an iron fist
+            if (!content.length <= 140) {
+                content.substring(0, 140);
             }
+
+            var post = { RecipientId: '@(Model.UserId)', Content: content };
+            $.ajax({
+                type: "POST",
+                data: JSON.stringify(post),
+                url: "api/profile/submit-post",
+                contentType: "application/json",
+            });
+
+            $('#new-post').val('');
+            $('#posts').fadeOut();
+            setTimeout(
+                function () {
+                    update();
+                    $('#posts').fadeIn();
+                }, 500);
+            return false; // Prevents the page from refreshing for some strange reason
         });
 
         // Remove a post
         function remove(id) {
             if (confirm('Delete post?')) {
-            $.post('api/posts/remove?id=' + id, function () {
+            $.post('api/profile/remove-post?id=' + id, function () {
                 $('#posts').fadeOut();
                 setTimeout(
                     function () {
                         update();
                         $('#posts').fadeIn();
                     }, 500);
-            
                 });
             }
         }
 
-        // Enforce textarea maxlength in browsers that don't support the attribute
-        $("textarea[maxlength]").on("propertychange input", function () {
-            if (this.value.length > this.maxlength) {
-                this.value = this.value.substring(0, this.maxlength);
-            }
-        });
+        // TODO: Add visitor to Visits table and add it to the view
 
         // Call update() when the page loads
         $(function () {

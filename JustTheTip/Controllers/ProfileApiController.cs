@@ -6,11 +6,11 @@ using System.Web;
 using System.Web.Http;
 
 namespace JustTheTip.Controllers {
-    [RoutePrefix("api/posts")]
-    public class PostApiController : ApiController {
+    [RoutePrefix("api/profile")]
+    public class ProfileApiController : ApiController {
         [HttpGet]
-        [Route("getposts")]
-        public PostViewModel[] Get(string id) { // api/posts/get?id=XXX
+        [Route("get-posts")]
+        public PostViewModel[] Get(string id) { // api/profile/get-posts?id=XXX
             var posts = new PostDbContext().Posts.Where(p => p.RecipientId == id).OrderByDescending(p => p.Date);
             var postList = new List<PostViewModel>();
             foreach (var post in posts) {
@@ -28,8 +28,8 @@ namespace JustTheTip.Controllers {
         }
 
         [HttpPost]
-        [Route("submit")]
-        public IHttpActionResult Submit([FromBody] PostModel post) { // api/posts/submit?recipient=XXX?content=YYY
+        [Route("submit-post")]
+        public IHttpActionResult Submit([FromBody] PostModel post) { // api/profile/submit-post?recipient=XXX?content=YYY
             var userId = User.Identity.GetUserId();
             // HTML-Encode the post content to prevent any funny business
             var content = HttpUtility.HtmlEncode(post.Content);
@@ -49,8 +49,8 @@ namespace JustTheTip.Controllers {
         }
 
         [HttpPost]
-        [Route("remove")]
-        public IHttpActionResult Remove(int id) { // api/posts/remove?id=XXX
+        [Route("remove-post")]
+        public IHttpActionResult Remove(int id) { // api/profile/remove-post?id=XXX
             var userId = User.Identity.GetUserId();
             var postContext = new PostDbContext();
             var postToRemove = postContext.Posts.FirstOrDefault(p => p.PostId == id);
