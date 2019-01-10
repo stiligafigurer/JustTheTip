@@ -21,6 +21,7 @@ namespace JustTheTip.Controllers
             {
                 var userContext = new UserDbContext();
                 var friendContext = new FriendsDbContext();
+                var friendReqContext = new FriendRequestDbContext();
                 var postContext = new PostDbContext();
                 var interestContext = new InterestsDbContext();
 
@@ -34,7 +35,7 @@ namespace JustTheTip.Controllers
                 List<FriendsModel> friendList = friendContext.Friends.Where
                     (u => u.UserId == userId).ToList();
                 List<PostModel> PostList = postContext.Friends.Where(u => u.RecipientId == userId).ToList();
-
+                
                 var UserPostList = new List<UserPostViewModel>();
                 //Puts all posts to the user in a viewmodel with post- and user info
                 foreach (var item in PostList)
@@ -52,6 +53,23 @@ namespace JustTheTip.Controllers
                         LastName = userInfo.LastName,
                     };
                     UserPostList.Add(modelView);
+                }
+                var friendRequestList = friendReqContext.FriendRequests.ToList();
+                //checks if any friendrequest between the users exists. False disables add friend
+                foreach(var item in friendRequestList)
+                {
+                    if (item.FriendId == ProfileId && item.UserId == User.Identity.GetUserId())
+                    {
+                        model.HasPendingRequest = true;
+                    }
+                }
+                //Checks if the users are already friends. False disables add friend.
+                foreach(var item in friendList)
+                {
+                    if (item.UserId == ProfileId && item.FriendId == User.Identity.GetUserId())
+                    {
+                        model.IsFriend = true;
+                    }
                 }
 
                 var UserDict = new Dictionary<UserModel, string>();

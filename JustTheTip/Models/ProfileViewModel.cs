@@ -20,5 +20,7 @@ namespace JustTheTip.Models
         public int Compatibility { get; set; }
         public List<UserPostViewModel> Posts { get; set; }
         public List<InterestsModel> Interests { get; set; }
+        public bool IsFriend { get; set; }
+        public bool HasPendingRequest { get; set; }
     }
 }
