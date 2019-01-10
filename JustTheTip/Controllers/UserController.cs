@@ -1,5 +1,6 @@
 ﻿using JustTheTip.Models;
 using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
@@ -25,7 +26,7 @@ namespace JustTheTip.Controllers {
                 LastName = currentUser?.LastName,
                 Gender = currentUser?.Gender,
                 SexualOrientation = currentUser?.SexualOrientation,
-                BirthDate = (System.DateTime) currentUser?.BirthDate,
+                BirthDate = (DateTime)currentUser?.BirthDate,
                 ProfilePicUrl = currentUser?.ProfilePicUrl,
                 ZodiacSign = currentUser?.ZodiacSign,
                 Country = currentUser?.Country,
@@ -65,6 +66,7 @@ namespace JustTheTip.Controllers {
                 currentUser.Country = model.Country;
                 currentUser.ActiveUser = model.ActiveUser;
             }
+
             try {
                 userContext.SaveChanges();
             } catch (DbEntityValidationException e) {
@@ -89,20 +91,69 @@ namespace JustTheTip.Controllers {
             return View(users);
         }
 
+        // TODO: Move this action to ProfileController when it's done
         public ActionResult Add(string id) {
             var userContext = new UserDbContext();
-            var userId = User.Identity.GetUserId();
-            var currentUser = userContext.Users.FirstOrDefault(u => u.UserId == userId);
-
             var friendsContext = new FriendsDbContext();
-            friendsContext.Friends.Add(new FriendsModel {
-                UserId = userId,
-                FriendId = id,
-                Category = "Friend"
-            });
-            friendsContext.SaveChanges();
+            var requestsContext = new FriendRequestDbContext();
+            var userId = User.Identity.GetUserId();
 
+            // Check that the sender hasn't already sent a request
+            var sentRequest = requestsContext.FriendRequests.Where(u => u.UserId == userId && u.FriendId == id);
+            if (sentRequest.Count() == 0) {
+                // Check that the recipient hasn't already sent a request (redirect to requests page if they have)
+                var receivedRequest = requestsContext.FriendRequests.Where(u => u.UserId == id && u.FriendId == userId);
+                if (receivedRequest.Count() == 0) {
+                    // Check that the users aren't already friends && that the user isn't trying to add themself
+                    var friends = friendsContext.Friends.Where(u => u.User.UserId == userId && u.Friend.UserId == id);
+                    if (friends.Count() == 0 && userId != id) {
+                        requestsContext.FriendRequests.Add(new FriendRequestModel {
+                            UserId = userId,
+                            FriendId = id,
+                            Seen = false
+                        });
+                        requestsContext.SaveChanges();
+                    }
+                } else {
+                    return RedirectToAction("Index", "Friends");
+                }
+            }
+            // TODO: Change to appropriate action once the method has been moved to ProfileController
             return RedirectToAction("All", "User");
+        }
+
+        [HttpGet]
+        public ActionResult Search(string srchterm)
+        {
+            if (srchterm == null)
+            {
+                srchterm = "joahn löfven";
+            }
+            string[] nameArr = srchterm.Split(' ');
+            var userContext = new UserDbContext();
+            List<UserModel> validUserList = new List<UserModel>();
+            foreach (var word in nameArr) {
+                validUserList.AddRange(userContext.Users.Where(u => u.FirstName == word).ToList());
+                validUserList.AddRange(userContext.Users.Where(u => u.LastName == word));
+            }
+            var validUserListNoDup = new List<UserModel>();
+            for(int i = 0; i < validUserList.Count; i++)
+            {
+                bool hasMatch = false;
+                for (int e = i + 1; e < validUserList.Count; e++)
+                {
+                    
+                    if(validUserList[i].UserId == validUserList[e].UserId)
+                    {
+                        hasMatch = true;
+                    }
+                }
+                if(!hasMatch)
+                {
+                    validUserListNoDup.Add(validUserList[i]);
+                }
+            }
+            return View(validUserListNoDup);
         }
     }
 }

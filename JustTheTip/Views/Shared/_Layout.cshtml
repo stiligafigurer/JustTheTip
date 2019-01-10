@@ -6,7 +6,8 @@
     <title>@ViewBag.Title - JustTheTip</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+          crossorigin="anonymous">
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -29,23 +30,46 @@
                         <li>@Html.ActionLink("Settings", "Index", "User")</li>
                     }
                 </ul>
-                <a  href='@Url.Action("Friends", "Profile")'>
-                    <img onclick=hejsan() id="newfriend" class="nav navbar-nav" src='@Url.Content("~/Pictures/friend.png")' height="40" width="40"/>
-                </a>
+                @if (User.Identity.IsAuthenticated) {
+                    // Create a different button depending on whether the user has any new friend requests
+                    if (Html.Action("NewRequests", "Friends").ToString() == "true") {
+                        <div class="navbar-header">
+                            <button style="color: mediumseagreen;" class="btn-navbar" title="Friends & requests" onclick="location.href='@Url.Action("Index", "Friends")'"><i id="friendnavbaricon" class="fas fa-user-plus"></i></button>
+                        </div>
+                    } else {
+                        <div class="navbar-header">
+                            <button style="color: grey;" class="btn-navbar" title="Friends & requests" onclick="location.href='@Url.Action("Index", "Friends")'"><i id="friendnavbaricon" class="fas fa-user"></i></button>
+                        </div>
+                    }
+                }
                 <style>
-                    .svartvit {
-                        filter: gray; /* IE6-9 */
-                        --webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
-                        filter: grayscale(1); /**Edge FF 35+*/
+                    .btn-navbar {
+                        padding-top: 7px;
+                        border: none;
+                        background-color: transparent;
+                        /*visibility: hidden;*/
+                    }
+
+                    .fa-user-plus, .fa-user {
+                        font-size: 35px;
+                    }
+
+                    .btn-navbar:hover {
+                        color: darkslategray;
                     }
                 </style>
-                <script>
-                        function hejsan() {
-                            $("#newfriend").addClass("svartvit");
-                            //$(".svartvit").hide();
-                        } 
-                </script>
-                
+                <div class="col-sm-3 col-md-3">
+                    @using (Html.BeginForm("Search", "User", FormMethod.Get)) { 
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search" name="srchterm" id="srchterm" runat="server">
+                            <div class="input-group-btn">
+                                <a href="@Url.Action("Search", "User", new { query = Request.Form["srchterm"] })" >
+
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
 
                 @Html.Partial("_LoginPartial")
             </div>
@@ -54,9 +78,6 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer>
-            <p class="navbar-fixed-bottom">&copy; @DateTime.Now.Year - JustTheTip&#8482;</p>
-        </footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")

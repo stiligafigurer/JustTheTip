@@ -1,13 +1,19 @@
-namespace JustTheTip.Migrations {
+namespace JustTheTip.Migrations
+{
+    using System;
+    using System.Data.Entity;
     using System.Data.Entity.Migrations;
+    using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Models.FriendsDbContext> {
-        public Configuration() {
-            AutomaticMigrationsEnabled = true;
-            ContextKey = "JustTheTip.Models.ProfileDbContext";
+    internal sealed class Configuration : DbMigrationsConfiguration<JustTheTip.Models.UserDbContext>
+    {
+        public Configuration()
+        {
+            AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(Models.FriendsDbContext context) {
+        protected override void Seed(JustTheTip.Models.UserDbContext context)
+        {
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
