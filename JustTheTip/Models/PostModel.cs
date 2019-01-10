@@ -8,20 +8,25 @@ namespace JustTheTip.Models {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PostId { get; set; }
 
-        //[ForeignKey("Poster")]
         public string PosterId { get; set; }
-        //public virtual UserModel Poster {get; set;}
-
-        //[ForeignKey("Recipient")]
         public string RecipientId { get; set; }
-        //public virtual UserModel Recipient { get; set; }
-
         public string Content { get; set; }
         public DateTime Date { get; set; }
     }
 
+    public class PostViewModel {
+        [Key]
+        public int PostId { get; set; }
+        public string PosterId { get; set; }
+        public string Content { get; set; }
+        public DateTime Date { get; set; }
+
+        public string ProfilePicUrl { get; set; }
+        public string PosterName { get; set; }
+    }
+
     public class PostDbContext : DbContext {
-        public DbSet<PostModel> Friends { get; set; }
+        public DbSet<PostModel> Posts { get; set; }
 
         public PostDbContext() : base("JustTheTip") { }
     }

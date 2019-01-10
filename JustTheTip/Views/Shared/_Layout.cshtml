@@ -59,11 +59,11 @@
                     }
                 </style>
                 <div class="col-sm-3 col-md-3">
-                    @using (Html.BeginForm("Search", "User", FormMethod.Get)) { 
+                    @using (Html.BeginForm("Search", "User", FormMethod.Get)) {
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Search" name="srchterm" id="srchterm" runat="server">
                             <div class="input-group-btn">
-                                <a href="@Url.Action("Search", "User", new { query = Request.Form["srchterm"] })" >
+                                <a href="@Url.Action("Search", "User", new { query = Request.Form["srchterm"] })">
 
                                 </a>
                             </div>
@@ -81,6 +81,7 @@
     </div>
 
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>

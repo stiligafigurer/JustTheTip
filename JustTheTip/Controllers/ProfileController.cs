@@ -28,7 +28,7 @@ namespace JustTheTip.Controllers
                 var user = userContext.Users.FirstOrDefault(u => u.UserId == userId);
                 List<FriendsModel> friendList = friendContext.Friends.Where
                     (u => u.UserId == userId).ToList();
-                List<PostModel> PostList = postContext.Friends.Where(u => u.RecipientId == userId).ToList();
+                List<PostModel> PostList = postContext.Posts.Where(u => u.RecipientId == userId).ToList();
                 var UserPostList = new List<UserPostViewModel>();
                 foreach(var item in PostList)
                 {
@@ -64,6 +64,8 @@ namespace JustTheTip.Controllers
                 model.Friends = UserDict;
                 model.Compatibility = CheckCompatibility(user.UserId);
                 model.Posts = UserPostList;
+
+                ViewBag.Id = userId;
 
                 return View(model);
               }

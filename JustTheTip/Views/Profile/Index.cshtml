@@ -9,8 +9,7 @@
 
 
 <h2>@Model.FirstName  @Model.LastName</h2>
-@{ if (@Model.Compatibility >= 0)
-    {
+@{ if (@Model.Compatibility >= 0) {
         <div class="progress">
 
             <div class="progress-bar" role="progressbar" aria-valuenow=@Model.Compatibility aria-valuemin="0" aria-valuemax="100" style="width:@Model.Compatibility%;">
@@ -26,26 +25,26 @@
     </div>
     <div class="col-md-4 ">
         <h1>Posts</h1>
-        <table id="message_table" class="table table-striped table-bordered table-hover table-dark">
+        <table class="table table-striped table-bordered table-hover table-dark">
             <thead style="background-color: lightblue">
                 <tr>
                     <th scope="col" width="20%"></th>
                     <th scope="col">#</th>
                 </tr>
             </thead>
-            <tbody>
-                @foreach (var post in Model.Posts)
-                {
+            <tbody id="posts">
+                @*@foreach (var post in Model.Posts)
+                    {
 
-                    <tr>
-                        <td>
-                            <a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = post.PosterId})">
-                                <img src="@post.ProfilePicUrl" alt="ProfilePic" class="img-rounded" style="max-height:50px; max-width:50px; height:auto; width:auto" />
-                            </a>
-                        </td>
-                        <td scope="row"><a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = post.PosterId})">@post.FirstName:</a> @post.Content </td>
-                    </tr>
-                }
+                        <tr>
+                            <td>
+                                <a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = post.PosterId})">
+                                    <img src="@post.ProfilePicUrl" alt="ProfilePic" class="img-rounded" style="max-height:50px; max-width:50px; height:auto; width:auto" />
+                                </a>
+                            </td>
+                            <td scope="row"><a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = post.PosterId})">@post.FirstName:</a> @post.Content </td>
+                        </tr>
+                    }*@
 
                 @*<tr>
                         <th scope="row">Josef</th>
@@ -61,15 +60,19 @@
         <table id="friends_table" class=" table table-striped table-bordered table-bordered">
             <thead style="background-color: lightblue">
                 <tr>
-                    <th scope="col" width="15%"></th>
-                    <th scope="col" width="45%">Name</th>
-                    <th scope="col">Category</th>
+                    <th scope="col" width="20%"></th>
+                    <th scope="col">#</th>
                 </tr>
             </thead>
+
+            <tr>
+                <th scope="col" width="15%"></th>
+                <th scope="col" width="45%">Name</th>
+                <th scope="col">Category</th>
+            </tr>
             <tbody>
                 @{
-                    foreach (var user in Model.Friends)
-                    {
+                    foreach (var user in Model.Friends) {
                         <tr>
                             <td><a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @user.Key.UserId})"><img src="@user.Key.ProfilePicUrl" alt="ProfilePic" class="img-rounded" style="max-height:50px; max-width:50px; height:auto; width:auto" /></a></td>
                             <td><a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @user.Key.UserId})">@user.Key.FirstName</a></td>
@@ -138,3 +141,32 @@
         </div>
     </div>
 </div>
+
+@section scripts {
+    <script>
+        $(function () {
+            // Update list of posts
+            function update() {
+                $.get('api/posts/getposts?id=' + '@(ViewBag.Id)', function (posts) {
+                    $('#posts').text(''); // Clear list of posts
+
+                    posts.forEach(function (post) {
+                        var tr = $('<tr></tr>)');
+                        tr.append(
+                            '<td>' +
+                            '<a class="table-link" href="profile?profileId=' + post.PosterId + '">' +
+                            '<img src="' + post.ProfilePicUrl + '" class="img-rounded" style="max-height:50px; max-width:50px;" />' +
+                            '</a>' +
+                            '</td>' +
+                            '<td>' +
+                            '<a class="table-link" href="profile?profileId=' + post.PosterId + '">' +
+                            post.PosterName + '</a>: ' + post.Content +
+                            '</td>');
+                        $('#posts').append(tr);
+                    });
+                });
+            }
+            update();
+            });
+    </script>
+}
