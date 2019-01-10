@@ -192,7 +192,7 @@
 
             // Enforce the 140 character limit with an iron fist
             if (!content.length <= 140) {
-                content.substring(0, 140);
+                content = content.substring(0, 140);
             }
 
             var post = { RecipientId: '@(Model.UserId)', Content: content };
@@ -227,11 +227,20 @@
             }
         }
 
-        // TODO: Add visitor to Visits table and add it to the view
+        function visit() {
+            var id = '@Model.UserId';
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(id),
+                url: 'api/profile/visit',
+                contentType: 'application/json',
+            });
+        }
 
         // Call update() when the page loads
         $(function () {
             update();
+            visit();
         });
     </script>
 }

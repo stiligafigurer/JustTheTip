@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 
@@ -67,6 +68,29 @@ namespace JustTheTip.Controllers {
             } else {
                 return base.BadRequest();
             }
+        }
+
+        [HttpPost]
+        [Route("visit")]
+        public IHttpActionResult Visit([FromBody] string id) { // api/profile/visit?request=XXX
+            var userId = User.Identity.GetUserId();
+            var visitorsContext = new VisitorsDbContext();
+
+            // Only log visits to other people's profiles
+            if (id != null && id != userId) {
+                visitorsContext.Visitors.Add(new VisitorsModel {
+                    UserId = userId,
+                    VisitedId = id,
+                    Date = System.DateTime.Now
+                });
+
+                try {
+                    visitorsContext.SaveChanges();
+                } catch {
+                    return base.BadRequest();
+                }
+            }
+            return base.Ok();
         }
     }
 }
