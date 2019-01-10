@@ -11,6 +11,22 @@
 <h2>@Model.FirstName  @Model.LastName</h2>
 @if (@Model.Compatibility >= 0)
 {
+    if (Model.IsFriend)
+    {
+        <div>@Html.ActionLink("You are friends", "../Friends", null, new { @class = "btn-lg btn-block text-center", @style = "width: 200px; text-align: center; background-color: hotpink; font-weight: 800; color: black", @role = "button" })</div>
+    }
+    else if (Model.HasPendingRequest)
+    {
+        <div>@Html.ActionLink("Friend-request sent", "../Friends", null, new { @class = "btn-lg btn-block text-center", @style = "width: 200px; text-align: center; background-color: hotpink; font-weight: 800; color: black", @role = "button" })</div>
+    }
+    else
+    {
+        <div>@Html.ActionLink("Add friend", "Add", new { id = Model.UserId }, new { @class = "btn-lg btn-block text-center", @style = "width: 200px; text-align: center; background-color: hotpink; font-weight: 800; color: black", @role = "button" })</div>
+    }
+
+
+    <br />
+
     <div class="progress">
 
         <div class="progress-bar" role="progressbar" aria-valuenow=@Model.Compatibility aria-valuemin="0" aria-valuemax="100" style="width:@Model.Compatibility%;">
