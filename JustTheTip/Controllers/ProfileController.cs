@@ -22,7 +22,6 @@ namespace JustTheTip.Controllers
                 var userContext = new UserDbContext();
                 var friendContext = new FriendsDbContext();
                 var friendReqContext = new FriendRequestDbContext();
-                var postContext = new PostDbContext();
                 var interestContext = new InterestsDbContext();
 
                 //Checks if the current user is the owner of the profile
@@ -34,26 +33,7 @@ namespace JustTheTip.Controllers
                 List<InterestsModel> interestsList = interestContext.Friends.Where(u => u.UserId == userId).ToList();
                 List<FriendsModel> friendList = friendContext.Friends.Where
                     (u => u.UserId == userId).ToList();
-                List<PostModel> PostList = postContext.Friends.Where(u => u.RecipientId == userId).ToList();
                 
-                var UserPostList = new List<UserPostViewModel>();
-                //Puts all posts to the user in a viewmodel with post- and user info
-                foreach (var item in PostList)
-                {
-                    UserModel userInfo = userContext.Users.FirstOrDefault(u => u.UserId == item.PosterId);
-                    var modelView = new UserPostViewModel
-                    {
-                        PostId = item.PostId,
-                        PosterId = item.PosterId,
-                        RecipientId = item.RecipientId,
-                        Content = item.Content,
-                        Date = item.Date,
-                        ProfilePicUrl = userInfo.ProfilePicUrl,
-                        FirstName = userInfo.FirstName,
-                        LastName = userInfo.LastName,
-                    };
-                    UserPostList.Add(modelView);
-                }
                 var friendRequestList = friendReqContext.FriendRequests.ToList();
                 //checks if any friendrequest between the users exists. False disables add friend
                 foreach(var item in friendRequestList)
@@ -89,7 +69,6 @@ namespace JustTheTip.Controllers
                 model.Country = user.Country;
                 model.Friends = UserDict;
                 model.Compatibility = CheckCompatibility(user.UserId);
-                model.Posts = UserPostList;
                 model.Interests = interestsList;
 
                 ViewBag.Id = userId;
