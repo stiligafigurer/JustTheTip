@@ -1,4 +1,5 @@
 ﻿using JustTheTip.Models;
+using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -8,8 +9,8 @@ namespace JustTheTip.Controllers {
     public class PostApiController : ApiController {
         [HttpGet]
         [Route("getposts")]
-        public PostViewModel[] GetPosts(string id) { // api/posts/getall?id=XXX
-            var posts = new PostDbContext().Posts.Where(p => p.RecipientId == id);
+        public PostViewModel[] Get(string id) { // api/posts/get?id=XXX
+            var posts = new PostDbContext().Posts.Where(p => p.RecipientId == id).OrderByDescending(p => p.Date);
             var postList = new List<PostViewModel>();
             foreach (var post in posts) {
                 var user = new UserDbContext().Users.FirstOrDefault(u => u.UserId == post.PosterId);
@@ -25,10 +26,23 @@ namespace JustTheTip.Controllers {
             return postList.ToArray();
         }
 
-        [HttpGet]
-        [Route("getuser")]
-        public UserModel GetUser(string id) { // api/posts/getuser?id=XXX
-            return new UserDbContext().Users.FirstOrDefault(u => u.UserId == id);
+        [HttpPost]
+        [Route("submit")]
+        public IHttpActionResult Submit([FromBody] PostModel post) { // api/posts/submit?recipient=XXX?content=YYY
+            var userId = User.Identity.GetUserId();
+            try {
+                var postContext = new PostDbContext();
+                postContext.Posts.Add(new PostModel {
+                    PosterId = userId,
+                    RecipientId = post.RecipientId,
+                    Content = post.Content,
+                    Date = System.DateTime.Now
+                });
+                postContext.SaveChanges();
+                return base.Ok();
+            } catch {
+                return base.BadRequest();
+            }
         }
     }
 }

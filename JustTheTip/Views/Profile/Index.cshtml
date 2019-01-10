@@ -1,7 +1,6 @@
 ﻿@model JustTheTip.Models.ProfileViewModel
 
 
-
 @{
     ViewBag.Title = "Index";
 }
@@ -25,6 +24,11 @@
     </div>
     <div class="col-md-4 ">
         <h1>Posts</h1>
+        <div class="form-group">
+            <label for="new-post">Post dat shizzle</label>
+            <textarea class="form-control" id="new-post" rows="3" placeholder="Write something..."></textarea>
+            <button type="submit" id="new-post-submit" class="btn btn-primary">Post</button>
+        </div>
         <table class="table table-striped table-bordered table-hover table-dark">
             <thead style="background-color: lightblue">
                 <tr>
@@ -33,25 +37,7 @@
                 </tr>
             </thead>
             <tbody id="posts">
-                @*@foreach (var post in Model.Posts)
-                    {
-
-                        <tr>
-                            <td>
-                                <a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = post.PosterId})">
-                                    <img src="@post.ProfilePicUrl" alt="ProfilePic" class="img-rounded" style="max-height:50px; max-width:50px; height:auto; width:auto" />
-                                </a>
-                            </td>
-                            <td scope="row"><a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = post.PosterId})">@post.FirstName:</a> @post.Content </td>
-                        </tr>
-                    }*@
-
-                @*<tr>
-                        <th scope="row">Josef</th>
-                    </tr>
-                    <tr>
-                        <td>Hey bby</td>
-                    </tr>*@
+                @* Table filled with js further down *@
             </tbody>
         </table>
     </div>
@@ -144,10 +130,14 @@
 
 @section scripts {
     <script>
+        // Call update() when the page loads
         $(function () {
-            // Update list of posts
-            function update() {
-                $.get('api/posts/getposts?id=' + '@(ViewBag.Id)', function (posts) {
+            update();
+        });
+
+        // Update list of posts
+        function update() {
+            $.get('api/posts/getposts?id=' + '@(ViewBag.Id)', function (posts) {
                     $('#posts').text(''); // Clear list of posts
 
                     posts.forEach(function (post) {
@@ -166,7 +156,24 @@
                     });
                 });
             }
-            update();
+
+        // Submit a new post
+        $('#new-post-submit').click(function () {
+            var content = $('#new-post').val();
+            var post = { RecipientId: '@(ViewBag.Id)', Content: content };
+            $.ajax({
+                type: "POST",
+                data: JSON.stringify(post),
+                url: "api/posts/submit",
+                contentType: "application/json"
             });
+            $('#new-post').val('');
+            $('#posts').fadeOut();
+            setTimeout(
+                function () {
+                    update();
+                    $('#posts').fadeIn();
+                }, 500);
+        });
     </script>
 }
