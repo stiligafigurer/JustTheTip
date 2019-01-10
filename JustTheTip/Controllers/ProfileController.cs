@@ -92,6 +92,8 @@ namespace JustTheTip.Controllers
                 model.Posts = UserPostList;
                 model.Interests = interestsList;
 
+                ViewBag.Id = userId;
+
                 return View(model);
               }
 

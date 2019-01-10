@@ -1,7 +1,6 @@
 ﻿@model JustTheTip.Models.ProfileViewModel
 
 
-
 @{
     ViewBag.Title = "Index";
 }
@@ -48,33 +47,20 @@
     </div>
     <div class="col-md-4 ">
         <h1>Posts</h1>
-        <table id="message_table" class="table table-striped table-bordered table-hover table-dark">
+        <div class="form-group">
+            <label for="new-post">Post dat shizzle</label>
+            <textarea class="form-control" id="new-post" rows="3" placeholder="Write something..."></textarea>
+            <button type="submit" id="new-post-submit" class="btn btn-primary">Post</button>
+        </div>
+        <table class="table table-striped table-bordered table-hover table-dark">
             <thead style="background-color: lightblue">
                 <tr>
                     <th scope="col" width="20%"></th>
                     <th scope="col">#</th>
                 </tr>
             </thead>
-            <tbody>
-                @foreach (var post in Model.Posts)
-                {
-
-                    <tr>
-                        <td>
-                            <a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = post.PosterId})">
-                                <img src="@post.ProfilePicUrl" alt="ProfilePic" class="img-rounded" style="max-height:50px; max-width:50px; height:auto; width:auto" />
-                            </a>
-                        </td>
-                        <td scope="row"><a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = post.PosterId})">@post.FirstName:</a> @post.Content </td>
-                    </tr>
-                }
-
-                @*<tr>
-                        <th scope="row">Josef</th>
-                    </tr>
-                    <tr>
-                        <td>Hey bby</td>
-                    </tr>*@
+            <tbody id="posts">
+                @* Table filled with js further down *@
             </tbody>
         </table>
     </div>
@@ -83,15 +69,19 @@
         <table id="friends_table" class=" table table-striped table-bordered table-bordered">
             <thead style="background-color: lightblue">
                 <tr>
-                    <th scope="col" width="15%"></th>
-                    <th scope="col" width="45%">Name</th>
-                    <th scope="col">Category</th>
+                    <th scope="col" width="20%"></th>
+                    <th scope="col">#</th>
                 </tr>
             </thead>
+
+            <tr>
+                <th scope="col" width="15%"></th>
+                <th scope="col" width="45%">Name</th>
+                <th scope="col">Category</th>
+            </tr>
             <tbody>
                 @{
-                    foreach (var user in Model.Friends)
-                    {
+                    foreach (var user in Model.Friends) {
                         <tr>
                             <td><a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @user.Key.UserId})"><img src="@user.Key.ProfilePicUrl" alt="ProfilePic" class="img-rounded" style="max-height:50px; max-width:50px; height:auto; width:auto" /></a></td>
                             <td><a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @user.Key.UserId})">@user.Key.FirstName</a></td>
@@ -161,3 +151,53 @@
         </div>
     </div>
 </div>
+
+@section scripts {
+    <script>
+        // Call update() when the page loads
+        $(function () {
+            update();
+        });
+
+        // Update list of posts
+        function update() {
+            $.get('api/posts/getposts?id=' + '@(ViewBag.Id)', function (posts) {
+                    $('#posts').text(''); // Clear list of posts
+
+                    posts.forEach(function (post) {
+                        var tr = $('<tr></tr>)');
+                        tr.append(
+                            '<td>' +
+                            '<a class="table-link" href="profile?profileId=' + post.PosterId + '">' +
+                            '<img src="' + post.ProfilePicUrl + '" class="img-rounded" style="max-height:50px; max-width:50px;" />' +
+                            '</a>' +
+                            '</td>' +
+                            '<td>' +
+                            '<a class="table-link" href="profile?profileId=' + post.PosterId + '">' +
+                            post.PosterName + '</a>: ' + post.Content +
+                            '</td>');
+                        $('#posts').append(tr);
+                    });
+                });
+            }
+
+        // Submit a new post
+        $('#new-post-submit').click(function () {
+            var content = $('#new-post').val();
+            var post = { RecipientId: '@(ViewBag.Id)', Content: content };
+            $.ajax({
+                type: "POST",
+                data: JSON.stringify(post),
+                url: "api/posts/submit",
+                contentType: "application/json"
+            });
+            $('#new-post').val('');
+            $('#posts').fadeOut();
+            setTimeout(
+                function () {
+                    update();
+                    $('#posts').fadeIn();
+                }, 500);
+        });
+    </script>
+}
