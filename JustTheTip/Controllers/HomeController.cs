@@ -12,14 +12,12 @@ namespace JustTheTip.Controllers {
             var userDbContext = new UserDbContext();
             var userList = new List<UserModel>();
             
-
             if (Request.IsAuthenticated) {
-                var user = User.Identity.GetUserId();
-                userList.AddRange(userDbContext.Users.Where(u => u.UserId != user));
+                var userId = User.Identity.GetUserId();
+                userList.AddRange(userDbContext.Users.Where(u => u.UserId != userId).ToList());
                 return View("Index_LoggedIn", userList);
             } else {
-               
-                userList.AddRange(userDbContext.Users);
+                userList.AddRange(userDbContext.Users.ToList());
                 return View("Index", userList);
             }
 

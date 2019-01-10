@@ -8,54 +8,47 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
-namespace JustTheTip.Controllers
-{
-    public class ProfileController : Controller
-    {
+namespace JustTheTip.Controllers {
+    public class ProfileController : Controller {
+
         // GET: Profile
-        public ActionResult Index(string ProfileId)
-        {
+        public ActionResult Index(string ProfileId) {
             var model = new ProfileViewModel();
             var userId = User.Identity.GetUserId();
-            if (userId != null)
-            {
+
+            if (userId != null) {
                 var userContext = new UserDbContext();
                 var friendContext = new FriendsDbContext();
                 var friendReqContext = new FriendRequestDbContext();
                 var interestContext = new InterestsDbContext();
 
                 //Checks if the current user is the owner of the profile
-                if (userId != ProfileId && ProfileId != null)
-                {
+                if (userId != ProfileId && ProfileId != null) {
                     userId = ProfileId;
-                };
+                }
+
                 var user = userContext.Users.FirstOrDefault(u => u.UserId == userId);
                 List<InterestsModel> interestsList = interestContext.Friends.Where(u => u.UserId == userId).ToList();
                 List<FriendsModel> friendList = friendContext.Friends.Where
                     (u => u.UserId == userId).ToList();
-                
+
                 var friendRequestList = friendReqContext.FriendRequests.ToList();
                 //checks if any friendrequest between the users exists. False disables add friend
-                foreach(var item in friendRequestList)
-                {
-                    if (item.FriendId == ProfileId && item.UserId == User.Identity.GetUserId())
-                    {
+                foreach (var item in friendRequestList) {
+                    if (item.FriendId == ProfileId && item.UserId == User.Identity.GetUserId()) {
                         model.HasPendingRequest = true;
                     }
                 }
                 //Checks if the users are already friends. False disables add friend.
-                foreach(var item in friendList)
-                {
-                    if (item.UserId == ProfileId && item.FriendId == User.Identity.GetUserId())
-                    {
+                foreach (var item in friendList) {
+                    if (item.UserId == ProfileId && item.FriendId == User.Identity.GetUserId()) {
                         model.IsFriend = true;
                     }
                 }
 
                 var UserDict = new Dictionary<UserModel, string>();
                 //Puts all friends in a dictionary and pairs them with their appointed category
-                foreach (var item in friendList)
-                {
+                foreach (var item in friendList) {
                     UserDict.Add(userContext.Users.FirstOrDefault(u => u.UserId == item.FriendId), item.Category);
                 }
                 model.UserId = user.UserId;
@@ -71,19 +64,19 @@ namespace JustTheTip.Controllers
                 model.Compatibility = CheckCompatibility(user.UserId);
                 model.Interests = interestsList;
 
-                ViewBag.Id = userId;
+                ViewBag.Id = User.Identity.GetUserId();
 
                 return View(model);
-              }
+            }
 
-            return View("~/Views/Home/index.cshtml");
+            //return View("~/Views/Home/Index.cshtml");
+            return RedirectToAction("Index", "Home");
         }
         private int CheckCompatibility(string id) {
             var compatibility = 0;
             var userContext = new UserDbContext();
             var userId = User.Identity.GetUserId();
-            if(id == userId)
-            {
+            if (id == userId) {
                 return -1;
             }
 
@@ -91,12 +84,12 @@ namespace JustTheTip.Controllers
             var compareUser = userContext.Users.FirstOrDefault(u => u.UserId == id);
 
             // Check age compatibility
-            if (currentUser.BirthDate.Value.Year <= compareUser.BirthDate.Value.Year + 1 || 
+            if (currentUser.BirthDate.Value.Year <= compareUser.BirthDate.Value.Year + 1 ||
                 currentUser.BirthDate.Value.Year >= compareUser.BirthDate.Value.Year - 1) {
                 compatibility += 20;
 
-            } else if (currentUser.BirthDate.Value.Year <= compareUser.BirthDate.Value.Year +3 || 
-                currentUser.BirthDate.Value.Year >= compareUser.BirthDate.Value.Year -3) {
+            } else if (currentUser.BirthDate.Value.Year <= compareUser.BirthDate.Value.Year + 3 ||
+                currentUser.BirthDate.Value.Year >= compareUser.BirthDate.Value.Year - 3) {
                 compatibility += 10;
             } else if (currentUser.BirthDate.Value.Year <= compareUser.BirthDate.Value.Year + 5 ||
                 currentUser.BirthDate.Value.Year >= compareUser.BirthDate.Value.Year - 5) {
@@ -148,8 +141,7 @@ namespace JustTheTip.Controllers
             return compatibility;
         }
 
-        public ActionResult Add(string id)
-        {
+        public ActionResult Add(string id) {
             var userContext = new UserDbContext();
             var friendsContext = new FriendsDbContext();
             var requestsContext = new FriendRequestDbContext();
@@ -157,48 +149,39 @@ namespace JustTheTip.Controllers
 
             // Check that the sender hasn't already sent a request
             var sentRequest = requestsContext.FriendRequests.Where(u => u.UserId == userId && u.FriendId == id);
-            if (sentRequest.Count() == 0)
-            {
+            if (sentRequest.Count() == 0) {
                 // Check that the recipient hasn't already sent a request (redirect to requests page if they have)
                 var receivedRequest = requestsContext.FriendRequests.Where(u => u.UserId == id && u.FriendId == userId);
-                if (receivedRequest.Count() == 0)
-                {
+                if (receivedRequest.Count() == 0) {
                     // Check that the users aren't already friends && that the user isn't trying to add themself
                     var friends = friendsContext.Friends.Where(u => u.User.UserId == userId && u.Friend.UserId == id);
-                    if (friends.Count() == 0 && userId != id)
-                    {
-                        requestsContext.FriendRequests.Add(new FriendRequestModel
-                        {
+                    if (friends.Count() == 0 && userId != id) {
+                        requestsContext.FriendRequests.Add(new FriendRequestModel {
                             UserId = userId,
                             FriendId = id,
                             Seen = false
                         });
                         requestsContext.SaveChanges();
                     }
-                }
-                else
-                {
+                } else {
                     return RedirectToAction("Index", "Friends");
                 }
             }
-            // TODO: Change to appropriate action once the method has been moved to ProfileController
             return (RedirectToAction("Index", "Profile", new { profileId = id }));
         }
 
 
-        public ActionResult CompabilitySearch(string userId)
-        {
+        public ActionResult CompatibilitySearch(string userId) {
             var userContext = new UserDbContext();
             var userDict = new Dictionary<UserModel, int>();
             List<UserModel> userList = new List<UserModel>();
             userList.AddRange(userContext.Users.Where(u => u.UserId != userId));
-            foreach (var user in userList)
-            {
+            foreach (var user in userList) {
                 var score = CheckCompatibility(user.UserId);
                 userDict.Add(user, score);
             }
             //Dictionary<UserModel, int> orderedUserDict = (Dictionary<UserModel, int>)userDict.OrderBy(x => x.Value);
-            return View("~/Views/User/CompabilitySearch.cshtml", userDict);
+            return View("~/Views/User/CompatibilitySearch.cshtml", userDict);
         }
     }
 }

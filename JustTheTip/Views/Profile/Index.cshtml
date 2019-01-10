@@ -8,18 +8,12 @@
 
 
 <h2>@Model.FirstName  @Model.LastName</h2>
-@if (@Model.Compatibility >= 0)
-{
-    if (Model.IsFriend)
-    {
+@if (@Model.Compatibility >= 0) {
+    if (Model.IsFriend) {
         <div>@Html.ActionLink("You are friends", "../Friends", null, new { @class = "btn-lg btn-block text-center", @style = "width: 200px; text-align: center; background-color: hotpink; font-weight: 800; color: black", @role = "button" })</div>
-    }
-    else if (Model.HasPendingRequest)
-    {
+    } else if (Model.HasPendingRequest) {
         <div>@Html.ActionLink("Friend-request sent", "../Friends", null, new { @class = "btn-lg btn-block text-center", @style = "width: 200px; text-align: center; background-color: hotpink; font-weight: 800; color: black", @role = "button" })</div>
-    }
-    else
-    {
+    } else {
         <div>@Html.ActionLink("Add friend", "Add", new { id = Model.UserId }, new { @class = "btn-lg btn-block text-center", @style = "width: 200px; text-align: center; background-color: hotpink; font-weight: 800; color: black", @role = "button" })</div>
     }
 
@@ -29,16 +23,15 @@
     <div class="progress">
 
         <div class="progress-bar" role="progressbar" aria-valuenow=@Model.Compatibility aria-valuemin="0" aria-valuemax="100" style="width:@Model.Compatibility%;">
-            Match Probability!
+            Match Probability: @Model.Compatibility%
         </div>
 
     </div>
 
 }
-@if (@Model.Compatibility < 0)
-{
+@if (@Model.Compatibility < 0) {
     <div class="btn">
-        <a class="table-link" href="@Url.Action("CompabilitySearch", "Profile", new { userId = Model.UserId})">Search for compatible partners</a>
+        <a class="table-link" href="@Url.Action("CompatibilitySearch", "Profile", new { userId = Model.UserId})">Search for compatible partners</a>
     </div>
 }
 <div class="row">
@@ -47,16 +40,23 @@
     </div>
     <div class="col-md-4 ">
         <h1>Posts</h1>
-        <div class="form-group">
-            <label for="new-post">Post dat shizzle</label>
-            <textarea class="form-control" id="new-post" rows="3" placeholder="Write something..."></textarea>
-            <button type="submit" id="new-post-submit" class="btn btn-primary">Post</button>
-        </div>
+        <label for="new-post">Write something on @Model.FirstName's wall!</label>
+
+        <form class="form-inline">
+            <div class="form-group">
+                <textarea maxlength="140" class="form-control" id="new-post" rows="3" placeholder="Write something..."></textarea>
+                <button type="submit" id="new-post-submit" class="btn btn-primary" style="margin-top: 5px;">Post</button>
+            </div>
+        </form>
+        <br />
         <table class="table table-striped table-bordered table-hover table-dark">
             <thead style="background-color: lightblue">
                 <tr>
-                    <th scope="col" width="20%"></th>
-                    <th scope="col">#</th>
+                    <th colspan="2">Posts</th>
+                    @* Add another column for post deletion if visiting your own profile page *@
+                    @if (Model.UserId == ViewBag.Id) {
+                        <th scope="col" width="20%"></th>
+                    }
                 </tr>
             </thead>
             <tbody id="posts">
@@ -139,8 +139,7 @@
                     <tr><th>My passion:</th></tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.Interests)
-                    {
+                    @foreach (var item in Model.Interests) {
                         <tr>
                             <td class="col-md-3">@item.Interest</td>
                         </tr>
@@ -154,50 +153,85 @@
 
 @section scripts {
     <script>
-        // Call update() when the page loads
-        $(function () {
-            update();
-        });
-
         // Update list of posts
         function update() {
-            $.get('api/posts/getposts?id=' + '@(ViewBag.Id)', function (posts) {
-                    $('#posts').text(''); // Clear list of posts
+            $.get('api/posts/getposts?id=' + '@(Model.UserId)', function (posts) {
+                $('#posts').text(''); // Clear list of posts
 
-                    posts.forEach(function (post) {
-                        var tr = $('<tr></tr>)');
+                posts.forEach(function (post) {
+                    var tr = $('<tr></tr>)');
+                    tr.append(
+                        '<td>' +
+                        '<a class="table-link" href="profile?profileId=' + post.PosterId + '">' +
+                        '<img src="' + post.ProfilePicUrl + '" class="img-rounded" style="max-height:50px; max-width:50px;" />' +
+                        '</a>' +
+                        '</td>' +
+                        '<td>' +
+                        '<a class="table-link" href="profile?profileId=' + post.PosterId + '">' +
+                        post.PosterName + '</a>: ' + post.Content +
+                        '</td>'
+                    );
+                    // Add delete post button if visiting your own profile
+                    if ('@Model.UserId' == '@ViewBag.Id') {
                         tr.append(
-                            '<td>' +
-                            '<a class="table-link" href="profile?profileId=' + post.PosterId + '">' +
-                            '<img src="' + post.ProfilePicUrl + '" class="img-rounded" style="max-height:50px; max-width:50px;" />' +
-                            '</a>' +
-                            '</td>' +
-                            '<td>' +
-                            '<a class="table-link" href="profile?profileId=' + post.PosterId + '">' +
-                            post.PosterName + '</a>: ' + post.Content +
-                            '</td>');
-                        $('#posts').append(tr);
-                    });
+                            '<td align="center" valign="middle">' +
+                            '<div>' +
+                            '<i class="fas fa-trash-alt" style="cursor: pointer;" onclick="remove(' + post.PostId + ')"></i>' +
+                            '</div>' +
+                            '</td>'
+                        );
+                    }
+                    $('#posts').append(tr);
                 });
-            }
+            });
+        }
 
         // Submit a new post
         $('#new-post-submit').click(function () {
             var content = $('#new-post').val();
-            var post = { RecipientId: '@(ViewBag.Id)', Content: content };
-            $.ajax({
-                type: "POST",
-                data: JSON.stringify(post),
-                url: "api/posts/submit",
-                contentType: "application/json"
-            });
-            $('#new-post').val('');
-            $('#posts').fadeOut();
-            setTimeout(
-                function () {
-                    update();
-                    $('#posts').fadeIn();
-                }, 500);
+            if (content.length <= 140) {
+                var post = { RecipientId: '@(Model.UserId)', Content: content };
+                $.ajax({
+                    type: "POST",
+                    data: JSON.stringify(post),
+                    url: "api/posts/submit",
+                    contentType: "application/json"
+                });
+                $('#new-post').val('');
+                $('#posts').fadeOut();
+                setTimeout(
+                    function () {
+                        update();
+                        $('#posts').fadeIn();
+                        }, 500);
+            }
+        });
+
+        // Remove a post
+        function remove(id) {
+            if (confirm('Delete post?')) {
+            $.post('api/posts/remove?id=' + id, function () {
+                $('#posts').fadeOut();
+                setTimeout(
+                    function () {
+                        update();
+                        $('#posts').fadeIn();
+                    }, 500);
+            
+                });
+            }
+        }
+
+        // Enforce textarea maxlength in browsers that don't support the attribute
+        $("textarea[maxlength]").on("propertychange input", function () {
+            if (this.value.length > this.maxlength) {
+                this.value = this.value.substring(0, this.maxlength);
+            }
+        });
+
+        // Call update() when the page loads
+        $(function () {
+            update();
         });
     </script>
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Web.Http;
 
 namespace JustTheTip.Controllers {
@@ -30,17 +31,40 @@ namespace JustTheTip.Controllers {
         [Route("submit")]
         public IHttpActionResult Submit([FromBody] PostModel post) { // api/posts/submit?recipient=XXX?content=YYY
             var userId = User.Identity.GetUserId();
+            // HTML-Encode the post content to prevent any funny business
+            var content = HttpUtility.HtmlEncode(post.Content);
             try {
                 var postContext = new PostDbContext();
                 postContext.Posts.Add(new PostModel {
                     PosterId = userId,
                     RecipientId = post.RecipientId,
-                    Content = post.Content,
+                    Content = content,
                     Date = System.DateTime.Now
                 });
                 postContext.SaveChanges();
                 return base.Ok();
             } catch {
+                return base.BadRequest();
+            }
+        }
+
+        [HttpPost]
+        [Route("remove")]
+        public IHttpActionResult Remove(int id) { // api/posts/remove?id=XXX
+            var userId = User.Identity.GetUserId();
+            var postContext = new PostDbContext();
+            var postToRemove = postContext.Posts.FirstOrDefault(p => p.PostId == id);
+
+            // Make sure the request is coming from the correct user
+            if (postToRemove.RecipientId == userId) {
+                try {
+                    postContext.Posts.Remove(postToRemove);
+                    postContext.SaveChanges();
+                    return base.Ok();
+                } catch {
+                    return base.BadRequest();
+                }
+            } else {
                 return base.BadRequest();
             }
         }

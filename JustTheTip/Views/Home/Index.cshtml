@@ -34,7 +34,13 @@
     </div>
 </div>
 <h2>Here's a few of our awesome members!</h2>
-@foreach (var item in Model.Take(3))
+@{
+    var n = Model.Count();
+    if (n > 3) {
+        n = 3;
+    }
+}
+@foreach (var item in Model.Take(n))
 {
     @*<div class="row">*@
     
