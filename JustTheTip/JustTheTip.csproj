@@ -215,6 +215,7 @@
     <Compile Include="Models\PostModel.cs" />
     <Compile Include="Models\ProfileViewModel.cs" />
     <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Models\UserPostViewModel.cs" />
     <Compile Include="Models\VisitorsModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -289,6 +290,7 @@
     <Content Include="Views\User\Search.cshtml" />
     <Content Include="Views\Friends\Friends.cshtml" />
     <Content Include="Views\Friends\Requests.cshtml" />
+    <Content Include="Views\Friends\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

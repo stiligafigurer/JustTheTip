@@ -1,9 +1,7 @@
 ﻿using JustTheTip.Models;
 using Microsoft.AspNet.Identity;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace JustTheTip.Controllers {
@@ -23,7 +21,8 @@ namespace JustTheTip.Controllers {
                     UserId = friend.FriendId,
                     ProfilePicUrl = user.ProfilePicUrl,
                     FullName = user.FirstName + ' ' + user.LastName,
-                    BirthYear = user.BirthDate.Value.Year
+                    BirthYear = user.BirthDate.Value.Year,
+                    Category = friend.Category
                 });
             }
 
@@ -31,15 +30,13 @@ namespace JustTheTip.Controllers {
             var requests = requestsContext.FriendRequests.Where(u => u.FriendId == userId);
             var requestList = new List<FriendsViewModel>();
 
-            foreach (var request in requests)
-            {
+            foreach (var request in requests) {
                 var user = userContext.Users.FirstOrDefault(u => u.UserId == request.UserId);
-                requestList.Add(new FriendsViewModel
-                {
+                requestList.Add(new FriendsViewModel {
                     UserId = request.UserId,
                     ProfilePicUrl = user.ProfilePicUrl,
                     FullName = user.FirstName + ' ' + user.LastName,
-                    BirthYear = user.BirthDate.Value.Year
+                    BirthYear = user.BirthDate.Value.Year,
                 });
             }
 
@@ -48,6 +45,7 @@ namespace JustTheTip.Controllers {
                 Requests = requestList
             };
 
+            ViewBag.CategoryList = GetList.Categories();
             return View(friendCollection);
         }
 
@@ -117,6 +115,26 @@ namespace JustTheTip.Controllers {
             }
 
             return Content(hasRequests);
+        }
+
+        public ActionResult Edit(FriendsModel model, string id) {
+            var friendsContext = new FriendsDbContext();
+            var userId = User.Identity.GetUserId();
+            var friendship = friendsContext.Friends.FirstOrDefault(f => f.UserId == userId && f.FriendId == id);
+
+            if (model.Category != null) {
+                friendship.Category = model.Category;
+                friendsContext.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            var userContext = new UserDbContext();
+            var friend = userContext.Users.FirstOrDefault(u => u.UserId == id);
+            var fullName = friend.FirstName + " " + friend.LastName;
+
+            ViewBag.Name = fullName;
+            ViewBag.CategoryList = GetList.Categories();
+            return View(friendship);
         }
     }
 }

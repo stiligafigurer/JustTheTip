@@ -15,18 +15,47 @@ namespace JustTheTip.Controllers
         // GET: Profile
         public ActionResult Index(ProfileViewModel model, string profileId)
         {
+
             var userId = User.Identity.GetUserId();
             if (userId != null)
             {
                 var userContext = new UserDbContext();
                 var friendContext = new FriendsDbContext();
+                var postContext = new PostDbContext();
+                var interestContext = new InterestsDbContext();
+
+                //Checks if the current user is the owner of the profile
                 if (userId != profileId && profileId != null)
                 {
                     userId = profileId;
                 };
                 var user = userContext.Users.FirstOrDefault(u => u.UserId == userId);
-                List<FriendsModel> friendList = friendContext.Friends.Where(f => f.UserId == userId).ToList();
+                List<InterestsModel> interestsList = interestContext.Friends.Where(u => u.UserId == userId).ToList();
+                List<FriendsModel> friendList = friendContext.Friends.Where
+                    (u => u.UserId == userId).ToList();
+                List<PostModel> PostList = postContext.Friends.Where(u => u.RecipientId == userId).ToList();
+
+                var UserPostList = new List<UserPostViewModel>();
+                //Puts all posts to the user in a viewmodel with post- and user info
+                foreach (var item in PostList)
+                {
+                    UserModel userInfo = userContext.Users.FirstOrDefault(u => u.UserId == item.PosterId);
+                    var modelView = new UserPostViewModel
+                    {
+                        PostId = item.PostId,
+                        PosterId = item.PosterId,
+                        RecipientId = item.RecipientId,
+                        Content = item.Content,
+                        Date = item.Date,
+                        ProfilePicUrl = userInfo.ProfilePicUrl,
+                        FirstName = userInfo.FirstName,
+                        LastName = userInfo.LastName,
+                    };
+                    UserPostList.Add(modelView);
+                }
+
                 var UserDict = new Dictionary<UserModel, string>();
+                //Puts all friends in a dictionary and pairs them with their appointed category
                 foreach (var item in friendList)
                 {
                     UserDict.Add(userContext.Users.FirstOrDefault(u => u.UserId == item.FriendId), item.Category);
@@ -41,6 +70,9 @@ namespace JustTheTip.Controllers
                 model.BirthDate = user.BirthDate;
                 model.Country = user.Country;
                 model.Friends = UserDict;
+                model.Compatibility = CheckCompatibility(user.UserId);
+                model.Posts = UserPostList;
+                model.Interests = interestsList;
 
                 return View(model);
               }
@@ -51,6 +83,10 @@ namespace JustTheTip.Controllers
             var compatibility = 0;
             var userContext = new UserDbContext();
             var userId = User.Identity.GetUserId();
+            if(id == userId)
+            {
+                return -1;
+            }
 
             var currentUser = userContext.Users.FirstOrDefault(u => u.UserId == userId);
             var compareUser = userContext.Users.FirstOrDefault(u => u.UserId == id);
