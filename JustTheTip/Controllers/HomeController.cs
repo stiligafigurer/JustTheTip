@@ -1,4 +1,6 @@
-﻿using System;
+﻿using JustTheTip.Models;
+using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -7,10 +9,18 @@ using System.Web.Mvc;
 namespace JustTheTip.Controllers {
     public class HomeController : Controller {
         public ActionResult Index() {
+            var userDbContext = new UserDbContext();
+            var userList = new List<UserModel>();
+            
+
             if (Request.IsAuthenticated) {
-                return RedirectToAction("Index_Loggedin", "Home");
+                var user = User.Identity.GetUserId();
+                userList.AddRange(userDbContext.Users.Where(u => u.UserId != user));
+                return View("Index_LoggedIn", userList);
             } else {
-                return View();
+               
+                userList.AddRange(userDbContext.Users);
+                return View("Index", userList);
             }
 
         }
@@ -27,8 +37,8 @@ namespace JustTheTip.Controllers {
             return View();
         }
         [Authorize]
-        public ActionResult Index_LoggedIn() {
-            return View();
+        public ActionResult Index_LoggedIn(List<UserModel> userList) {
+            return View(userList);
         }
     }
 }
