@@ -134,7 +134,7 @@
         <div class="col-md-4 col-md-offset-4">
             <h1>Passion</h1>
 
-            <table id="interests_table" class=" table table-striped table-bordered table-bordered">
+            <table id="interests_table" class=" table table-striped table-bordered">
                 <thead style="background-color: lightblue">
                     <tr><th>My passion:</th></tr>
                 </thead>
@@ -145,6 +145,17 @@
                         </tr>
                     }
 
+                </tbody>
+            </table>
+
+            <table class="table table-striped table-bordered">
+                <thead style="background-color: lightblue;">
+                    <tr>
+                        <th colspan="2">Latest visitors</th>
+                    </tr>
+                </thead>
+                <tbody id="visitors">
+                    @* Table filled by js further down *@
                 </tbody>
             </table>
         </div>
@@ -237,10 +248,35 @@
             });
         }
 
-        // Call update() when the page loads
+        function getVisitors() {
+            $.get('api/profile/get-visitors?id=' + '@Model.UserId', function (visitors) {
+                $('#visitors').text(''); // Clear the list of visitors
+
+                visitors.forEach(function (visitor) {
+                    var tr = $('<tr></tr>');
+                    tr.append(
+                        '<td>' +
+                        '<a class="table-link" href="profile?profileId=' + visitor.UserId + '">' +
+                        '<img src="' + visitor.ProfilePicUrl + '" class="img-rounded" style="max-height:50px; max-width:50px;" />' +
+                        '</a>' +
+                        '</td>' +
+                        '<td>' +
+                        '<a class="table-link" href="profile?profileId=' + visitor.UserId + '">' +
+                        visitor.FullName +
+                        '</a>' +
+                        '<p style="font-style: italic;">' + visitor.Date + '</p>' +
+                        '</td>'
+                    );
+                    $('#visitors').append(tr);
+                });
+            });
+        }
+
+        // Call some functions when the page loads
         $(function () {
             update();
             visit();
+            getVisitors();
         });
     </script>
 }

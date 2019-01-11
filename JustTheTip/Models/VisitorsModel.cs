@@ -12,6 +12,16 @@ namespace JustTheTip.Models {
         public DateTime Date { get; set; }
     }
 
+    public class VisitorsViewModel {
+        [Key]
+        public int Id { get; set; }
+        public string UserId { get; set; }
+        public string FullName { get; set; }
+        public string ProfilePicUrl { get; set; }
+        public string VisitedId { get; set; }
+        public string Date { get; set; }
+    }
+
     public class VisitorsDbContext : DbContext {
         public DbSet<VisitorsModel> Visitors { get; set; }
 

@@ -1,5 +1,6 @@
 ﻿using JustTheTip.Models;
 using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -40,7 +41,7 @@ namespace JustTheTip.Controllers {
                     PosterId = userId,
                     RecipientId = post.RecipientId,
                     Content = content,
-                    Date = System.DateTime.Now
+                    Date = DateTime.Now
                 });
                 postContext.SaveChanges();
                 return base.Ok();
@@ -79,15 +80,17 @@ namespace JustTheTip.Controllers {
             // Only log visits to other people's profiles
             if (id != null && id != userId) {
 
+                // We only want to log one visit per user & profile, so remove previous visits by the user to the specified profile
                 var previousVisits = visitorsContext.Visitors.Where(v => v.UserId == userId && v.VisitedId == id);
                 foreach (var visit in previousVisits) {
                     visitorsContext.Visitors.Remove(visit);
                 }
 
+                // Add the new visit
                 visitorsContext.Visitors.Add(new VisitorsModel {
                     UserId = userId,
                     VisitedId = id,
-                    Date = System.DateTime.Now
+                    Date = DateTime.Now
                 });
 
                 try {
@@ -97,6 +100,46 @@ namespace JustTheTip.Controllers {
                 }
             }
             return base.Ok();
+        }
+
+        [HttpGet]
+        [Route("get-visitors")]
+        public VisitorsViewModel[] GetVisitors(string id) { // api/profile/get-visits?id=XXX
+            var visitorsContext = new VisitorsDbContext();
+            var visitors = visitorsContext.Visitors.Where(
+                v => v.VisitedId == id).OrderByDescending(v => v.Date).ToList();
+            var visitorList = new List<VisitorsViewModel>();
+
+            // Remove any inactive users from the list
+            foreach (var visitor in visitors) {
+                if (visitorList.Count < 5) {
+                    var userContext = new UserDbContext();
+                    var user = userContext.Users.FirstOrDefault(u => u.UserId == visitor.UserId);
+                    if (user.ActiveUser != 0) {
+                        visitorList.Add(new VisitorsViewModel {
+                            Id = visitor.Id,
+                            UserId = visitor.UserId,
+                            FullName = user.FirstName + " " + user.LastName,
+                            ProfilePicUrl = user.ProfilePicUrl,
+                            VisitedId = visitor.VisitedId,
+                            Date = DateToString(visitor.Date)
+                        });
+                    }
+                } else {
+                    break;
+                }
+            }
+
+            return visitorList.ToArray();
+        }
+
+        private string DateToString(DateTime date) {
+            if (date.Day == DateTime.Now.Day)
+                return "Today " + date.ToString("(HH:mm)");
+            else if (date.Day == DateTime.Now.AddDays(-1).Day)
+                return "Yesterday " + date.ToString("(HH:mm)");
+            else
+                return date.ToString("yyyy-MM-dd (HH:mm)");
         }
     }
 }

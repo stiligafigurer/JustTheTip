@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 namespace JustTheTip.Controllers {
@@ -95,10 +96,7 @@ namespace JustTheTip.Controllers {
         [HttpGet]
         public ActionResult Search(string srchterm)
         {
-            if (srchterm == null)
-            {
-                srchterm = "joahn löfven";
-            }
+            // TODO: Fix <script> etc. in search box
             string[] nameArr = srchterm.Split(' ');
             var userContext = new UserDbContext();
             List<UserModel> validUserList = new List<UserModel>();
