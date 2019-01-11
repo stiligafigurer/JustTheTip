@@ -10,7 +10,7 @@
 <h2>@Model.FirstName  @Model.LastName</h2>
 @if (@Model.Compatibility >= 0) {
     if (Model.IsFriend) {
-        <div>@Html.ActionLink("You are friends", "../Friends", null, new { @class = "btn-lg btn-block text-center", @style = "width: 200px; text-align: center; background-color: hotpink; font-weight: 800; color: black", @role = "button" })</div>
+        <div>@Html.ActionLink("You are friends", "../Friends", null, new { @class = "btn-lg btn-block text-center", @style = "width: 200px; text-align: center; background-color: mediumseagreen; font-weight: 800; color: black", @role = "button" })</div>
     } else if (Model.HasPendingRequest) {
         <div>@Html.ActionLink("Friend-request sent", "../Friends", null, new { @class = "btn-lg btn-block text-center", @style = "width: 200px; text-align: center; background-color: hotpink; font-weight: 800; color: black", @role = "button" })</div>
     } else {
@@ -36,7 +36,7 @@
 }
 <div class="row">
     <div class="col-md-4">
-        <img style="max-height: 250px; max-width: 250px; height:auto; width:auto" class="img-circle " src="@Model.ProfilePicUrl" alt="https://makehimyours.com.au/wp-content/uploads/2016/11/Depositphotos_9830876_l-2015Optimised.jpg" />
+        <img style="max-height: 250px; max-width: 250px; height:auto; width:auto" class="img-circle " src="@Model.ProfilePicUrl" alt="No image" />
     </div>
     <div class="col-md-4 ">
         <h1>Posts</h1>
@@ -132,22 +132,6 @@
 
         </div>
         <div class="col-md-4 col-md-offset-4">
-            <h1>Passion</h1>
-
-            <table id="interests_table" class=" table table-striped table-bordered">
-                <thead style="background-color: lightblue">
-                    <tr><th>My passion:</th></tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.Interests) {
-                        <tr>
-                            <td class="col-md-3">@item.Interest</td>
-                        </tr>
-                    }
-
-                </tbody>
-            </table>
-
             <table class="table table-striped table-bordered">
                 <thead style="background-color: lightblue;">
                     <tr>

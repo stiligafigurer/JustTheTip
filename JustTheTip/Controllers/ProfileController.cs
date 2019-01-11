@@ -20,7 +20,6 @@ namespace JustTheTip.Controllers {
                 var userContext = new UserDbContext();
                 var friendContext = new FriendsDbContext();
                 var friendReqContext = new FriendRequestDbContext();
-                var interestContext = new InterestsDbContext();
 
                 //Checks if the current user is the owner of the profile
                 if (userId != ProfileId && ProfileId != null) {
@@ -28,7 +27,6 @@ namespace JustTheTip.Controllers {
                 }
 
                 var user = userContext.Users.FirstOrDefault(u => u.UserId == userId);
-                List<InterestsModel> interestsList = interestContext.Friends.Where(u => u.UserId == userId).ToList();
                 List<FriendsModel> friendList = friendContext.Friends.Where
                     (u => u.UserId == userId).ToList();
 
@@ -62,7 +60,6 @@ namespace JustTheTip.Controllers {
                 model.Country = user.Country;
                 model.Friends = UserDict;
                 model.Compatibility = CheckCompatibility(user.UserId);
-                model.Interests = interestsList;
 
                 ViewBag.Id = User.Identity.GetUserId();
 

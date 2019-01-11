@@ -8,26 +8,29 @@ namespace JustTheTip.Models {
     public class UserModel
     {
         [Required, Key]
-        public virtual string UserId { get; set; }
+        public string UserId { get; set; }
         [Required, Display(Name = "First name")]
-        public virtual string FirstName { get; set; }
+        [StringLength(256, ErrorMessage = "The {0} must be at least {2} character long.", MinimumLength = 1)]
+        public string FirstName { get; set; }
         [Required, Display(Name = "Last name")]
-        public virtual string LastName { get; set; }
+        [StringLength(256, ErrorMessage = "The {0} must be at least {2} character long.", MinimumLength = 1)]
+        public string LastName { get; set; }
         [Required]
-        public virtual string Gender { get; set; }
+        public string Gender { get; set; }
         [Required, Display(Name = "Sexual orientation")]
-        public virtual string SexualOrientation { get; set; }
+        public string SexualOrientation { get; set; }
         [Required, DataType(DataType.Date), Display(Name = "Date of birth")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
-        public virtual DateTime? BirthDate { get; set; }
-        [Required, DataType(DataType.ImageUrl), Display(Name = "Profile picture (url)")]
-        public virtual string ProfilePicUrl { get; set; }
+        public DateTime? BirthDate { get; set; }
+        [RegularExpression(@"(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)", ErrorMessage = "Invalid URL.")]
+        [Required, DataType(DataType.ImageUrl), Display(Name = "Profile picture (URL)")]
+        public string ProfilePicUrl { get; set; }
         [Required, Display(Name = "Zodiac sign")]
-        public virtual string ZodiacSign { get; set; }
+        public string ZodiacSign { get; set; }
         [Required]
-        public virtual string Country { get; set; }
+        public string Country { get; set; }
         //ActiveUser 1 = true, 0 = false
-        public virtual int? ActiveUser { get; set; }
+        public int? ActiveUser { get; set; }
     }
 
     public class UserDbContext : DbContext {

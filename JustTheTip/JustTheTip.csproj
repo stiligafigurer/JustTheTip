@@ -218,6 +218,18 @@
     <Compile Include="Migrations\201901101617013_UpdateDb.Designer.cs">
       <DependentUpon>201901101617013_UpdateDb.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901111247596_UpdateDb1.cs" />
+    <Compile Include="Migrations\201901111247596_UpdateDb1.Designer.cs">
+      <DependentUpon>201901111247596_UpdateDb1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901111300486_UpdateDb2.cs" />
+    <Compile Include="Migrations\201901111300486_UpdateDb2.Designer.cs">
+      <DependentUpon>201901111300486_UpdateDb2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901111342389_UpdateDb3.cs" />
+    <Compile Include="Migrations\201901111342389_UpdateDb3.Designer.cs">
+      <DependentUpon>201901111342389_UpdateDb3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\FriendRequestModel.cs" />
@@ -225,7 +237,6 @@
     <Compile Include="Models\FriendsViewModel.cs" />
     <Compile Include="Models\GetList.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\InterestsModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PostModel.cs" />
     <Compile Include="Models\ProfileViewModel.cs" />
@@ -326,6 +337,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201901101617013_UpdateDb.resx">
       <DependentUpon>201901101617013_UpdateDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901111247596_UpdateDb1.resx">
+      <DependentUpon>201901111247596_UpdateDb1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901111300486_UpdateDb2.resx">
+      <DependentUpon>201901111300486_UpdateDb2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901111342389_UpdateDb3.resx">
+      <DependentUpon>201901111342389_UpdateDb3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

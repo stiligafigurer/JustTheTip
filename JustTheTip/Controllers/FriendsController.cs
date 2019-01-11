@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 namespace JustTheTip.Controllers {
@@ -45,7 +46,6 @@ namespace JustTheTip.Controllers {
                 Requests = requestList
             };
 
-            ViewBag.CategoryList = GetList.Categories();
             return View(friendCollection);
         }
 
@@ -122,8 +122,9 @@ namespace JustTheTip.Controllers {
             var userId = User.Identity.GetUserId();
             var friendship = friendsContext.Friends.FirstOrDefault(f => f.UserId == userId && f.FriendId == id);
 
-            if (model.Category != null) {
-                friendship.Category = model.Category;
+            if (model.Category != null && model.Category.Length <= 15) {
+                var category = HttpUtility.HtmlEncode(model.Category);
+                friendship.Category = category;
                 friendsContext.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -133,7 +134,6 @@ namespace JustTheTip.Controllers {
             var fullName = friend.FirstName + " " + friend.LastName;
 
             ViewBag.Name = fullName;
-            ViewBag.CategoryList = GetList.Categories();
             return View(friendship);
         }
     }
