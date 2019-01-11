@@ -10,7 +10,7 @@
         <img class="" src="..\Pictures\Icon.png" />
     </div>
     <div class=" col-md-4 ">
-        <h1 style="color: hotpink; font-weight: 600">Welcome to Just the Tip Dating</h1>
+        <h1 class="welcometext">Welcome to Just the Tip Dating</h1>
         <p class="lead">A dating site for desires out of the ordinary</p>
 
     </div>
@@ -38,37 +38,13 @@
 <h2>Here's a few of our awesome members!</h2>
 @foreach (var item in Model.Take(3))
 {
-    @*<div class="row">*@
 
     <div class="col-md-3" id="exampleusers">
         <a href="@Url.Action("Index", "Profile", new { profileId = @item.UserId})">
             <h3>@Html.DisplayFor(modelItem => item.FirstName) </h3>
-            <img src="@Html.DisplayFor(modelItem => item.ProfilePicUrl)" alt="No image" style="max-height: 200px; max-width: 200px; height: auto; width: auto;" class="img-circle" />
+            <img src="@Html.DisplayFor(modelItem => item.ProfilePicUrl)" alt="No image" id="profilepicexampleusers"class="img-circle" />
 
         </a>
     </div>
 
-    @*</div>*@
-
 }
-
-<style>
-    .btn {
-        cursor: pointer;
-        background-color: white;
-    }
-
-    .fa-envelope, .fa-user-friends, .fa-search, .fa-user-circle {
-        font-size: 200px;
-        text-shadow: 3px 3px 16px #272634;
-    }
-
-        .fa-envelope:hover, .fa-user-friends:hover, .fa-search:hover, .fa-user-circle:hover {
-            color: darkslategray;
-        }
-
-    #col-md-3 {
-        text-align: center;
-    }
-</style>
-

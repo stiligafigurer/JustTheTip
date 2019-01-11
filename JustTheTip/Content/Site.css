@@ -30,3 +30,45 @@ textarea {
 a:hover {
     color:initial;
 }
+.tablecolor {
+    background-color: pink;
+}
+#friendiconprofile {
+    max-height:50px;
+    max-width:50px;
+    height:auto;
+    width:auto
+}
+#profilepiconprofile {
+    max-height: 250px;
+    max-width: 250px;
+    height:auto;
+    width:auto
+}
+#profilepicexampleusers {
+    max-height: 200px;
+    max-width: 200px;
+    height: auto;
+    width: auto;
+}
+.welcometext { /*från index_loggedin*/
+    color: hotpink;
+    font-weight: 600;
+}
+.btn-primary {
+    cursor: pointer;
+}
+
+.fa-envelope, .fa-user-friends, .fa-search, .fa-user-circle {
+    font-size: 200px;
+    text-shadow: 3px 3px 16px #272634;
+    background-color: white;
+}
+
+    .fa-envelope:hover, .fa-user-friends:hover, .fa-search:hover, .fa-user-circle:hover {
+        color: darkslategray;
+    }
+
+#col-md-3 { 
+    text-align: center;
+} /*från index_loggedin*/
