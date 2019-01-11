@@ -221,7 +221,6 @@
     <Compile Include="Models\FriendsViewModel.cs" />
     <Compile Include="Models\GetList.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\InterestsModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PostModel.cs" />
     <Compile Include="Models\ProfileViewModel.cs" />

@@ -12,6 +12,7 @@ namespace JustTheTip.Models {
         public string FriendId { get; set; }
         public virtual UserModel Friend { get; set; }
 
+        [Required, StringLength(15, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 2)]
         public string Category { get; set; }
     }
 
