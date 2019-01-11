@@ -69,28 +69,7 @@
     #col-md-3 {
         text-align: center;
     }
-
-    .newmsg {
-        color: #ffd800;
-    }
-
-    .newfriend {
-        color: limegreen;
-    }
-
-    .newevents {
-        display: none;
-    }
 </style>
-<script>
-    function newMessage() {
-        $("#messageicon").addClass("newmsg");
-    };
-    function newFriend() {
-        $("#friendicon").addClass("newfriend");
-        $("#friendnavbaricon").addClass("newfriend");
-    }
-
 </script>
 @if(null != TempData["alertMessage"])
    {
@@ -98,4 +77,4 @@
                alert('@TempData["alertMessage"]');
         </script>
    }
-@* Fixa länk på meddelandeikon *@
+
