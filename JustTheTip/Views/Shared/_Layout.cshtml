@@ -58,11 +58,11 @@
                         color: darkslategray;
                     }
                 </style>
-                <div class="col-sm-3 col-md-3">
+                <div class="col-sm-3 col-md-3" style="padding-top: 10px">
                     @using (Html.BeginForm("Search", "User", FormMethod.Get)) {
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Search" name="srchterm" id="srchterm" runat="server">
-                            <div class="input-group-btn">
+                            <div class="input-group-addon">
                                 <a href="@Url.Action("Search", "User", new { query = Request.Form["srchterm"] })">
 
                                 </a>
