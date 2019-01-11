@@ -16,14 +16,18 @@ namespace JustTheTip.Controllers {
             var friendList = new List<FriendsViewModel>();
 
             foreach (var friend in friends) {
-                var user = userContext.Users.FirstOrDefault(u => u.UserId == friend.FriendId);
-                friendList.Add(new FriendsViewModel {
-                    UserId = friend.FriendId,
-                    ProfilePicUrl = user.ProfilePicUrl,
-                    FullName = user.FirstName + ' ' + user.LastName,
-                    BirthYear = user.BirthDate.Value.Year,
-                    Category = friend.Category
-                });
+                var user = userContext.Users.FirstOrDefault(u => u.UserId == friend.FriendId && u.ActiveUser == 1);
+                if(user != null && user.ActiveUser == 1) {
+
+                    friendList.Add(new FriendsViewModel {
+                        UserId = friend.FriendId,
+                        ProfilePicUrl = user.ProfilePicUrl,
+                        FullName = user.FirstName + ' ' + user.LastName,
+                        BirthYear = user.BirthDate.Value.Year,
+                        Category = friend.Category
+                
+                    });
+                }
             }
 
             var requestsContext = new FriendRequestDbContext();
@@ -32,12 +36,14 @@ namespace JustTheTip.Controllers {
 
             foreach (var request in requests) {
                 var user = userContext.Users.FirstOrDefault(u => u.UserId == request.UserId);
-                requestList.Add(new FriendsViewModel {
-                    UserId = request.UserId,
-                    ProfilePicUrl = user.ProfilePicUrl,
-                    FullName = user.FirstName + ' ' + user.LastName,
-                    BirthYear = user.BirthDate.Value.Year,
-                });
+                if(user.ActiveUser == 1) { 
+                    requestList.Add(new FriendsViewModel {
+                        UserId = request.UserId,
+                        ProfilePicUrl = user.ProfilePicUrl,
+                        FullName = user.FirstName + ' ' + user.LastName,
+                        BirthYear = user.BirthDate.Value.Year,
+                    });
+                }
             }
 
             var friendCollection = new FriendCollectionViewModel {
@@ -107,10 +113,18 @@ namespace JustTheTip.Controllers {
         public ActionResult NewRequests() {
             var hasRequests = "false";
             var requestsContext = new FriendRequestDbContext();
+            var userContext = new UserDbContext();
             var userId = User.Identity.GetUserId();
-            var unseenRequests = requestsContext.FriendRequests.Where(r => r.FriendId == userId && r.Seen == false).Count();
+            var unseenRequests = requestsContext.FriendRequests.Where(r => r.FriendId == userId && r.Seen == false);
+            int amountRequests = 0;
+            foreach(var request in unseenRequests) {
+                var user = userContext.Users.FirstOrDefault(u => u.UserId == request.UserId && u.ActiveUser == 1);
+                if(user != null && user.ActiveUser == 1) {
+                    amountRequests += 1;
+                }
+            }
 
-            if (unseenRequests > 0) {
+            if (amountRequests > 0) {
                 hasRequests = "true";
             }
 

@@ -103,8 +103,8 @@ namespace JustTheTip.Controllers {
             var userContext = new UserDbContext();
             List<UserModel> validUserList = new List<UserModel>();
             foreach (var word in nameArr) {
-                validUserList.AddRange(userContext.Users.Where(u => u.FirstName == word).ToList());
-                validUserList.AddRange(userContext.Users.Where(u => u.LastName == word));
+                validUserList.AddRange(userContext.Users.Where(u => u.FirstName == word && u.ActiveUser == 1));
+                validUserList.AddRange(userContext.Users.Where(u => u.LastName == word & u.ActiveUser == 1));
             }
             var validUserListNoDup = new List<UserModel>();
             for(int i = 0; i < validUserList.Count; i++)

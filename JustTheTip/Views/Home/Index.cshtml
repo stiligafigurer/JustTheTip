@@ -47,7 +47,7 @@
         <div class="col-md-3" id="exampleusers">
             <a href="@Url.Action("Login", "Account", new { profileId = @item.UserId})">
                 <h3>@Html.DisplayFor(modelItem => item.FirstName) </h3>
-                <img src="@Html.DisplayFor(modelItem => item.ProfilePicUrl)" alt="No image" style="max-height: 200px; max-width: 200px; min-height: 100%; min-width: 100%;" class="img-circle" />
+                <img src="@Html.DisplayFor(modelItem => item.ProfilePicUrl)" alt="No image" style="max-height: 200px; max-width: 200px; height: auto; width: auto;" class="img-circle" />
 
             </a>
         </div>
