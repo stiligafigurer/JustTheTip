@@ -26,10 +26,8 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
-                    @if (Request.IsAuthenticated) {
-                        <li>@Html.ActionLink("Settings", "Index", "User")</li>
-                    }
                 </ul>
+
                 @if (User.Identity.IsAuthenticated) {
                     // Create a different button depending on whether the user has any new friend requests
                     if (Html.Action("NewRequests", "Friends").ToString() == "true") {
@@ -47,15 +45,14 @@
                         padding-top: 7px;
                         border: none;
                         background-color: transparent;
-                        /*visibility: hidden;*/
                     }
 
-                    .fa-user-plus, .fa-user {
+                    .fa-user-plus, .fa-user, .fa-cog, .fa-sign-out-alt {
                         font-size: 35px;
                     }
 
                     .btn-navbar:hover {
-                        color: darkslategray;
+                        color: lightgray;
                     }
                 </style>
                 <div class="col-sm-3 col-md-3" style="padding-top: 10px">
@@ -70,7 +67,6 @@
                         </div>
                     }
                 </div>
-
                 @Html.Partial("_LoginPartial")
             </div>
         </div>

@@ -133,6 +133,5 @@ namespace JustTheTip.Controllers {
             userContext.SaveChanges();
             return RedirectToAction("LogOffNoToken", "Account");
         }
-
     }
 }
