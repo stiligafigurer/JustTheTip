@@ -1,7 +1,6 @@
 ﻿@using Microsoft.AspNet.Identity
+
 @if (Request.IsAuthenticated) {
-
-
     <ul class="nav navbar-nav navbar-right">
         <li>
             @{
@@ -14,6 +13,7 @@
         <li>
             <button style="color: grey;" class="btn-navbar" title="Settings" onclick="location.href='@Url.Action("Index", "User")'"><i class="fas fa-cog"></i></button>
         </li>
+
         @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" })) {
             @Html.AntiForgeryToken()
             <li>
