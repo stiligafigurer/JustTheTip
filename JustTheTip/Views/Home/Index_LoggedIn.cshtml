@@ -36,8 +36,7 @@
 
 
 <h2>Here's a few of our awesome members!</h2>
-@foreach (var item in Model.Take(3))
-{
+@foreach (var item in Model.Take(3)) {
     @*<div class="row">*@
 
     <div class="col-md-3" id="exampleusers">
@@ -71,4 +70,11 @@
         text-align: center;
     }
 </style>
+</script>
+@if(null != TempData["alertMessage"])
+   {
+        <script type="text/javascript">
+               alert('@TempData["alertMessage"]');
+        </script>
+   }
 
