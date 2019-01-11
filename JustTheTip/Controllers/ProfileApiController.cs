@@ -16,14 +16,16 @@ namespace JustTheTip.Controllers {
             var postList = new List<PostViewModel>();
             foreach (var post in posts) {
                 var user = new UserDbContext().Users.FirstOrDefault(u => u.UserId == post.PosterId);
-                postList.Add(new PostViewModel {
-                    PostId = post.PostId,
-                    PosterId = post.PosterId,
-                    Content = post.Content,
-                    Date = post.Date,
-                    ProfilePicUrl = user.ProfilePicUrl,
-                    PosterName = user.FirstName + " " + user.LastName
-                });
+                if(user.ActiveUser == 1) { 
+                    postList.Add(new PostViewModel {
+                        PostId = post.PostId,
+                        PosterId = post.PosterId,
+                        Content = post.Content,
+                        Date = post.Date,
+                        ProfilePicUrl = user.ProfilePicUrl,
+                        PosterName = user.FirstName + " " + user.LastName
+                    });
+                }
             }
             return postList.ToArray();
         }

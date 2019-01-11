@@ -30,7 +30,15 @@ namespace JustTheTip.Controllers {
                 var user = userContext.Users.FirstOrDefault(u => u.UserId == userId);
                 List<InterestsModel> interestsList = interestContext.Friends.Where(u => u.UserId == userId).ToList();
                 List<FriendsModel> friendList = friendContext.Friends.Where
-                    (u => u.UserId == userId).ToList();
+                    (f => f.UserId == userId).ToList();
+                var activeFriendList = new List<FriendsModel>();
+                //Checks if the users in friendList are active or not. Inactive users are not moved to activeFriendList
+                foreach(var friend in friendList) {
+                    UserModel tempFriend = userContext.Users.FirstOrDefault(f => f.UserId == friend.FriendId && f.ActiveUser == 1);
+                    if(tempFriend != null && tempFriend.ActiveUser == 1) {
+                        activeFriendList.Add(friend);
+                    }
+                }
 
                 var friendRequestList = friendReqContext.FriendRequests.ToList();
                 //checks if any friendrequest between the users exists. False disables add friend
@@ -40,7 +48,7 @@ namespace JustTheTip.Controllers {
                     }
                 }
                 //Checks if the users are already friends. False disables add friend.
-                foreach (var item in friendList) {
+                foreach (var item in activeFriendList) {
                     if (item.UserId == ProfileId && item.FriendId == User.Identity.GetUserId()) {
                         model.IsFriend = true;
                     }
@@ -48,7 +56,7 @@ namespace JustTheTip.Controllers {
 
                 var UserDict = new Dictionary<UserModel, string>();
                 //Puts all friends in a dictionary and pairs them with their appointed category
-                foreach (var item in friendList) {
+                foreach (var item in activeFriendList) {
                     UserDict.Add(userContext.Users.FirstOrDefault(u => u.UserId == item.FriendId), item.Category);
                 }
                 model.UserId = user.UserId;
@@ -175,12 +183,12 @@ namespace JustTheTip.Controllers {
             var userContext = new UserDbContext();
             var userDict = new Dictionary<UserModel, int>();
             List<UserModel> userList = new List<UserModel>();
-            userList.AddRange(userContext.Users.Where(u => u.UserId != userId));
+            //This method only shows users that are not yourself and that are active.
+            userList.AddRange(userContext.Users.Where(u => u.UserId != userId && u.ActiveUser == 1));
             foreach (var user in userList) {
                 var score = CheckCompatibility(user.UserId);
                 userDict.Add(user, score);
             }
-            //Dictionary<UserModel, int> orderedUserDict = (Dictionary<UserModel, int>)userDict.OrderBy(x => x.Value);
             return View("~/Views/User/CompatibilitySearch.cshtml", userDict);
         }
     }

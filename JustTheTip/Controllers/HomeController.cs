@@ -14,10 +14,10 @@ namespace JustTheTip.Controllers {
             
             if (Request.IsAuthenticated) {
                 var userId = User.Identity.GetUserId();
-                userList.AddRange(userDbContext.Users.Where(u => u.UserId != userId).ToList());
+                userList.AddRange(userDbContext.Users.Where(u => u.UserId != userId && u.ActiveUser == 1));
                 return View("Index_LoggedIn", userList);
             } else {
-                userList.AddRange(userDbContext.Users.ToList());
+                userList.AddRange(userDbContext.Users.Where(u => u.ActiveUser == 1));
                 return View("Index", userList);
             }
 
