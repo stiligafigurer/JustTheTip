@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 
 namespace JustTheTip.Controllers {
@@ -124,6 +125,15 @@ namespace JustTheTip.Controllers {
                 }
             }
             return View(validUserListNoDup);
+        }
+
+        public ActionResult DeactivateAccount() {
+            var id = User.Identity.GetUserId();
+            var userContext = new UserDbContext();
+            var currentUser = userContext.Users.FirstOrDefault(u => u.UserId == id);
+            currentUser.ActiveUser = 0;
+            userContext.SaveChanges();
+            return RedirectToAction("LogOffNoToken", "Account");
         }
 
     }
