@@ -78,6 +78,12 @@ namespace JustTheTip.Controllers {
 
             // Only log visits to other people's profiles
             if (id != null && id != userId) {
+
+                var previousVisits = visitorsContext.Visitors.Where(v => v.UserId == userId && v.VisitedId == id);
+                foreach (var visit in previousVisits) {
+                    visitorsContext.Visitors.Remove(visit);
+                }
+
                 visitorsContext.Visitors.Add(new VisitorsModel {
                     UserId = userId,
                     VisitedId = id,
