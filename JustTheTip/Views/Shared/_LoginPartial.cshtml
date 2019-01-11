@@ -1,24 +1,27 @@
 ﻿@using Microsoft.AspNet.Identity
-@if (Request.IsAuthenticated)
-{
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-    {
-    @Html.AntiForgeryToken()
+@if (Request.IsAuthenticated) {
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" })) {
+        @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
-        <li>@{ 
-            var userContext = new JustTheTip.Models.UserDbContext();
-            var currentId = User.Identity.GetUserId();
-            var user = userContext.Users.FirstOrDefault(u => u.UserId == currentId);
-        }
-            @Html.ActionLink("Hello " + @user.FirstName + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-        </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-    </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                @{
+                    var userContext = new JustTheTip.Models.UserDbContext();
+                    var currentId = User.Identity.GetUserId();
+                    var user = userContext.Users.FirstOrDefault(u => u.UserId == currentId);
+                }
+                @Html.ActionLink("Hello " + @user.FirstName + "!", "Index", "Profile", routeValues: null, htmlAttributes: new { title = user.FirstName })
+            </li>
+            <li>
+                <button style="color: grey;" class="btn-navbar" title="Settings" onclick="location.href='@Url.Action("Index", "User")'"><i class="fas fa-cog"></i></button>
+            </li>
+            <li>
+                <button style="color: grey;" class="btn-navbar" title="Log out" href="javascript:document.getElementById('logoutForm').submit()"><i class="fas fa-sign-out-alt"></i></button>
+            </li>
+
+        </ul>
     }
-}
-else
-{
+} else {
     <ul class="nav navbar-nav navbar-right">
         <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
         <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
