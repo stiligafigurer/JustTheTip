@@ -18,7 +18,6 @@ namespace JustTheTip.Models
         public string ProfilePicUrl { get; set; }
         public Dictionary<UserModel, string> Friends { get; set; } 
         public int Compatibility { get; set; }
-        public List<InterestsModel> Interests { get; set; }
         public bool IsFriend { get; set; }
         public bool HasPendingRequest { get; set; }
     }

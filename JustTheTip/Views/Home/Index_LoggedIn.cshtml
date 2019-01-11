@@ -39,6 +39,7 @@
 @foreach (var item in Model.Take(3))
 {
 
+
     <div class="col-md-3" id="exampleusers">
         <a href="@Url.Action("Index", "Profile", new { profileId = @item.UserId})">
             <h3>@Html.DisplayFor(modelItem => item.FirstName) </h3>
@@ -48,3 +49,11 @@
     </div>
 
 }
+@if(null != TempData["alertMessage"])
+   {
+        <script type="text/javascript">
+               alert('@TempData["alertMessage"]');
+        </script>
+   }
+
+
