@@ -7,10 +7,10 @@
 
 <div class="row">
     <div class="col-md-3 ">
-        <img class="" src="..\Pictures\Icon.png" />
+        <img src="..\Pictures\Icon.png" />
     </div>
-    <div class=" col-md-6">
-        <h1 style="color: hotpink; font-weight: 700">Welcome to Just the Tip Dating</h1>
+    <div class="col-md-6">
+        <h1 class="welcometext">Welcome to Just the Tip Dating</h1>
         <p class="lead">A dating site for desires out of the ordinary</p>
 
     </div>
@@ -18,13 +18,13 @@
 </div>
 
 
-<div class=" row test">
+<div class="row test">
     <div class="col-md-5">
         @Html.ActionLink("Register", "../Account/Register", null, new { @class = "btn-lg btn-block text-center", @style = "text-align: center; background-color: hotpink; font-weight: 800; color: black", @role = "button" })
     </div>
 </div>
 <br />
-<div class=" row">
+<div class="row">
     <div class="col-md-5 test">
         @Html.ActionLink("Log in", "../Account/Login", null, new { @id = "startpagebtn", @class = "btn-lg btn-block text-center", @style = "text-align: center; background-color: hotpink; font-weight: 800; color: black", @role = "button" })
     </div>
@@ -33,6 +33,7 @@
         <p>We strive to achieve the best possible matching experience for our users.</p>
     </div>
 </div>
+<div class="row col-md-12">
 <h2>Here's a few of our awesome members!</h2>
 @{
     if (Model != null) {
@@ -49,10 +50,11 @@
         <div class="col-md-3" id="exampleusers">
             <a href="@Url.Action("Login", "Account", new { profileId = @item.UserId })">
                 <h3>@Html.DisplayFor(modelItem => item.FirstName) </h3>
-                <img src="@Html.DisplayFor(modelItem => item.ProfilePicUrl)" alt="No image" style="max-height: 200px; max-width: 200px; height: auto; width: auto;" class="img-circle" />
+                <img src="@Html.DisplayFor(modelItem => item.ProfilePicUrl)" alt="No image" id="profilepicexampleusers" class="img-circle" />
 
             </a>
         </div>
+
             }
         }
     }
@@ -61,15 +63,5 @@
     }
 }
 
-<style>
-    .col-md-3 {
-        text-align: center;
     }
-
-    #exampleusers {
-    }
-
-        #exampleusers:hover {
-            background-color: lightpink;
-        }
-</style>
+</div>
