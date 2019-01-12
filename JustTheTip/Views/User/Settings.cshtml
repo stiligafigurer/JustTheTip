@@ -90,6 +90,7 @@
             <div class="col-md-offset-2 col-md-10">
                 <hr />
                 @Html.ActionLink("Change password", "ChangePassword", "Manage", null, htmlAttributes: new { id = "changepassword" }) |
+                @Html.ActionLink("Export profile", "ExportProfile", null, htmlAttributes: new { id = "exportprofile" }) |
                 @Html.ActionLink("Deactivate account", "DeactivateAccount", null, htmlAttributes: new { id = "deactivate", onclick = "return confirm('Are you sure?');" })
             </div>
         </div>

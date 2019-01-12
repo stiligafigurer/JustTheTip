@@ -8,6 +8,7 @@ using System.Linq;
 using System.Web;
 using System.Net;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace JustTheTip.Controllers {
     [Authorize]
@@ -92,11 +93,10 @@ namespace JustTheTip.Controllers {
             var users = userContext.Users.ToList();
             return View(users);
         }
- 
+
 
         [HttpGet]
-        public ActionResult Search(string srchterm)
-        {
+        public ActionResult Search(string srchterm) {
             // TODO: Fix <script> etc. in search box
             string[] nameArr = srchterm.Split(' ');
             var userContext = new UserDbContext();
@@ -106,19 +106,15 @@ namespace JustTheTip.Controllers {
                 validUserList.AddRange(userContext.Users.Where(u => u.LastName == word & u.ActiveUser == 1));
             }
             var validUserListNoDup = new List<UserModel>();
-            for(int i = 0; i < validUserList.Count; i++)
-            {
+            for (int i = 0; i < validUserList.Count; i++) {
                 bool hasMatch = false;
-                for (int e = i + 1; e < validUserList.Count; e++)
-                {
-                    
-                    if(validUserList[i].UserId == validUserList[e].UserId)
-                    {
+                for (int e = i + 1; e < validUserList.Count; e++) {
+
+                    if (validUserList[i].UserId == validUserList[e].UserId) {
                         hasMatch = true;
                     }
                 }
-                if(!hasMatch)
-                {
+                if (!hasMatch) {
                     validUserListNoDup.Add(validUserList[i]);
                 }
             }
@@ -133,5 +129,73 @@ namespace JustTheTip.Controllers {
             userContext.SaveChanges();
             return RedirectToAction("LogOffNoToken", "Account");
         }
+
+        public void ExportProfile() {
+            var userId = User.Identity.GetUserId();
+
+            var identityContext = new IdentityDbContext();
+            identityContext.Configuration.ProxyCreationEnabled = false;
+            var userContext = new UserDbContext();
+            userContext.Configuration.ProxyCreationEnabled = false;
+            var friendsContext = new FriendsDbContext();
+            friendsContext.Configuration.ProxyCreationEnabled = false;
+            var postsContext = new PostDbContext();
+            postsContext.Configuration.ProxyCreationEnabled = false;
+
+            var email = identityContext.Users.FirstOrDefault(u => u.Id == userId).Email;
+
+            var posts = postsContext.Posts.Where(p => p.PosterId == userId).ToList();
+            var postList = new List<PostExportModel>();
+            foreach (var post in posts) {
+                var recipient = userContext.Users.FirstOrDefault(u => u.UserId == post.RecipientId);
+                postList.Add(new PostExportModel {
+                    Recipient = recipient.FirstName + " " + recipient.LastName,
+                    Content = post.Content,
+                    Date = post.Date
+                });
+            }
+
+            var friends = friendsContext.Friends.Where(f => f.UserId == userId).ToList();
+            var friendsList = new List<FriendsExportModel>();
+            foreach (var friend in friends) {
+                var userFriend = userContext.Users.FirstOrDefault(u => u.UserId == friend.FriendId);
+                friendsList.Add(new FriendsExportModel {
+                    Name = userFriend.FirstName + " " + userFriend.LastName
+                });
+            }
+
+            var user = userContext.Users.FirstOrDefault(u => u.UserId == userId);
+            var userDetails = new UserExportModel {
+                Email = email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Gender = user.Gender,
+                SexualOrientation = user.SexualOrientation,
+                BirthDate = user.BirthDate,
+                ProfilePicUrl = user.ProfilePicUrl,
+                ZodiacSign = user.ZodiacSign,
+                Country = user.Country
+            };
+
+            var userInfo = new AllUserData {
+                User = userDetails,
+                Friends = friendsList,
+                Posts = postList
+            };
+
+            Response.ClearContent();
+            Response.Buffer = true;
+            Response.AddHeader("content-disposition", "attachment; filename=jtt-profile.xml");
+            Response.ContentType = "text/xml";
+
+            var xs = new System.Xml.Serialization.XmlSerializer(userInfo.GetType());
+            xs.Serialize(Response.OutputStream, userInfo);
+        }
+    }
+
+    public class AllUserData {
+        public UserExportModel User;
+        public List<FriendsExportModel> Friends;
+        public List<PostExportModel> Posts;
     }
 }

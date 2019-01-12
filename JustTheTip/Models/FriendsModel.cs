@@ -16,6 +16,10 @@ namespace JustTheTip.Models {
         public string Category { get; set; }
     }
 
+    public class FriendsExportModel {
+        public string Name { get; set; }
+    }
+
     public class FriendsDbContext : DbContext {
         public DbSet<FriendsModel> Friends { get; set; }
 

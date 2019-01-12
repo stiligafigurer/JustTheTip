@@ -5,8 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 
 namespace JustTheTip.Models {
-    public class UserModel
-    {
+    public class UserModel {
         [Required, Key]
         public string UserId { get; set; }
         [Required, Display(Name = "First name")]
@@ -31,6 +30,18 @@ namespace JustTheTip.Models {
         public string Country { get; set; }
         //ActiveUser 1 = true, 0 = false
         public int? ActiveUser { get; set; }
+    }
+
+    public class UserExportModel {
+        public string Email { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Gender { get; set; }
+        public string SexualOrientation { get; set; }
+        public DateTime? BirthDate { get; set; }
+        public string ProfilePicUrl { get; set; }
+        public string ZodiacSign { get; set; }
+        public string Country { get; set; }
     }
 
     public class UserDbContext : DbContext {
