@@ -36,24 +36,37 @@
 
 
 <h2>Here's a few of our awesome members!</h2>
-@foreach (var item in Model.Take(3))
-{
+@{
+    if (Model != null) {
+
+        int n = Model.Count();
+        if (n > 3) {
+            n = 3;
+        }
 
 
-    <div class="col-md-3" id="exampleusers">
-        <a href="@Url.Action("Index", "Profile", new { profileId = @item.UserId})">
-            <h3>@Html.DisplayFor(modelItem => item.FirstName) </h3>
-            <img src="@Html.DisplayFor(modelItem => item.ProfilePicUrl)" alt="No image" id="profilepicexampleusers"class="img-circle" />
+        if (n > 0) {
+            foreach (var item in Model.Take(n)) {
 
-        </a>
-    </div>
+                <div class="col-md-3" id="exampleusers">
+                    <a href="@Url.Action("Login", "Account", new { profileId = @item.UserId })">
+                        <h3>@Html.DisplayFor(modelItem => item.FirstName) </h3>
+                        <img src="@Html.DisplayFor(modelItem => item.ProfilePicUrl)" alt="No image" style="max-height: 200px; max-width: 200px; height: auto; width: auto;" class="img-circle" />
 
+                    </a>
+                </div>
+            }
+        }
+    }
+    else {
+        <h5>Sorry, we have no members bu you at the moment. Please wait for more memebers to register! </h5>
+    }
 }
-@if(null != TempData["alertMessage"])
-   {
-        <script type="text/javascript">
+
+@if (null != TempData["alertMessage"]) {
+    <script type="text/javascript">
                alert('@TempData["alertMessage"]');
-        </script>
-   }
+    </script>
+}
 
 
