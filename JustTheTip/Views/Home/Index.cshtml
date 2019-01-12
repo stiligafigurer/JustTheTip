@@ -35,26 +35,32 @@
 </div>
 <h2>Here's a few of our awesome members!</h2>
 @{
-    var n = Model.Count();
-    if (n > 3) {
-        n = 3;
-    }
-}
-@foreach (var item in Model.Take(n))
-{
-    @*<div class="row">*@
-    
+    if (Model != null) {
+
+        int n = Model.Count();
+        if (n > 3) {
+            n = 3;
+        }
+
+
+        if (n > 0) {
+            foreach (var item in Model.Take(n)) {
+
         <div class="col-md-3" id="exampleusers">
-            <a href="@Url.Action("Login", "Account", new { profileId = @item.UserId})">
+            <a href="@Url.Action("Login", "Account", new { profileId = @item.UserId })">
                 <h3>@Html.DisplayFor(modelItem => item.FirstName) </h3>
                 <img src="@Html.DisplayFor(modelItem => item.ProfilePicUrl)" alt="No image" style="max-height: 200px; max-width: 200px; height: auto; width: auto;" class="img-circle" />
 
             </a>
         </div>
-
-        @*</div>*@
-
+            }
+        }
+    }
+    else {
+        <h5>Sorry, we have no members at the moment. Please register a new account to change that! </h5>
+    }
 }
+
 <style>
     .col-md-3 {
         text-align: center;
