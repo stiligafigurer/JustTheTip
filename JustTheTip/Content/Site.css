@@ -53,7 +53,7 @@ a:hover {
 }
 .welcometext { /*från index_loggedin*/
     color: hotpink;
-    font-weight: 600;
+    font-weight: 700;
 }
 .btn-primary {
     cursor: pointer;
@@ -73,3 +73,13 @@ a:hover {
     text-align: center;
 } /*från index_loggedin*/
 
+  .loggedinbtn {
+      background-color: white;
+  }
+#exampleusers {
+    text-align: center;
+}
+
+    #exampleusers:hover {
+        background-color: lightpink;
+    }
