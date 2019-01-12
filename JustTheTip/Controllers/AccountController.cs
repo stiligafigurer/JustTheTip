@@ -5,6 +5,10 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using JustTheTip.Models;
+using System.Web.Helpers;
+using System.ComponentModel.DataAnnotations;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 
 namespace JustTheTip.Controllers {
     [Authorize]
@@ -100,9 +104,20 @@ namespace JustTheTip.Controllers {
                         Country = model.Country,
                         ActiveUser = 1
                     });
-                    userContext.SaveChanges();
-
-                    return RedirectToAction("Index", "Home");
+                    try {
+                        userContext.SaveChanges();
+                    }
+                    catch (DbEntityValidationException e) {
+                        foreach (var eve in e.EntityValidationErrors) {
+                            Debug.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                                eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                            foreach (var ve in eve.ValidationErrors) {
+                                Debug.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                                    ve.PropertyName, ve.ErrorMessage);
+                            }
+                        }
+                    }
+                        return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }
