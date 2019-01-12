@@ -87,17 +87,11 @@ namespace JustTheTip.Controllers {
 
             return RedirectToAction("Index", "User");
         }
-
-        public ActionResult All(IEnumerable<UserModel> model) {
-            var userContext = new UserDbContext();
-            var users = userContext.Users.ToList();
-            return View(users);
-        }
-
-
+ 
         [HttpGet]
-        public ActionResult Search(string srchterm) {
-            // TODO: Fix <script> etc. in search box
+        public ActionResult Search(string srchterm)
+        {
+            //Splits the query into words and searches db for people with first- or last names matching the query
             string[] nameArr = srchterm.Split(' ');
             var userContext = new UserDbContext();
             List<UserModel> validUserList = new List<UserModel>();
@@ -106,7 +100,9 @@ namespace JustTheTip.Controllers {
                 validUserList.AddRange(userContext.Users.Where(u => u.LastName == word & u.ActiveUser == 1));
             }
             var validUserListNoDup = new List<UserModel>();
-            for (int i = 0; i < validUserList.Count; i++) {
+            //Checks if there are any duplicate users in the result and removes them
+            for(int i = 0; i < validUserList.Count; i++)
+            {
                 bool hasMatch = false;
                 for (int e = i + 1; e < validUserList.Count; e++) {
 
@@ -122,11 +118,13 @@ namespace JustTheTip.Controllers {
         }
 
         public ActionResult DeactivateAccount() {
+            //Sets ActiveUser to 0 (0 = inactive, 1 = active)
             var id = User.Identity.GetUserId();
             var userContext = new UserDbContext();
             var currentUser = userContext.Users.FirstOrDefault(u => u.UserId == id);
             currentUser.ActiveUser = 0;
             userContext.SaveChanges();
+            //Calls default logout action
             return RedirectToAction("LogOffNoToken", "Account");
         }
 
