@@ -18,8 +18,8 @@ namespace JustTheTip.Controllers {
 
             if (userId != null) {
                 var userContext = new UserDbContext();
-                var friendContext = new FriendsDbContext();
-                var friendReqContext = new FriendRequestDbContext();
+                var friendsContext = new FriendsDbContext();
+                var requestsContext = new FriendRequestDbContext();
 
                 //Checks if the current user is the owner of the profile
                 if (userId != ProfileId && ProfileId != null) {
@@ -27,7 +27,7 @@ namespace JustTheTip.Controllers {
                 }
 
                 var user = userContext.Users.FirstOrDefault(u => u.UserId == userId);
-                List<FriendsModel> friendList = friendContext.Friends.Where
+                List<FriendsModel> friendList = friendsContext.Friends.Where
                     (f => f.UserId == userId).ToList();
                 var activeFriendList = new List<FriendsModel>();
                 //Checks if the users in friendList are active or not. Inactive users are not moved to activeFriendList
@@ -38,7 +38,7 @@ namespace JustTheTip.Controllers {
                     }
                 }
 
-                var friendRequestList = friendReqContext.FriendRequests.ToList();
+                var friendRequestList = requestsContext.FriendRequests.ToList();
                 //checks if any friendrequest between the users exists. False disables add friend
                 foreach (var item in friendRequestList) {
                     if (item.FriendId == ProfileId && item.UserId == User.Identity.GetUserId()) {
@@ -57,6 +57,7 @@ namespace JustTheTip.Controllers {
                 foreach (var item in activeFriendList) {
                     UserDict.Add(userContext.Users.FirstOrDefault(u => u.UserId == item.FriendId), item.Category);
                 }
+                //Fills all properties in the UserViewModel with relevant data 
                 model.UserId = user.UserId;
                 model.FirstName = user.FirstName;
                 model.LastName = user.LastName;
@@ -73,8 +74,7 @@ namespace JustTheTip.Controllers {
 
                 return View(model);
             }
-
-            //return View("~/Views/Home/Index.cshtml");
+            
             return RedirectToAction("Index", "Home");
         }
         private int CheckCompatibility(string id) {

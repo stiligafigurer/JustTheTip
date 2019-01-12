@@ -24,8 +24,13 @@ namespace JustTheTip.Controllers {
                 }
                 return View("Index_LoggedIn", userList);
             } else {
-                userList.AddRange(userContext.Users.Where(u => u.ActiveUser == 1));
-                return View("Index", userList);
+                try { 
+                    userList.AddRange(userContext.Users.Where(u => u.ActiveUser == 1));
+                    return View("Index", userList);
+                }
+                catch(Exception) {
+                    return View("index");
+                }
             }
 
         }

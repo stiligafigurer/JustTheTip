@@ -25,6 +25,12 @@ namespace JustTheTip.Models {
         public string PosterName { get; set; }
     }
 
+    public class PostExportModel {
+        public string Recipient { get; set; }
+        public string Content { get; set; }
+        public DateTime Date { get; set; }
+    }
+
     public class PostDbContext : DbContext {
         public DbSet<PostModel> Posts { get; set; }
 
