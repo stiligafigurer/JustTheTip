@@ -21,7 +21,7 @@ namespace JustTheTip.Models {
         [Required, DataType(DataType.Date), Display(Name = "Date of birth")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime? BirthDate { get; set; }
-        [RegularExpression(@"(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)", ErrorMessage = "Invalid URL.")]
+        [RegularExpression(@"(http(s?):)([/|.|,\w|\s|-])*\.(?:jpg|gif|png)", ErrorMessage = "Invalid URL.")]
         [Required, DataType(DataType.ImageUrl), Display(Name = "Profile picture (URL)")]
         public string ProfilePicUrl { get; set; }
         [Required, Display(Name = "Zodiac sign")]
