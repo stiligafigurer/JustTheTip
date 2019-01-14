@@ -3,7 +3,6 @@ using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace JustTheTip.Controllers {
@@ -11,11 +10,12 @@ namespace JustTheTip.Controllers {
         public ActionResult Index() {
             var userContext = new UserDbContext();
             var userList = new List<UserModel>();
-            
-            if (Request.IsAuthenticated) {
-                var userId = User.Identity.GetUserId();
+            var userId = User.Identity.GetUserId();
+            var currentUser = userContext.Users.FirstOrDefault(u => u.UserId == userId);
+
+            if (currentUser != null) {
                 userList.AddRange(userContext.Users.Where(u => u.UserId != userId && u.ActiveUser == 1));
-                var currentUser = userContext.Users.FirstOrDefault(u => u.UserId == userId);
+                
                 if(currentUser.ActiveUser == 0) {
                     currentUser.ActiveUser = 1;
                     userContext.SaveChanges();

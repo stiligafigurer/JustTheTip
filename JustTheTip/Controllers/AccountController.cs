@@ -9,6 +9,7 @@ using System.Web.Helpers;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
+using System;
 
 namespace JustTheTip.Controllers {
     [Authorize]
@@ -106,20 +107,29 @@ namespace JustTheTip.Controllers {
                     });
                     try {
                         userContext.SaveChanges();
+                    } catch {
+                        var rvModel = new RegisterViewModel {
+                            Email = model.Email,
+                            Password = "",
+                            ConfirmPassword = "",
+                            FirstName = model.FirstName,
+                            LastName = model.LastName,
+                            Gender = model.Gender,
+                            SexualOrientation = model.SexualOrientation,
+                            BirthDate = model.BirthDate,
+                            ProfilePicUrl = "Invalid url",
+                            ZodiacSign = model.ZodiacSign,
+                            Country = model.Country,
+                            ActiveUser = 1
+                        };
+                        ViewBag.CountryList = GetList.Countries();
+                        ViewBag.ZodiacList = GetList.ZodiacSigns();
+                        ViewBag.GenderList = GetList.Genders();
+                        ViewBag.SexOrList = GetList.SexualOrientations();
+                        return View(rvModel);
                     }
-                    catch (DbEntityValidationException e) {
-                        foreach (var eve in e.EntityValidationErrors) {
-                            Debug.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-                                eve.Entry.Entity.GetType().Name, eve.Entry.State);
-                            foreach (var ve in eve.ValidationErrors) {
-                                Debug.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
-                                    ve.PropertyName, ve.ErrorMessage);
-                            }
-                        }
-                    }
-                        return RedirectToAction("Index", "Home");
                 }
-                AddErrors(result);
+                return RedirectToAction("Index", "Home");
             }
 
             // If we got this far, something failed, redisplay form

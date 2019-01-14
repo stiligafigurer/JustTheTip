@@ -36,6 +36,7 @@
         }
 
 
+
         if (n > 0) {
             foreach (var item in Model.Take(n)) {
 
@@ -48,11 +49,11 @@
                 </div>
             }
         }
-    }
-    else {
+    } else {
         <h5>Sorry, we have no members bu you at the moment. Please wait for more memebers to register! </h5>
+        }
     }
-}
+
 
 @if (null != TempData["alertMessage"]) {
     <script type="text/javascript">
