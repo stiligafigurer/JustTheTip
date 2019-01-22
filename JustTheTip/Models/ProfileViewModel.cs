@@ -15,7 +15,7 @@ namespace JustTheTip.Models
         public string Country { get; set; }
         public DateTime? BirthDate { get; set; }
         public string ZodiacSign { get; set; }
-        public string ProfilePicUrl { get; set; }
+        public byte[] ProfilePic { get; set; }
         public Dictionary<UserModel, string> Friends { get; set; } 
         public int Compatibility { get; set; }
         public bool IsFriend { get; set; }

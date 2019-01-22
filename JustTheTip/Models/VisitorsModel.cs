@@ -17,7 +17,7 @@ namespace JustTheTip.Models {
         public int Id { get; set; }
         public string UserId { get; set; }
         public string FullName { get; set; }
-        public string ProfilePicUrl { get; set; }
+        public byte[] ProfilePic { get; set; }
         public string VisitedId { get; set; }
         public string Date { get; set; }
     }

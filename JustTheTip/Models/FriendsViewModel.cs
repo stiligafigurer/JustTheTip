@@ -6,7 +6,7 @@ namespace JustTheTip.Models {
         [Key]
         public string UserId { get; set; }
         [Display(Name = "Profile picture")]
-        public string ProfilePicUrl { get; set; }
+        public byte[] ProfilePic { get; set; }
         [Display(Name = "Name")]
         public string FullName { get; set; }
         [Display(Name = "Born")]

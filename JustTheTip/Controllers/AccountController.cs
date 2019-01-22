@@ -10,6 +10,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System;
+using System.IO;
 
 namespace JustTheTip.Controllers {
     [Authorize]
@@ -84,12 +85,20 @@ namespace JustTheTip.Controllers {
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model) {
+        public async Task<ActionResult> Register([Bind(Exclude = "ProfilePic")] RegisterViewModel model) {
             if (ModelState.IsValid) {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded) {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                    byte[] imgData = null;
+                    if (Request.Files.Count > 0) {
+                        HttpPostedFileBase imgFile = Request.Files["ProfilePic"];
+                        using (var binary = new BinaryReader(imgFile.InputStream)) {
+                            imgData = binary.ReadBytes(imgFile.ContentLength);
+                        }
+                    }
 
                     var userContext = new UserDbContext();
                     var userId = SignInManager.AuthenticationManager.AuthenticationResponseGrant.Identity.GetUserId();
@@ -100,7 +109,7 @@ namespace JustTheTip.Controllers {
                         Gender = model.Gender,
                         SexualOrientation = model.SexualOrientation,
                         BirthDate = model.BirthDate.Value,
-                        ProfilePicUrl = model.ProfilePicUrl,
+                        ProfilePic = imgData,
                         ZodiacSign = model.ZodiacSign,
                         Country = model.Country,
                         ActiveUser = 1
@@ -117,7 +126,7 @@ namespace JustTheTip.Controllers {
                             Gender = model.Gender,
                             SexualOrientation = model.SexualOrientation,
                             BirthDate = model.BirthDate,
-                            ProfilePicUrl = "Invalid url",
+                            ProfilePic = null,
                             ZodiacSign = model.ZodiacSign,
                             Country = model.Country,
                             ActiveUser = 1

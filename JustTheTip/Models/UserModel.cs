@@ -21,8 +21,8 @@ namespace JustTheTip.Models {
         [Required, DataType(DataType.Date), Display(Name = "Date of birth")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime? BirthDate { get; set; }
-        [Required, DataType(DataType.ImageUrl), Display(Name = "Profile picture (URL)")]
-        public string ProfilePicUrl { get; set; }
+        [Display(Name = "Profile picture")]
+        public byte[] ProfilePic { get; set; }
         [Required, Display(Name = "Zodiac sign")]
         public string ZodiacSign { get; set; }
         [Required]
@@ -38,7 +38,7 @@ namespace JustTheTip.Models {
         public string Gender { get; set; }
         public string SexualOrientation { get; set; }
         public DateTime? BirthDate { get; set; }
-        public string ProfilePicUrl { get; set; }
+        public byte[] ProfilePic { get; set; }
         public string ZodiacSign { get; set; }
         public string Country { get; set; }
     }

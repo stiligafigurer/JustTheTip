@@ -21,7 +21,7 @@ namespace JustTheTip.Models {
         public string Content { get; set; }
         public DateTime Date { get; set; }
 
-        public string ProfilePicUrl { get; set; }
+        public byte[] ProfilePic { get; set; }
         public string PosterName { get; set; }
     }
 

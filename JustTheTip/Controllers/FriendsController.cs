@@ -22,7 +22,7 @@ namespace JustTheTip.Controllers {
 
                     friendList.Add(new FriendsViewModel {
                         UserId = friend.FriendId,
-                        ProfilePicUrl = user.ProfilePicUrl,
+                        ProfilePic = user.ProfilePic,
                         FullName = user.FirstName + ' ' + user.LastName,
                         BirthYear = user.BirthDate.Value.Year,
                         Category = friend.Category
@@ -40,7 +40,7 @@ namespace JustTheTip.Controllers {
                 if(user.ActiveUser == 1) { 
                     requestList.Add(new FriendsViewModel {
                         UserId = request.UserId,
-                        ProfilePicUrl = user.ProfilePicUrl,
+                        ProfilePic = user.ProfilePic,
                         FullName = user.FirstName + ' ' + user.LastName,
                         BirthYear = user.BirthDate.Value.Year,
                     });

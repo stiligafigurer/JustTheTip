@@ -23,7 +23,7 @@ namespace JustTheTip.Controllers {
                         PosterId = post.PosterId,
                         Content = post.Content,
                         Date = post.Date,
-                        ProfilePicUrl = user.ProfilePicUrl,
+                        ProfilePic = user.ProfilePic,
                         PosterName = user.FirstName + " " + user.LastName
                     });
                 }
@@ -122,7 +122,7 @@ namespace JustTheTip.Controllers {
                             Id = visitor.Id,
                             UserId = visitor.UserId,
                             FullName = user.FirstName + " " + user.LastName,
-                            ProfilePicUrl = user.ProfilePicUrl,
+                            ProfilePic = user.ProfilePic,
                             VisitedId = visitor.VisitedId,
                             Date = DateToString(visitor.Date)
                         });

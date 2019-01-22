@@ -31,9 +31,9 @@ namespace JustTheTip.Controllers {
                     (f => f.UserId == userId).ToList();
                 var activeFriendList = new List<FriendsModel>();
                 //Checks if the users in friendList are active or not. Inactive users are not moved to activeFriendList
-                foreach(var friend in friendList) {
+                foreach (var friend in friendList) {
                     UserModel tempFriend = userContext.Users.FirstOrDefault(f => f.UserId == friend.FriendId && f.ActiveUser == 1);
-                    if(tempFriend != null && tempFriend.ActiveUser == 1) {
+                    if (tempFriend != null && tempFriend.ActiveUser == 1) {
                         activeFriendList.Add(friend);
                     }
                 }
@@ -64,7 +64,7 @@ namespace JustTheTip.Controllers {
                 model.Gender = user.Gender;
                 model.SexualOrientation = user.SexualOrientation;
                 model.ZodiacSign = user.ZodiacSign;
-                model.ProfilePicUrl = user.ProfilePicUrl;
+                model.ProfilePic = user.ProfilePic;
                 model.BirthDate = user.BirthDate;
                 model.Country = user.Country;
                 model.Friends = UserDict;
@@ -74,9 +74,17 @@ namespace JustTheTip.Controllers {
 
                 return View(model);
             }
-            
+
             return RedirectToAction("Index", "Home");
         }
+
+        public ActionResult ProfilePic(string id) {
+            using (var userContext = new UserDbContext()) {
+                var user = userContext.Users.FirstOrDefault(u => u.UserId == id);
+                return File(user.ProfilePic, "Image/png");
+            }
+        }
+
         private int CheckCompatibility(string id) {
             var compatibility = 0;
             var userContext = new UserDbContext();

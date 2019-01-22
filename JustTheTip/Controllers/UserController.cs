@@ -9,6 +9,7 @@ using System.Web;
 using System.Net;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.IO;
 
 namespace JustTheTip.Controllers {
     [Authorize]
@@ -30,7 +31,7 @@ namespace JustTheTip.Controllers {
                 Gender = currentUser?.Gender,
                 SexualOrientation = currentUser?.SexualOrientation,
                 BirthDate = (DateTime)currentUser?.BirthDate,
-                ProfilePicUrl = currentUser?.ProfilePicUrl,
+                ProfilePic = currentUser?.ProfilePic,
                 ZodiacSign = currentUser?.ZodiacSign,
                 Country = currentUser?.Country,
                 ActiveUser = currentUser?.ActiveUser
@@ -39,10 +40,18 @@ namespace JustTheTip.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(UserModel model) {
+        public ActionResult Edit([Bind(Exclude = "ProfilePic")] UserModel model) {
             var userContext = new UserDbContext();
             var userId = User.Identity.GetUserId();
             var currentUser = userContext.Users.FirstOrDefault(u => u.UserId == userId);
+
+            byte[] imgData = null;
+            if (Request.Files.Count > 0) {
+                HttpPostedFileBase imgFile = Request.Files["ProfilePic"];
+                using (var binary = new BinaryReader(imgFile.InputStream)) {
+                    imgData = binary.ReadBytes(imgFile.ContentLength);
+                }
+            }
 
             if (currentUser == null) {
                 userContext.Users.Add(new UserModel {
@@ -52,7 +61,7 @@ namespace JustTheTip.Controllers {
                     Gender = model.Gender,
                     SexualOrientation = model.SexualOrientation,
                     BirthDate = model.BirthDate.Value,
-                    ProfilePicUrl = model.ProfilePicUrl,
+                    ProfilePic = imgData,
                     ZodiacSign = model.ZodiacSign,
                     Country = model.Country,
                     ActiveUser = model.ActiveUser
@@ -64,7 +73,9 @@ namespace JustTheTip.Controllers {
                 currentUser.Gender = model.Gender;
                 currentUser.SexualOrientation = model.SexualOrientation;
                 currentUser.BirthDate = model.BirthDate.Value;
-                currentUser.ProfilePicUrl = model.ProfilePicUrl;
+                currentUser.ProfilePic = imgData;
+
+
                 currentUser.ZodiacSign = model.ZodiacSign;
                 currentUser.Country = model.Country;
                 currentUser.ActiveUser = model.ActiveUser;
@@ -170,7 +181,7 @@ namespace JustTheTip.Controllers {
                 Gender = user.Gender,
                 SexualOrientation = user.SexualOrientation,
                 BirthDate = user.BirthDate,
-                ProfilePicUrl = user.ProfilePicUrl,
+                ProfilePic = user.ProfilePic,
                 ZodiacSign = user.ZodiacSign,
                 Country = user.Country
             };

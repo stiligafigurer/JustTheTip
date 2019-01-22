@@ -85,8 +85,8 @@ namespace JustTheTip.Models
         public virtual string SexualOrientation { get; set; }
         [Required, DataType(DataType.Date), Display(Name = "Date of birth")]
         public virtual DateTime? BirthDate { get; set; }
-        [Required, DataType(DataType.ImageUrl), Display(Name = "Profile picture (url)")]
-        public virtual string ProfilePicUrl { get; set; }
+        [DataType(DataType.ImageUrl), Display(Name = "Profile picture")]
+        public virtual byte[] ProfilePic { get; set; }
         [Required, Display(Name = "Zodiac sign")]
         public virtual string ZodiacSign { get; set; }
         [Required]
