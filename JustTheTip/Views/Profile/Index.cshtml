@@ -79,7 +79,7 @@
                 @{
                     foreach (var user in Model.Friends) {
                         <tr>
-                            <td><a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @user.Key.UserId})"><img src="@user.Key.ProfilePic" alt="ProfilePic" class="img-rounded" id="friendiconprofile" /></a></td>
+                            <td><a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @user.Key.UserId})"><img src="@Url.Action("ProfilePic", "Profile", new { id = user.Key.UserId })" alt="ProfilePic" class="img-rounded" id="friendiconprofile" /></a></td>
                             <td><a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @user.Key.UserId})">@user.Key.FirstName</a></td>
                             <td><a class="table-link" href="@Url.Action("Index", "Friends", new { profileId = @user.Key.UserId})">@user.Value</a></td>
                         </tr>

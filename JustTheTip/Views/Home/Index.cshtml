@@ -50,7 +50,7 @@
                     <div class="col-md-3" id="exampleusers">
                         <a href="@Url.Action("Login", "Account", new { profileId = @item.UserId })">
                             <h3>@Html.DisplayFor(modelItem => item.FirstName) </h3>
-                            <img src="@Html.DisplayFor(modelItem => item.ProfilePic)" alt="No image" id="profilepicexampleusers" class="img-circle" />
+                            <img src="@Url.Action("ProfilePic", "Profile", new { id = item.UserId })" alt="No image" id="profilepicexampleusers" class="img-circle" />
 
                         </a>
                     </div>

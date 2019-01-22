@@ -214,13 +214,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201901221445134_UpdateDb.cs" />
-    <Compile Include="Migrations\201901221445134_UpdateDb.Designer.cs">
-      <DependentUpon>201901221445134_UpdateDb.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201901221452157_UpdateDb1.cs" />
-    <Compile Include="Migrations\201901221452157_UpdateDb1.Designer.cs">
-      <DependentUpon>201901221452157_UpdateDb1.cs</DependentUpon>
+    <Compile Include="Migrations\201901221629373_ivan100.cs" />
+    <Compile Include="Migrations\201901221629373_ivan100.Designer.cs">
+      <DependentUpon>201901221629373_ivan100.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -311,11 +307,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201901221445134_UpdateDb.resx">
-      <DependentUpon>201901221445134_UpdateDb.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201901221452157_UpdateDb1.resx">
-      <DependentUpon>201901221452157_UpdateDb1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201901221629373_ivan100.resx">
+      <DependentUpon>201901221629373_ivan100.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

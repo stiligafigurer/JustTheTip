@@ -81,7 +81,13 @@ namespace JustTheTip.Controllers {
         public ActionResult ProfilePic(string id) {
             using (var userContext = new UserDbContext()) {
                 var user = userContext.Users.FirstOrDefault(u => u.UserId == id);
-                return File(user.ProfilePic, "Image/png");
+                if(user.ProfilePic != null) {
+
+                    return File(user.ProfilePic, "Image/png");
+                }
+                else {
+                    return null;
+                }
             }
         }
 

@@ -23,7 +23,7 @@
         foreach (var item in Model.Requests) {
             <tr>
                 <td>
-                    <a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @item.UserId})"><img src="@Html.DisplayFor(modelItem => item.ProfilePic)" alt="No image" style="max-height: 50px; max-width: 50px;" /></a>
+                    <a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @item.UserId})"><img src="@Url.Action("ProfilePic", "Profile", new { id = item.UserId })" alt="No image" style="max-height: 50px; max-width: 50px;" /></a>
 </td>
                 <td>
                     <a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @item.UserId})">@Html.DisplayFor(modelItem => item.FullName)</a>

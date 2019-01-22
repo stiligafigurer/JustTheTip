@@ -24,7 +24,7 @@
 
 
                     <tr>
-                        <td><a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @item.Key.UserId})"><img src="@item.Key.ProfilePic" alt="ProfilePic" class="img-rounded" style="max-height:50px; max-width:50px; height:auto; width:auto" /></a></td>
+                        <td><a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @item.Key.UserId})"><img src="@Url.Action("ProfilePic", "Profile", new { id = item.Key.UserId })" alt="ProfilePic" class="img-rounded" style="max-height:50px; max-width:50px; height:auto; width:auto" /></a></td>
                         <td><a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @item.Key.UserId})">@item.Key.FirstName @item.Key.LastName</a></td>
                         <td><a class="table-link" href="@Url.Action("Index", "Profile", new { profileId = @item.Key.UserId})">@item.Key.Gender</a></td>
 
