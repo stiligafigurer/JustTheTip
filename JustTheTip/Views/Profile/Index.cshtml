@@ -155,7 +155,7 @@
                     tr.append(
                         '<td>' +
                         '<a class="table-link" href="profile?profileId=' + post.PosterId + '">' +
-                        '<img src="' + post.ProfilePic + '" class="img-rounded" style="max-height:50px; max-width:50px;" />' +
+                        '<img id="' + post.PosterId + '" src="" class="img-rounded" style="max-height:50px; max-width:50px;" />' +
                         '</a>' +
                         '</td>' +
                         '<td>' +
@@ -174,6 +174,7 @@
                         );
                     }
                     $('#posts').append(tr);
+                    $('#' + post.PosterId).attr('src', 'data:image/png;base64,' + post.ProfilePic);
                 });
             });
         }
@@ -238,7 +239,7 @@
                     tr.append(
                         '<td>' +
                         '<a class="table-link" href="profile?profileId=' + visitor.UserId + '">' +
-                        '<img src="' + visitor.ProfilePic + '" class="img-rounded" style="max-height:50px; max-width:50px;" />' +
+                        '<img id="' + visitor.UserId + '" src="" class="img-rounded" style="max-height:50px; max-width:50px;" />' +
                         '</a>' +
                         '</td>' +
                         '<td>' +
@@ -249,6 +250,7 @@
                         '</td>'
                     );
                     $('#visitors').append(tr);
+                    $('#' + visitor.UserId).attr('src', 'data:image/png;base64,' + visitor.ProfilePic);
                 });
             });
         }
