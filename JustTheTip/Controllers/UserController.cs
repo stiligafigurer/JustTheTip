@@ -64,7 +64,7 @@ namespace JustTheTip.Controllers {
                     ProfilePic = imgData,
                     ZodiacSign = model.ZodiacSign,
                     Country = model.Country,
-                    ActiveUser = model.ActiveUser
+                    ActiveUser = currentUser.ActiveUser
                 });
             } else {
                 currentUser.UserId = userId;
@@ -78,7 +78,7 @@ namespace JustTheTip.Controllers {
 
                 currentUser.ZodiacSign = model.ZodiacSign;
                 currentUser.Country = model.Country;
-                currentUser.ActiveUser = model.ActiveUser;
+                currentUser.ActiveUser = currentUser.ActiveUser;
             }
 
             try {
