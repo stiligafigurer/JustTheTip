@@ -155,7 +155,7 @@
                     tr.append(
                         '<td>' +
                         '<a class="table-link" href="profile?profileId=' + post.PosterId + '">' +
-                        '<img id="' + post.PosterId + '" src="" class="img-rounded" style="max-height:50px; max-width:50px;" />' +
+                        '<img class="' + post.PosterId + '" src="" class="img-rounded" style="max-height:50px; max-width:50px;" />' +
                         '</a>' +
                         '</td>' +
                         '<td>' +
@@ -174,7 +174,7 @@
                         );
                     }
                     $('#posts').append(tr);
-                    $('#' + post.PosterId).attr('src', 'data:image/png;base64,' + post.ProfilePic);
+                    $('.' + post.PosterId).attr('src', 'data:image/png;base64,' + post.ProfilePic);
                 });
             });
         }
