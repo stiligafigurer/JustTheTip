@@ -73,7 +73,7 @@ namespace JustTheTip.Controllers {
                 currentUser.Gender = model.Gender;
                 currentUser.SexualOrientation = model.SexualOrientation;
                 currentUser.BirthDate = model.BirthDate.Value;
-                currentUser.ProfilePic = imgData;
+                currentUser.ProfilePic = imgData.Length > 0 ? imgData : currentUser.ProfilePic;
 
 
                 currentUser.ZodiacSign = model.ZodiacSign;
